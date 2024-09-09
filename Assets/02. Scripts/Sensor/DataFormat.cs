@@ -9,7 +9,7 @@ using UnityEngine;
 public class SensorDataFormat
 {
     public Vector2 rectSize;
-    public List<Vector3> position = new List<Vector3>();
+    public List<Vector3> positionList = new List<Vector3>();
 }
 
 

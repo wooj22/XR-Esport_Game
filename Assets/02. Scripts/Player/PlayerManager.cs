@@ -10,32 +10,32 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] SensorManager sensorManager;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] Transform playerParent;
-    [SerializeField] private List<GameObject> players = new List<GameObject>();
+    [SerializeField] private List<GameObject> playerList = new List<GameObject>();
 
     void Update()
     {
         // Player 추가
-        if (sensorManager.getSensorVector().Count > players.Count)
+        if (sensorManager.GetSensorVector().Count > playerList.Count)
         {
-            for (int i = players.Count; i < sensorManager.getSensorVector().Count; i++)
+            for (int i = playerList.Count; i < sensorManager.GetSensorVector().Count; i++)
             {
-                players.Add(Instantiate(playerPrefab, playerParent));
+                playerList.Add(Instantiate(playerPrefab, playerParent));
             }
         }
         // Player 비활성화
-        else if (sensorManager.getSensorVector().Count < players.Count)
+        else if (sensorManager.GetSensorVector().Count < playerList.Count)
         {
-            for (int i = sensorManager.getSensorVector().Count; i < players.Count; i++)
+            for (int i = sensorManager.GetSensorVector().Count; i < playerList.Count; i++)
             {
-                players[i].SetActive(false);
+                playerList[i].SetActive(false);
             }
         }
 
         // Player 위치 업데이트
-        for (int i = 0; i < sensorManager.getSensorVector().Count; i++)
+        for (int i = 0; i < sensorManager.GetSensorVector().Count; i++)
         {
-            players[i].SetActive(true);
-            players[i].transform.localPosition = sensorManager.getSensorVector()[i];
+            playerList[i].SetActive(true);
+            playerList[i].transform.localPosition = sensorManager.GetSensorVector()[i];
         }
     }
 }
