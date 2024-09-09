@@ -8,8 +8,8 @@ using UnityEngine;
 [SerializeField]
 public class SensorDataFormat
 {
-    public Vector2 RectSize;
-    public List<Vector3> Position = new List<Vector3>();
+    public Vector2 rectSize;
+    public List<Vector3> position = new List<Vector3>();
 }
 
 

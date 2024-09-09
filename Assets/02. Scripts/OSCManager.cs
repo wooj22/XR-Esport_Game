@@ -5,30 +5,30 @@ public class OSCManager : MonoBehaviour
 {
     [Header ("OSC")]
     [SerializeField] public OSC sensorOSC;
-    public SensorDataFormat[] SensorData;
+    public SensorDataFormat[] sensorData;
 
     private void Start()
     {
         SetOSC_Event();
-        SensorData = new SensorDataFormat[System.Enum.GetValues(typeof(SensorEnum)).Length];
+        sensorData = new SensorDataFormat[System.Enum.GetValues(typeof(SensorEnum)).Length];
 
         //5 size 배열
-        for (int i = 0; i < SensorData.Length; i++)
-            SensorData[i] = new SensorDataFormat();
+        for (int i = 0; i < sensorData.Length; i++)
+            sensorData[i] = new SensorDataFormat();
     }
 
     /// 센서 핸들러 - Start, Update, Stop, Quit
     #region Front Sensor Handler
     public void getFrontStartMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Front)].RectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        SensorData[((int)SensorEnum.Front)].Position.Clear();
+        sensorData[((int)SensorEnum.Front)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
+        sensorData[((int)SensorEnum.Front)].position.Clear();
         Debug.Log("Front 센서 연결");
     }
 
     public void getFrontSensorMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Front)].Position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Front)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
     public void getFrontStopMessage(OscMessage message)
@@ -45,14 +45,14 @@ public class OSCManager : MonoBehaviour
     #region Right Sensor Handler
     public void getRightStartMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Right)].RectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        SensorData[((int)SensorEnum.Right)].Position.Clear();
+        sensorData[((int)SensorEnum.Right)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
+        sensorData[((int)SensorEnum.Right)].position.Clear();
         Debug.Log("Right 센서 연결");
     }
 
     public void getRightSensorMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Right)].Position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Right)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
     public void getRightStopMessage(OscMessage message)
@@ -69,14 +69,14 @@ public class OSCManager : MonoBehaviour
     #region Back Sensor Handler
     public void getBackStartMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Back)].RectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        SensorData[((int)SensorEnum.Back)].Position.Clear();
+        sensorData[((int)SensorEnum.Back)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
+        sensorData[((int)SensorEnum.Back)].position.Clear();
         Debug.Log("Back 센서 연결");
     }
 
     public void getBackSensorMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Back)].Position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Back)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
     public void getBackStopMessage(OscMessage message)
@@ -93,14 +93,14 @@ public class OSCManager : MonoBehaviour
     #region Left Sensor Handler
     public void getLeftStartMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Left)].RectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        SensorData[((int)SensorEnum.Left)].Position.Clear();
+        sensorData[((int)SensorEnum.Left)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
+        sensorData[((int)SensorEnum.Left)].position.Clear();
         Debug.Log("Left 센서 연결");
     }
 
     public void getLeftSensorMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Left)].Position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Left)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
     public void getLeftStopMessage(OscMessage message)
@@ -117,13 +117,13 @@ public class OSCManager : MonoBehaviour
     #region Down Sensor Handler
     public void getDownStartMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Down)].RectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        SensorData[((int)SensorEnum.Down)].Position.Clear();
+        sensorData[((int)SensorEnum.Down)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
+        sensorData[((int)SensorEnum.Down)].position.Clear();
         Debug.Log("Down 센서 연결");
     }
     public void getDownSensorMessage(OscMessage message)
     {
-        SensorData[((int)SensorEnum.Down)].Position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Down)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
     public void getDownStopMessage(OscMessage message)
     {
