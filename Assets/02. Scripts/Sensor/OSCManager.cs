@@ -19,19 +19,19 @@ public class OSCManager : MonoBehaviour
 
     /// ¼¾¼­ ÇÚµé·¯ - Start, Update, Stop, Quit
     #region Front Sensor Handler
-    public void getFrontStartMessage(OscMessage message)
+    public void GetFrontStartMessage(OscMessage message)
     {
         sensorData[((int)SensorEnum.Front)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        sensorData[((int)SensorEnum.Front)].position.Clear();
+        sensorData[((int)SensorEnum.Front)].positionList.Clear();
         Debug.Log("Front ¼¾¼­ ¿¬°á");
     }
 
-    public void getFrontSensorMessage(OscMessage message)
+    public void GetFrontSensorMessage(OscMessage message)
     {
-        sensorData[((int)SensorEnum.Front)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Front)].positionList.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
-    public void getFrontStopMessage(OscMessage message)
+    public void GetFrontStopMessage(OscMessage message)
     {
         Debug.Log("Front ¼¾¼­ ¸ØÃã");
     }
@@ -43,19 +43,19 @@ public class OSCManager : MonoBehaviour
     #endregion
 
     #region Right Sensor Handler
-    public void getRightStartMessage(OscMessage message)
+    public void GetRightStartMessage(OscMessage message)
     {
         sensorData[((int)SensorEnum.Right)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        sensorData[((int)SensorEnum.Right)].position.Clear();
+        sensorData[((int)SensorEnum.Right)].positionList.Clear();
         Debug.Log("Right ¼¾¼­ ¿¬°á");
     }
 
-    public void getRightSensorMessage(OscMessage message)
+    public void GetRightSensorMessage(OscMessage message)
     {
-        sensorData[((int)SensorEnum.Right)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Right)].positionList.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
-    public void getRightStopMessage(OscMessage message)
+    public void GetRightStopMessage(OscMessage message)
     {
         Debug.Log("Right ¼¾¼­ ¸ØÃã");
     }
@@ -67,19 +67,19 @@ public class OSCManager : MonoBehaviour
     #endregion
 
     #region Back Sensor Handler
-    public void getBackStartMessage(OscMessage message)
+    public void GetBackStartMessage(OscMessage message)
     {
         sensorData[((int)SensorEnum.Back)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        sensorData[((int)SensorEnum.Back)].position.Clear();
+        sensorData[((int)SensorEnum.Back)].positionList.Clear();
         Debug.Log("Back ¼¾¼­ ¿¬°á");
     }
 
-    public void getBackSensorMessage(OscMessage message)
+    public void GetBackSensorMessage(OscMessage message)
     {
-        sensorData[((int)SensorEnum.Back)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Back)].positionList.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
-    public void getBackStopMessage(OscMessage message)
+    public void GetBackStopMessage(OscMessage message)
     {
         Debug.Log("Back ¼¾¼­ ¸ØÃã");
     }
@@ -91,19 +91,19 @@ public class OSCManager : MonoBehaviour
     #endregion
 
     #region Left Sensor Handler
-    public void getLeftStartMessage(OscMessage message)
+    public void GetLeftStartMessage(OscMessage message)
     {
         sensorData[((int)SensorEnum.Left)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        sensorData[((int)SensorEnum.Left)].position.Clear();
+        sensorData[((int)SensorEnum.Left)].positionList.Clear();
         Debug.Log("Left ¼¾¼­ ¿¬°á");
     }
 
-    public void getLeftSensorMessage(OscMessage message)
+    public void GetLeftSensorMessage(OscMessage message)
     {
-        sensorData[((int)SensorEnum.Left)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Left)].positionList.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
 
-    public void getLeftStopMessage(OscMessage message)
+    public void GetLeftStopMessage(OscMessage message)
     {
         Debug.Log("Left ¼¾¼­ ¸ØÃã");
     }
@@ -115,17 +115,17 @@ public class OSCManager : MonoBehaviour
     #endregion
 
     #region Down Sensor Handler
-    public void getDownStartMessage(OscMessage message)
+    public void GetDownStartMessage(OscMessage message)
     {
         sensorData[((int)SensorEnum.Down)].rectSize = new Vector2(message.GetFloat(0), message.GetFloat(1));
-        sensorData[((int)SensorEnum.Down)].position.Clear();
+        sensorData[((int)SensorEnum.Down)].positionList.Clear();
         Debug.Log("Down ¼¾¼­ ¿¬°á");
     }
-    public void getDownSensorMessage(OscMessage message)
+    public void GetDownSensorMessage(OscMessage message)
     {
-        sensorData[((int)SensorEnum.Down)].position.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
+        sensorData[((int)SensorEnum.Down)].positionList.Add(new Vector3(message.GetFloat(0), message.GetFloat(1), 0));
     }
-    public void getDownStopMessage(OscMessage message)
+    public void GetDownStopMessage(OscMessage message)
     {
         Debug.Log("Down ¼¾¼­ ¸ØÃã");
     }
@@ -143,34 +143,34 @@ public class OSCManager : MonoBehaviour
     void SetOSC_Event()
     {
         // Front
-        sensorOSC.SetAddressHandler("/Front/Start", getFrontStartMessage);
-        sensorOSC.SetAddressHandler("/Front/Data", getFrontSensorMessage);
-        sensorOSC.SetAddressHandler("/Front/End", getFrontStopMessage);
+        sensorOSC.SetAddressHandler("/Front/Start", GetFrontStartMessage);
+        sensorOSC.SetAddressHandler("/Front/Data", GetFrontSensorMessage);
+        sensorOSC.SetAddressHandler("/Front/End", GetFrontStopMessage);
         sensorOSC.SetAddressHandler("/Front/Quit", FrontSensorQuit);
 
         // Right
-        sensorOSC.SetAddressHandler("/Right/Start", getRightStartMessage);
-        sensorOSC.SetAddressHandler("/Right/Data", getRightSensorMessage);
-        sensorOSC.SetAddressHandler("/Right/End", getRightStopMessage);
+        sensorOSC.SetAddressHandler("/Right/Start", GetRightStartMessage);
+        sensorOSC.SetAddressHandler("/Right/Data", GetRightSensorMessage);
+        sensorOSC.SetAddressHandler("/Right/End", GetRightStopMessage);
         sensorOSC.SetAddressHandler("/Right/Quit", RightSensorQuit);
 
         // Back
-        sensorOSC.SetAddressHandler("/Back/Start", getBackStartMessage);
-        sensorOSC.SetAddressHandler("/Back/Data", getBackSensorMessage);
-        sensorOSC.SetAddressHandler("/Back/End", getBackStopMessage);
+        sensorOSC.SetAddressHandler("/Back/Start", GetBackStartMessage);
+        sensorOSC.SetAddressHandler("/Back/Data", GetBackSensorMessage);
+        sensorOSC.SetAddressHandler("/Back/End", GetBackStopMessage);
         sensorOSC.SetAddressHandler("/Back/Quit", BackSensorQuit);
 
 
         // Left
-        sensorOSC.SetAddressHandler("/Left/Start", getLeftStartMessage);
-        sensorOSC.SetAddressHandler("/Left/Data", getLeftSensorMessage);
-        sensorOSC.SetAddressHandler("/Left/End", getLeftStopMessage);
+        sensorOSC.SetAddressHandler("/Left/Start", GetLeftStartMessage);
+        sensorOSC.SetAddressHandler("/Left/Data", GetLeftSensorMessage);
+        sensorOSC.SetAddressHandler("/Left/End", GetLeftStopMessage);
         sensorOSC.SetAddressHandler("/Left/Quit", LeftSensorQuit);
 
         // Down
-        sensorOSC.SetAddressHandler("/Down/Start", getDownStartMessage);
-        sensorOSC.SetAddressHandler("/Down/Data", getDownSensorMessage);
-        sensorOSC.SetAddressHandler("/Down/End", getDownStopMessage);
+        sensorOSC.SetAddressHandler("/Down/Start", GetDownStartMessage);
+        sensorOSC.SetAddressHandler("/Down/Data", GetDownSensorMessage);
+        sensorOSC.SetAddressHandler("/Down/End", GetDownStopMessage);
         sensorOSC.SetAddressHandler("/Down/Quit", DownSensorQuit);
     }
 }

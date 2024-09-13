@@ -28,24 +28,24 @@ public class SensorManager : MonoBehaviour
             sensorPositionList.Clear();
 
             // 현재 인식되어있는 센서들의 포지션값 업데이트
-            for (int i = 0; i < SensorData.position.Count; i++)
+            for (int i = 0; i < SensorData.positionList.Count; i++)
             {
-                sensorPositionList.Add(new Vector3(scale(-SensorData.rectSize.x / 2, SensorData.rectSize.x / 2, sensorGround.position.x - sensorGround.rect.width / 2, sensorGround.position.x + sensorGround.rect.width / 2, SensorData.position[i].x),
-                                        scale(-SensorData.rectSize.y / 2, SensorData.rectSize.y / 2, sensorGround.position.y - sensorGround.rect.height / 2, sensorGround.position.y + sensorGround.rect.height / 2, SensorData.position[i].y),
+                sensorPositionList.Add(new Vector3(Scale(-SensorData.rectSize.x / 2, SensorData.rectSize.x / 2, sensorGround.position.x - sensorGround.rect.width / 2, sensorGround.position.x + sensorGround.rect.width / 2, SensorData.positionList[i].x),
+                                        Scale(-SensorData.rectSize.y / 2, SensorData.rectSize.y / 2, sensorGround.position.y - sensorGround.rect.height / 2, sensorGround.position.y + sensorGround.rect.height / 2, SensorData.positionList[i].y),
                                         0));
             }
         }
     }
 
     /// 포지션 리스트 getter 제공
-    public List<Vector3> getSensorVector()
+    public List<Vector3> GetSensorVector()
     {
         return sensorPositionList;
     }
 
 
     /// 센서 그라운드 면적 계산
-    private float scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
+    private float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
     {
         float OldRange = (OldMax - OldMin);
         float NewRange = (NewMax - NewMin);
