@@ -11,6 +11,8 @@ public class Balloon : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            print("플레이어와 충돌했습니다.");
+
             StartCoroutine(PopBalloon());
         }
     }
@@ -22,10 +24,10 @@ public class Balloon : MonoBehaviour
     //  
     IEnumerator PopBalloon()
     {
-        GetComponent<Animator>().SetTrigger("Pop");
         print("터지는 애니메이션이 실행됩니다.");
+        // GetComponent<Animator>().SetTrigger("Pop"); // 애니메이션 구현 시, 할당 필요
 
-        yield return new WaitForSeconds(0.5f); 
+        yield return new WaitForSeconds(0.7f); 
         Destroy(gameObject);
     }
 }
