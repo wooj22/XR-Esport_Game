@@ -12176,6 +12176,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Amuse1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3775235220927618790, guid: 583a865e205b950458b3c676727e5cc5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9077236166572673162, guid: 583a865e205b950458b3c676727e5cc5,
         type: 3}
       propertyPath: m_LocalPosition.x
