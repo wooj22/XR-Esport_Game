@@ -46,9 +46,7 @@ public class HorrorGameManager : MonoBehaviour
         }
 
         // 1라운드 성공, 공간이동
-        Debug.Log("1라운드 성공. 공간 이동을 시작합니다.");
-        yield return new WaitForSeconds(5f);
-        Debug.Log("5초뒤 2라운드를 시작합니다.");
+        Debug.Log("1라운드 성공. 공간이동. 5초 뒤 2라운드를 시작합니다.");
         yield return new WaitForSeconds(5f);
 
         // 2라운드
@@ -70,6 +68,7 @@ public class HorrorGameManager : MonoBehaviour
         // 최종 성공 UI 띄우고(+성공 효과) 코루틴 멈추고 메인화면 이동
     }
 
+
     /*----------------------------------------------------------------*/
     /// 라운드 셋팅
     private void RoundSetting(int round)
@@ -80,6 +79,9 @@ public class HorrorGameManager : MonoBehaviour
 
         // 먹어야할 아이템 개수 셋팅
         curRoundItemMaxCount = itemMaxCountByRoundList[curRound - 1];
+
+        // 플레이어가 먹은 아이템 개수 초기화
+        eatItemCount = 0;
     }
 
     /// 라운드 정리

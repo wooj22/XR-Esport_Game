@@ -24,6 +24,7 @@ public class ItemController : MonoBehaviour
     IEnumerator FoundPlayer()
     {
         Debug.Log("æ∆¿Ã≈€ Ω¿µÊ");
+        _gameManager.eatItemCount++;
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
