@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 403542372917436385}
   serializedVersion: 2
   m_LocalRotation: {x: 0.049910463, y: -0.015661782, z: 0.052176908, w: 0.9972669}
-  m_LocalPosition: {x: 0, y: 4, z: 98}
+  m_LocalPosition: {x: 0, y: 0, z: 64.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,11 +44,11 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0.99345523, b: 0.9792453, a: 1}
-  m_Intensity: 100000
-  m_Range: 300
-  m_SpotAngle: 37.115055
-  m_InnerSpotAngle: 26.733215
+  m_Color: {r: 1, g: 0.8831374, b: 0.76792455, a: 1}
+  m_Intensity: 30000
+  m_Range: 129.4
+  m_SpotAngle: 69.59192
+  m_InnerSpotAngle: 59.210075
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -246,7 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8254370532447121024}
   m_Layer: 0
-  m_Name: FlashLight
+  m_Name: FlashLight_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
