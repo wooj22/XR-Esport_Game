@@ -5,149 +5,137 @@ using UnityEngine.UI;
 
 public class BalloonMapManager : MonoBehaviour
 {
-    /*
-    // [ 풍선 생성 및 배치 ]
-    public GameObject[] balloonPrefabs;  // 6개 색상의 풍선 프리팹 배열 (각 색에 맞는 태그를 가짐)
-    private int totalBalloons = 120;     // 전체 풍선의 개수
-    public int balloonsPerScreen = 30;   // 각 화면당 생성할 풍선 수
-    public Plane[] planes;               // 4개의 화면을 나타내는 Plane 오브젝트 배열
 
-    // [ 제한 시간, 게임 클리어 조건 ]
-    public float timeLimit = 90f;        // 제한 시간 (1분 30초)
-    private float timeRemaining;         // 남은 시간
-    private bool gameEnded = false;      // 게임이 끝났는지 여부 체크
-    public GameObject gameClearUI;       // 게임 클리어 시 보여줄 UI
+    // ★ [ 풍선 생성 및 랜덤배치 ]
+    // 
+    public GameObject[] spawnPrefabs;   // 생성할 6가지 풍선 프리팹
+    public GameObject[] centerObjects;  // 중심점 오브젝트 배열 (right, left, back, front, down)
 
-    // [ 게이지 시스템 ]
-    public Slider progressBar;   // 게이지를 나타내는 슬라이더 UI
-    // private int totalBalloons;   // 전체 풍선의 개수
-    private int poppedBalloons;  // 터트린 풍선의 개수
+    private float spawnRadiusY = 70f;   // Y축 랜덤 거리 범위
+    private float spawnRadiusZ = 350f;  // Z축 랜덤 거리 범위 (right, left, down)
+    private float spawnRadiusX = 250f;  // X축 랜덤 거리 범위 (back, front, down)
+
+    #region down 중심점의 거리 범위 설정 (Spout 카메라 확인 필요)
+    // private float downSpawnRadiusZ = 350f;  // down 중심점의 Z축 랜덤 거리 범위
+    // private float downSpawnRadiusX = 250f;  // down 중심점의 X축 랜덤 거리 범위
+    #endregion
+
+    private int objectsPerCenter = 40;  // 각 중심점에서 생성할 오브젝트 개수
+    private float minDistance = 20f;    // 오브젝트 간 최소 거리
+
+
+    // ------------------------------------------------------------------------------------------------
 
 
     void Start()
     {
-        // SpawnBalloons();
-
-        timeRemaining = timeLimit;  // 남은 시간을 제한 시간으로 설정
-
-        // totalBalloons = GameObject.FindGameObjectsWithTag("Balloon").Length; // 전체 풍선 개수 설정
-        poppedBalloons = 0;   // 터트린 풍선의 개수 초기화
-        UpdateProgressBar();  // 초기 게이지 상태 업데이트
+        SpawnObjects();
     }
 
 
-    // [ 남은 시간 체크 ]
-    //  - 시간 감소 (초 단위)
-    //  - 게임 종료 관리: 시간 초과 시 게임 종료 / 모든 풍선을 터트리면 게임 클리어
-    //
-    void Update()
-    {
-        if (!gameEnded)
-        {
-            timeRemaining -= Time.deltaTime;
-
-            if (timeRemaining <= 0)
-            {
-                EndGame(false); 
-            }
-
-            if (GameObject.FindGameObjectsWithTag("Balloon").Length == 0)
-            {
-                EndGame(true); 
-            }
-        }
-    }
-
-
-    // ★ [ 풍선 -> 각 화면의 Plane 위에 랜덤하게 배치 ] 
+    // ★ [ 각 중심점에 맞게 오브젝트 생성 ] ★
     // 
-    
-    void SpawnBalloons()
+    // - spawnedPositions : 생성된 오브젝트들의 위치 리스트
+    // - 각 중심점에서 objectsPerCenter 수 만큼 오브젝트 생성
+    // 
+    void SpawnObjects()
     {
-        for (int i = 0; i < planes.Length; i++)
-        {  // 각 화면 (Plane)마다 반복
-            for (int j = 0; j < balloonsPerScreen; j++)
-            {  
-                // 각 화면당 30개의 풍선 생성
-                // 랜덤한 위치를 Plane의 영역 내에서 선택
-                Vector3 randomPosition = GetRandomPositionOnPlane(planes[i]);
+        foreach (GameObject centerObject in centerObjects)
+        {
+            List<Vector3> spawnedPositions = new List<Vector3>(); 
 
-                // 랜덤한 풍선 프리팹을 선택하여 해당 위치에 생성
-                GameObject balloon = Instantiate(balloonPrefabs[Random.Range(0, balloonPrefabs.Length)], randomPosition, Quaternion.identity);
+            for (int i = 0; i < objectsPerCenter; i++)
+            {
+                SpawnAtCenter(centerObject, spawnedPositions);
             }
         }
     }
-    
 
-    // Plane의 영역 내에서 랜덤한 위치를 반환하는 함수
-    
-    Vector3 GetRandomPositionOnPlane(Plane plane)
+
+
+    // ★ [ 주어진 중심점에서 하나의 오브젝트 생성 ]
+    // 
+    // 최대 100번 시도 => ( 유효한 위치에 오브젝트 생성 , 부모로 중심점 설정 )
+    // - selectedPrefab : 랜덤하게 생성할 프리팹 선택
+    // - validPosition : 생성 위치가 유효한지 여부
+    // - attempts : 위치 생성 시도 횟수
+    // 
+    void SpawnAtCenter(GameObject centerObject, List<Vector3> spawnedPositions)
     {
-        // Plane의 범위를 기준으로 X, Z 좌표를 무작위로 선택
-        float randomX = Random.Range(plane.bounds.min.x, plane.bounds.max.x);
-        float randomZ = Random.Range(plane.bounds.min.z, plane.bounds.max.z);
+        GameObject selectedPrefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
+        Vector3 spawnPosition;
+        bool validPosition = false;
+        int attempts = 0;
 
-        // Plane의 높이(Y 값)는 일정하므로, 그 값을 유지한 채로 반환
-        return new Vector3(randomX, plane.transform.position.y, randomZ);
-    }
-
-    Vector3 GetObjectBounds(GameObject obj)
-    {
-        // 오브젝트에서 Collider 컴포넌트 가져오기
-        Collider collider = obj.GetComponent<Collider>();
-
-        if (collider != null)
+        while (!validPosition && attempts < 100)
         {
-            // bounds로 Collider의 경계 상자를 얻음
-            Bounds bounds = collider.bounds;
+            attempts++;
 
-            // 경계 상자의 최소, 최대 좌표 출력
-            Vector3 min = bounds.min;  // 최소 좌표
-            Vector3 max = bounds.max;  // 최대 좌표
-            Vector3 center = bounds.center;  // 중심 좌표
+            spawnPosition = GetRandomPosition(centerObject);
+            validPosition = IsPositionValid(spawnPosition, spawnedPositions);
 
-            Debug.Log("Min Bounds: " + min);
-            Debug.Log("Max Bounds: " + max);
-            Debug.Log("Center Bounds: " + center);
+            if (validPosition)
+            {
+                GameObject newObject = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
+                newObject.transform.parent = centerObject.transform;
 
-            // 경계 상자의 중심 좌표를 반환
-            return center;
+                spawnedPositions.Add(spawnPosition);
+            }
         }
-        else
+    }
+
+
+    // ★ [ 중심점에 따라 랜덤 좌표 반환 ]
+    // 
+    // - randomY : 모든 중심점에서 사용
+    // 
+    // - 기본적으로 중심점의 위치를 반환 (오류 방지용)
+    // 
+    Vector3 GetRandomPosition(GameObject centerObject)
+    {
+        float randomY = Random.Range(-spawnRadiusY, spawnRadiusY);
+
+        float randomX = 0f, randomZ = 0f;
+
+        if (centerObject.name == "right" || centerObject.name == "left")      // X축 고정, Y와 Z축 랜덤
         {
-            Debug.LogError("Collider가 없습니다.");
-            return Vector3.zero;  // Collider가 없을 경우 기본값 반환
+            randomZ = Random.Range(-spawnRadiusZ, spawnRadiusZ);
+            return new Vector3(centerObject.transform.position.x,
+                               centerObject.transform.position.y + randomY,
+                               centerObject.transform.position.z + randomZ);
         }
-    }
-
-    void EndGame(bool cleared)
-    {
-        gameEnded = true;
-
-        if (cleared)
-        { 
-            gameClearUI.SetActive(true); // 클리어 UI 표시
-        }
-        else
+        else if (centerObject.name == "back" || centerObject.name == "front")  // Z축 고정, X와 Y축 랜덤
         {
-            // 게임 실패 처리
+            randomX = Random.Range(-spawnRadiusX, spawnRadiusX);
+            return new Vector3(centerObject.transform.position.x + randomX,
+                               centerObject.transform.position.y + randomY,
+                               centerObject.transform.position.z);
         }
+        else if (centerObject.name == "down")                                  // Y축 고정, Z와 X축 랜덤
+        {
+            randomZ = Random.Range(-spawnRadiusZ, spawnRadiusZ);
+            randomX = Random.Range(-spawnRadiusX, spawnRadiusX);
+            return new Vector3(centerObject.transform.position.x + randomX,
+                               centerObject.transform.position.y,
+                               centerObject.transform.position.z + randomZ);
+        }
+
+        return centerObject.transform.position; 
     }
 
 
-
-    // ★ [ 게이지 업데이트 ]
-    void UpdateProgressBar()
+    // ★ [ 최소 거리 만족하는지 확인 ] 
+    // 
+    bool IsPositionValid(Vector3 position, List<Vector3> spawnedPositions)
     {
-        progressBar.value = (float)poppedBalloons / totalBalloons; // 주의! (0 ~ 1 사이 값)
+        foreach (Vector3 pos in spawnedPositions)
+        {
+            if (Vector3.Distance(position, pos) < minDistance)
+            {
+                return false;
+            }
+        }
+        return true; 
     }
 
-    // ★ [ 풍선 터졌을 때 호출 ]
-    void OnBalloonPopped()
-    {
-        poppedBalloons++;
-        UpdateProgressBar();
-    }
-
-    */
 }
