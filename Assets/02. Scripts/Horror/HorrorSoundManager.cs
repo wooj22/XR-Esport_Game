@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class HorrorSoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] AudioSource bgmSource;
+    [SerializeField] AudioSource sfxSource;
+    [SerializeField] List<AudioClip> bgmClipList;
+    [SerializeField] List<AudioClip> sfxClipList;
+
+    /// BGM
+    public void PlayBGM(int index)
     {
-        
+        Debug.Log(index);
+        bgmSource.clip = bgmClipList[index];
+        bgmSource.loop = true;
+        bgmSource.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StopBGM()
     {
-        
+        bgmSource.Stop();
+    }
+
+    /// SFX
+    public void PlaySFX(string clipName)
+    {
+        AudioClip clipToPlay = sfxClipList.Find(clip => clip.name == clipName);
+        sfxSource.PlayOneShot(clipToPlay);
     }
 }
