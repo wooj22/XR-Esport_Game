@@ -20,7 +20,7 @@ public class HorrorSoundManager : MonoBehaviour
 
     public void StopBGM()
     {
-        bgmSource.Play();
+        bgmSource.Stop();
     }
 
     /// SFX
