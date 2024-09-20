@@ -6,11 +6,11 @@ public class Balloon : MonoBehaviour
 {
     BalloonMapManager balloonMapManager;
 
-    public bool isEventBalloon = false; // 이벤트 풍선인지 여부
-    public float timer = 0f; // 이벤트 지속 시간 추적
-    public Material eventMaterial; // 이벤트 풍선으로 바꿀 머터리얼
-    private Material originalMaterial; // 원래의 머터리얼
-    private Renderer balloonRenderer; // 풍선의 Renderer 컴포넌트
+    public bool isEventBalloon = false;  // 이벤트 풍선인지 여부
+    public float timer = 0f;             // 이벤트 지속 시간 추적
+    public Material eventMaterial;       // 이벤트 풍선으로 바꿀 머터리얼
+    private Material originalMaterial;   // 원래의 머터리얼
+    private Renderer balloonRenderer;    // 풍선의 Renderer 컴포넌트
 
 
     void Start()
@@ -35,7 +35,6 @@ public class Balloon : MonoBehaviour
         if (balloonRenderer != null && eventMaterial != null)
         {
             balloonRenderer.material = eventMaterial; // 이벤트 풍선 머터리얼 적용
-            Debug.Log("이벤트 풍선의 외형으로 변했어!");
         }
     }
 
@@ -47,7 +46,6 @@ public class Balloon : MonoBehaviour
         if (balloonRenderer != null && originalMaterial != null)
         {
             balloonRenderer.material = originalMaterial; // 원래 머터리얼로 복구
-            Debug.Log("이벤트 풍선이 원래 풍선으로 돌아왔어!");
         }
         
     }

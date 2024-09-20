@@ -14,9 +14,12 @@ public class BalloonMapManager : MonoBehaviour
     string[] balloonTags = { "red", "yellow", "green", "blue", "pink", "purple" }; // 풍선 색깔에 해당하는 태그 리스트
 
     Balloon eventBalloon = null;        // 현재 이벤트 풍선 
-    float eventBalloonTime = 30f;       // 30초마다 이벤트 발생
-    float eventDuration = 20f;          // 5초 안에 이벤트 풍선을 터트려야 함
+    float eventBalloonTime = 20f;       // 30초마다 이벤트 발생
+    float eventDuration = 20f;          // 5초 안에 이벤트 풍선을 터트려야 함 => 현재 시연 위해 변경되어있음
     float timer = 0f;
+
+
+    // ------------------------------------------------------------------------------------------------------------
 
 
     void Start()
@@ -25,24 +28,28 @@ public class BalloonMapManager : MonoBehaviour
         availableScreens = new List<GameObject>(balloonScreens);
     }
 
+
+    // 1. 30초마다 이벤트 풍선 선택
+    //   - 타이머 리셋
+    // 2. 이벤트 풍선의 시간 제한 확인
+    //   - 시간 초과 시 원래 모습으로 돌아가게 함
+    //
     void Update()
     {
         timer += Time.deltaTime;
 
-        // 30초마다 이벤트 풍선을 선택
         if (timer >= eventBalloonTime)
         {
             SelectRandomEventBalloon();
-            timer = 0f; // 타이머 리셋
+            timer = 0f; 
         }
 
-        // 이벤트 풍선의 시간 제한 확인
         if (eventBalloon != null && eventBalloon.isEventBalloon)
         {
             eventBalloon.timer += Time.deltaTime;
             if (eventBalloon.timer >= eventDuration)
             {
-                ResetBalloon(eventBalloon); // 시간 초과 시 원래 모습으로 돌아가게 함
+                ResetBalloon(eventBalloon); 
             }
         }
     }
@@ -64,8 +71,6 @@ public class BalloonMapManager : MonoBehaviour
             return; 
         }
 
-        print("이벤트 풍선을 선택 합니다.");
-
         int randomScreenIndex = Random.Range(0, availableScreens.Count);
         GameObject selectedScreen = availableScreens[randomScreenIndex];
 
@@ -82,11 +87,11 @@ public class BalloonMapManager : MonoBehaviour
 
             availableScreens.Remove(selectedScreen);
 
-            Debug.Log("이벤트 풍선이 활성화 되었습니다.");
+            Debug.Log("이벤트 풍선이 활성화 되었음.");
         }
         else
         {
-            Debug.Log("해당 벽에 풍선이 없습니다."); // 벽에 풍선이 없다면 => 거의 다 없애 간다는 거니까 이벤트 풍선 발생 X
+            Debug.Log("해당 벽에 풍선이 없음"); // 벽에 풍선이 없다면 => 거의 다 없애 간다는 거니까 이벤트 풍선 발생 X
         }
     }
 
@@ -96,6 +101,7 @@ public class BalloonMapManager : MonoBehaviour
     // 
     // 1. 랜덤 색깔 태그 선택
     // 2. 이벤트 풍선이 속한 벽에서 해당 태그의 풍선들을 찾아 파괴
+    // 3. 이벤트 풍선 리셋 적용
     //
     void DestroyRandomColorBalloons(Balloon eventBalloon)
     {
@@ -106,27 +112,28 @@ public class BalloonMapManager : MonoBehaviour
             if (balloon.CompareTag(randomTag))
             {
                 Destroy(balloon.gameObject); 
-                Debug.Log("이벤트 풍선의 효과로 "+ randomTag + "색의 풍선이 터졌다!!");
             }
         }
 
-        // 이벤트 풍선 리셋
+        Debug.Log("성공 : 이벤트 풍선의 효과로 " + randomTag + "색의 풍선이 터졌다!!");
+
         ResetBalloon(eventBalloon);
     }
 
 
     // ★ [ 이벤트 풍선을 터치했을 때 처리 ]
     // 
+    // - 이벤트 풍선일 때는 랜덤 색깔 풍선 파괴
+    // - 일반 풍선일 때는 단순 파괴 -> 현재는 Balloon 스크립트에서 해줄거임 
+    //
     public void OnBalloonPopped(Balloon balloon)
     {
         if (balloon.isEventBalloon)
         {
-            // 이벤트 풍선일 때는 랜덤 색깔 풍선 파괴
             DestroyRandomColorBalloons(balloon);
         }
         else
         {
-            // 일반 풍선일 때는 단순 파괴 -> Balloon 스크립트에서 해줄거임 
             // Destroy(balloon.gameObject);
         }
     }
@@ -134,14 +141,17 @@ public class BalloonMapManager : MonoBehaviour
 
     // ★ [ 시간 초과 시 또는 풍선을 터트린 후 : 이벤트 풍선을 원래 상태로 리셋 ]
     // 
+    // - 원래 모습으로 되돌림
+    // - 해당 게임 오브젝트를 다시 사용 가능하게 리스트에 추가 => 현재는 비활성화 
+    // - 이벤트 풍선 리셋
     void ResetBalloon(Balloon balloon)
     {
+        Debug.Log("이벤트 풍선이 원래 모습으로 돌아왔음");
         balloon.isEventBalloon = false;
-        balloon.ResetAppearance(); // 원래 모습으로 되돌림
+        balloon.ResetAppearance(); 
 
-        // 해당 게임 오브젝트를 다시 사용 가능하게 리스트에 추가 => ?? 왜 추가함?
         // availableScreens.Add(balloon.transform.parent.gameObject);
 
-        eventBalloon = null; // 이벤트 풍선 리셋
+        eventBalloon = null;
     }
 }
