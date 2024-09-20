@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour
 {
-    public HorrorGameManager _gameManager;
+    private HorrorGameManager _gameManager;
 
     private void Start()
     {
@@ -18,13 +18,14 @@ public class ItemController : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             _gameManager.OnPlayerEatItem();
-            StartCoroutine(Wait1F());
-            Destroy(this.gameObject);
+            StartCoroutine(Eat());
+            
         }
     }
 
-    IEnumerator Wait1F()
+    IEnumerator Eat()
     {
         yield return new WaitForSeconds(1f);
+        Destroy(this.gameObject);
     }
 }

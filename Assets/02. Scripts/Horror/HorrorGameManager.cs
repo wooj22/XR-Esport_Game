@@ -36,7 +36,8 @@ public class HorrorGameManager : MonoBehaviour
     }
 
 
-    /*-------------------------- Game ing -----------------------------*/
+    /*-------------------------- Gaming -----------------------------*/
+
     IEnumerator HorrorHouseStart()
     {
         // 1라운드
@@ -44,6 +45,7 @@ public class HorrorGameManager : MonoBehaviour
         curRound = 1;
         RoundDataSetting(curRound);
         RoundUISetting();
+        RoundSoundSetting(curRound);
         yield return new WaitForSeconds(60f);
         RoundCleaning(curRound);
 
@@ -63,6 +65,7 @@ public class HorrorGameManager : MonoBehaviour
         curRound = 2;
         RoundDataSetting(curRound);
         RoundUISetting();
+        RoundSoundSetting(curRound);
         yield return new WaitForSeconds(60f);
         RoundCleaning(curRound);
 
@@ -78,7 +81,9 @@ public class HorrorGameManager : MonoBehaviour
     }
 
 
+
     /*-------------------------- Round Setting -----------------------------*/
+
     private void RoundDataSetting(int round)
     {
         curMap = Instantiate(mapByRoundList[round - 1], mapParent);
@@ -94,6 +99,10 @@ public class HorrorGameManager : MonoBehaviour
         StartCoroutine(_horrorUIManager.StartRoundTimer());
         _horrorUIManager.ItemGaugeActive(curRoundItemMaxCount);
     }
+    private void RoundSoundSetting(int round)
+    {
+        _horrorSoundManager.PlayBGM(round - 1);
+    }
 
     private void RoundCleaning(int round)
     {
@@ -101,13 +110,23 @@ public class HorrorGameManager : MonoBehaviour
         Destroy(curGhosts);
         Destroy(curItems);
         _horrorUIManager.ItemGaugeInactive();
+        _horrorSoundManager.StopBGM();
     }
 
+    
+
+
     /*--------------------------- Event ----------------------------*/
-    /// 이벤트
+
     public void OnPlayerEatItem()
     {
         eatItemCount++;
         _horrorUIManager.ItemGaugeUp();
+        _horrorSoundManager.PlaySFX("SFX_Horror_item");
+    }
+
+    public void OnPlayerFindGhost()
+    {
+        _horrorSoundManager.PlaySFX("SFX_Horror_ghost");
     }
 }
