@@ -1,141 +1,147 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BalloonMapManager : MonoBehaviour
 {
 
-    // ★ [ 풍선 생성 및 랜덤배치 ]
-    // 
-    public GameObject[] spawnPrefabs;   // 생성할 6가지 풍선 프리팹
-    public GameObject[] centerObjects;  // 중심점 오브젝트 배열 (right, left, back, front, down)
+    // [ 이벤트 풍선 관련 변수 ]
 
-    private float spawnRadiusY = 70f;   // Y축 랜덤 거리 범위
-    private float spawnRadiusZ = 350f;  // Z축 랜덤 거리 범위 (right, left, down)
-    private float spawnRadiusX = 250f;  // X축 랜덤 거리 범위 (back, front, down)
+    public GameObject[] balloonScreens;  // 5개의 벽 오브젝트 배열
 
-    #region down 중심점의 거리 범위 설정 (Spout 카메라 확인 필요)
-    // private float downSpawnRadiusZ = 350f;  // down 중심점의 Z축 랜덤 거리 범위
-    // private float downSpawnRadiusX = 250f;  // down 중심점의 X축 랜덤 거리 범위
-    #endregion
+    List<GameObject> availableScreens;   // 이벤트 발생하지 않은 벽 리스트
 
-    private int objectsPerCenter = 40;  // 각 중심점에서 생성할 오브젝트 개수
-    private float minDistance = 20f;    // 오브젝트 간 최소 거리
+    string[] balloonTags = { "red", "yellow", "green", "blue", "pink", "purple" }; // 풍선 색깔에 해당하는 태그 리스트
 
-
-    // ------------------------------------------------------------------------------------------------
+    Balloon eventBalloon = null;        // 현재 이벤트 풍선 
+    float eventBalloonTime = 30f;       // 30초마다 이벤트 발생
+    float eventDuration = 20f;          // 5초 안에 이벤트 풍선을 터트려야 함
+    float timer = 0f;
 
 
     void Start()
     {
-        SpawnObjects();
+        // 처음에 모든 화면을 사용 가능하도록 설정
+        availableScreens = new List<GameObject>(balloonScreens);
     }
 
-
-    // ★ [ 각 중심점에 맞게 오브젝트 생성 ] ★
-    // 
-    // - spawnedPositions : 생성된 오브젝트들의 위치 리스트
-    // - 각 중심점에서 objectsPerCenter 수 만큼 오브젝트 생성
-    // 
-    void SpawnObjects()
+    void Update()
     {
-        foreach (GameObject centerObject in centerObjects)
-        {
-            List<Vector3> spawnedPositions = new List<Vector3>(); 
+        timer += Time.deltaTime;
 
-            for (int i = 0; i < objectsPerCenter; i++)
+        // 30초마다 이벤트 풍선을 선택
+        if (timer >= eventBalloonTime)
+        {
+            SelectRandomEventBalloon();
+            timer = 0f; // 타이머 리셋
+        }
+
+        // 이벤트 풍선의 시간 제한 확인
+        if (eventBalloon != null && eventBalloon.isEventBalloon)
+        {
+            eventBalloon.timer += Time.deltaTime;
+            if (eventBalloon.timer >= eventDuration)
             {
-                SpawnAtCenter(centerObject, spawnedPositions);
+                ResetBalloon(eventBalloon); // 시간 초과 시 원래 모습으로 돌아가게 함
             }
         }
     }
 
 
-
-    // ★ [ 주어진 중심점에서 하나의 오브젝트 생성 ]
+    // ★ [ 이벤트 풍선 랜덤 선택 ] ★
     // 
-    // 최대 100번 시도 => ( 유효한 위치에 오브젝트 생성 , 부모로 중심점 설정 )
-    // - selectedPrefab : 랜덤하게 생성할 프리팹 선택
-    // - validPosition : 생성 위치가 유효한지 여부
-    // - attempts : 위치 생성 시도 횟수
-    // 
-    void SpawnAtCenter(GameObject centerObject, List<Vector3> spawnedPositions)
+    // 1. 랜덤으로 사용 가능한 벽 선택
+    //   - 선택된 벽 (오브젝트)의 자식 풍선들 가져옴 
+    // 2. 랜덤 풍선 선택
+    //   - 선택된 풍선을 이벤트 풍선으로 설정
+    //   - 이벤트 발생한 게임 오브젝트는 리스트에서 제거
+    //
+    void SelectRandomEventBalloon()
     {
-        GameObject selectedPrefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
-        Vector3 spawnPosition;
-        bool validPosition = false;
-        int attempts = 0;
-
-        while (!validPosition && attempts < 100)
+        if (availableScreens.Count == 0)
         {
-            attempts++;
+            Debug.Log("이벤트를 발생시킬 화면이 더 이상 없음.");
+            return; 
+        }
 
-            spawnPosition = GetRandomPosition(centerObject);
-            validPosition = IsPositionValid(spawnPosition, spawnedPositions);
+        print("이벤트 풍선을 선택 합니다.");
 
-            if (validPosition)
+        int randomScreenIndex = Random.Range(0, availableScreens.Count);
+        GameObject selectedScreen = availableScreens[randomScreenIndex];
+
+        Balloon[] balloons = selectedScreen.GetComponentsInChildren<Balloon>();
+
+        if (balloons.Length > 0)
+        {
+            int randomBalloonIndex = Random.Range(0, balloons.Length);
+            eventBalloon = balloons[randomBalloonIndex];
+
+            eventBalloon.isEventBalloon = true;
+            eventBalloon.timer = 0f;
+            eventBalloon.ChangeToEventBalloonAppearance();
+
+            availableScreens.Remove(selectedScreen);
+
+            Debug.Log("이벤트 풍선이 활성화 되었습니다.");
+        }
+        else
+        {
+            Debug.Log("해당 벽에 풍선이 없습니다."); // 벽에 풍선이 없다면 => 거의 다 없애 간다는 거니까 이벤트 풍선 발생 X
+        }
+    }
+
+
+
+    // ★ [ 이벤트 풍선 파괴 시 : 랜덤 색상의 풍선 파괴 ] ★
+    // 
+    // 1. 랜덤 색깔 태그 선택
+    // 2. 이벤트 풍선이 속한 벽에서 해당 태그의 풍선들을 찾아 파괴
+    //
+    void DestroyRandomColorBalloons(Balloon eventBalloon)
+    {
+        string randomTag = balloonTags[Random.Range(0, balloonTags.Length)];
+
+        foreach (Transform balloon in eventBalloon.transform.parent)
+        {
+            if (balloon.CompareTag(randomTag))
             {
-                GameObject newObject = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity);
-                newObject.transform.parent = centerObject.transform;
-
-                spawnedPositions.Add(spawnPosition);
+                Destroy(balloon.gameObject); 
+                Debug.Log("이벤트 풍선의 효과로 "+ randomTag + "색의 풍선이 터졌다!!");
             }
         }
+
+        // 이벤트 풍선 리셋
+        ResetBalloon(eventBalloon);
     }
 
 
-    // ★ [ 중심점에 따라 랜덤 좌표 반환 ]
+    // ★ [ 이벤트 풍선을 터치했을 때 처리 ]
     // 
-    // - randomY : 모든 중심점에서 사용
-    // 
-    // - 기본적으로 중심점의 위치를 반환 (오류 방지용)
-    // 
-    Vector3 GetRandomPosition(GameObject centerObject)
+    public void OnBalloonPopped(Balloon balloon)
     {
-        float randomY = Random.Range(-spawnRadiusY, spawnRadiusY);
-
-        float randomX = 0f, randomZ = 0f;
-
-        if (centerObject.name == "right" || centerObject.name == "left")      // X축 고정, Y와 Z축 랜덤
+        if (balloon.isEventBalloon)
         {
-            randomZ = Random.Range(-spawnRadiusZ, spawnRadiusZ);
-            return new Vector3(centerObject.transform.position.x,
-                               centerObject.transform.position.y + randomY,
-                               centerObject.transform.position.z + randomZ);
+            // 이벤트 풍선일 때는 랜덤 색깔 풍선 파괴
+            DestroyRandomColorBalloons(balloon);
         }
-        else if (centerObject.name == "back" || centerObject.name == "front")  // Z축 고정, X와 Y축 랜덤
+        else
         {
-            randomX = Random.Range(-spawnRadiusX, spawnRadiusX);
-            return new Vector3(centerObject.transform.position.x + randomX,
-                               centerObject.transform.position.y + randomY,
-                               centerObject.transform.position.z);
+            // 일반 풍선일 때는 단순 파괴 -> Balloon 스크립트에서 해줄거임 
+            // Destroy(balloon.gameObject);
         }
-        else if (centerObject.name == "down")                                  // Y축 고정, Z와 X축 랜덤
-        {
-            randomZ = Random.Range(-spawnRadiusZ, spawnRadiusZ);
-            randomX = Random.Range(-spawnRadiusX, spawnRadiusX);
-            return new Vector3(centerObject.transform.position.x + randomX,
-                               centerObject.transform.position.y,
-                               centerObject.transform.position.z + randomZ);
-        }
-
-        return centerObject.transform.position; 
     }
 
 
-    // ★ [ 최소 거리 만족하는지 확인 ] 
+    // ★ [ 시간 초과 시 또는 풍선을 터트린 후 : 이벤트 풍선을 원래 상태로 리셋 ]
     // 
-    bool IsPositionValid(Vector3 position, List<Vector3> spawnedPositions)
+    void ResetBalloon(Balloon balloon)
     {
-        foreach (Vector3 pos in spawnedPositions)
-        {
-            if (Vector3.Distance(position, pos) < minDistance)
-            {
-                return false;
-            }
-        }
-        return true; 
-    }
+        balloon.isEventBalloon = false;
+        balloon.ResetAppearance(); // 원래 모습으로 되돌림
 
+        // 해당 게임 오브젝트를 다시 사용 가능하게 리스트에 추가 => ?? 왜 추가함?
+        // availableScreens.Add(balloon.transform.parent.gameObject);
+
+        eventBalloon = null; // 이벤트 풍선 리셋
+    }
 }

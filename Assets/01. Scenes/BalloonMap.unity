@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18370908, g: 0.22913575, b: 0.30483547, a: 1}
+  m_IndirectSpecularColor: {r: 0.18299358, g: 0.22868137, b: 0.30679816, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1834,7 +1834,7 @@ Light:
     serializedVersion: 2
     m_Bits: 512
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -9309,36 +9309,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 457066821}
-  - component: {fileID: 457066820}
+  - component: {fileID: 457066822}
   m_Layer: 0
   m_Name: BalloonMapManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &457066820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 457066819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a306755da433c234582da0294c102307, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPrefabs:
-  - {fileID: 3492849716737928284, guid: 38a93efeadab36b4b8899553ee9c3192, type: 3}
-  - {fileID: 1384009211265863865, guid: 96154d42d53b1aa4bb29b1d4124a6b2e, type: 3}
-  - {fileID: 1384009211265863865, guid: 0e1511c5b1b803847bd242ad9e885a5b, type: 3}
-  centerObjects:
-  - {fileID: 563420944}
-  - {fileID: 505133382}
-  - {fileID: 2116311600}
-  - {fileID: 12211966}
-  - {fileID: 1152662592}
+  m_IsActive: 1
 --- !u!4 &457066821
 Transform:
   m_ObjectHideFlags: 0
@@ -9354,6 +9332,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &457066822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457066819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba136f877546f47408fd8536ac62934a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balloonScreens:
+  - {fileID: 1994608639}
+  - {fileID: 2057206065}
+  - {fileID: 433339818}
+  - {fileID: 181616835}
+  - {fileID: 1418032559}
 --- !u!1001 &461566090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15511,7 +15507,7 @@ Light:
     serializedVersion: 2
     m_Bits: 64
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -27856,7 +27852,7 @@ Light:
     serializedVersion: 2
     m_Bits: 128
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -28366,7 +28362,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!135 &1554721348
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -37638,7 +37634,7 @@ Light:
     serializedVersion: 2
     m_Bits: 256
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1

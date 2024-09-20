@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7362685395955779760}
   m_Layer: 0
   m_Name: Balloon_Red
-  m_TagString: Untagged
+  m_TagString: red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,3 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6270ff13db306b4f87eb5b8e57b419d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEventBalloon: 0
+  timer: 0
+  eventMaterial: {fileID: -876546973899608171, guid: b38791ef0291248349d2d026354b1319,
+    type: 3}
