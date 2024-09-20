@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; 
 
 public class BalloonMapManager : MonoBehaviour
 {
-
-    // [ 이벤트 풍선 관련 변수 ]
-
     public GameObject[] balloonScreens;  // 5개의 벽 오브젝트 배열
 
     List<GameObject> availableScreens;   // 이벤트 발생하지 않은 벽 리스트
+
+
+    // [ 이벤트 풍선 ]
 
     string[] balloonTags = { "red", "yellow", "green", "blue", "pink", "purple" }; // 풍선 색깔에 해당하는 태그 리스트
 
@@ -19,23 +20,61 @@ public class BalloonMapManager : MonoBehaviour
     float timer = 0f;
 
 
+    // [ 게임 진행상황 표시 ]
+
+    public Slider balloonSlider;        // 풍선 개수 표시할 슬라이더
+    public Text timerText;              // 남은 시간을 표시할 텍스트 UI
+
+    private int totalBalloons = 0;      // 전체 풍선 개수
+    private int poppedBalloons = 0;     // 터진 풍선 개수
+
+    private float gameDuration = 90f;   // 1분 30초(90초) 타이머
+    private bool gameEnded = false;     // 게임 종료 여부
+
     // ------------------------------------------------------------------------------------------------------------
 
 
     void Start()
     {
+        // 게임 시작 시 전체 풍선 개수 계산
+        foreach (GameObject screen in balloonScreens)
+        {
+            totalBalloons += screen.GetComponentsInChildren<Balloon>().Length;
+        }
+
+        // 슬라이더 초기화
+        balloonSlider.maxValue = totalBalloons;
+        balloonSlider.value = 0;
+
+
         // 처음에 모든 화면을 사용 가능하도록 설정
         availableScreens = new List<GameObject>(balloonScreens);
     }
 
 
-    // 1. 30초마다 이벤트 풍선 선택
-    //   - 타이머 리셋
-    // 2. 이벤트 풍선의 시간 제한 확인
-    //   - 시간 초과 시 원래 모습으로 돌아가게 함
+    // ★ --------------------------------------- ★
+    //
+    // 1. [ 타이머 업데이트 ]
+    // 2. [ 이벤트 풍선 처리 ]
+    // 2-1. 30초마다 이벤트 풍선 선택
+    //     - 타이머 리셋
+    // 2-2. 이벤트 풍선의 시간 제한 확인
+    //     - 시간 초과 시 원래 모습으로 돌아가게 함
     //
     void Update()
     {
+        if (!gameEnded)
+        {
+            gameDuration -= Time.deltaTime;
+            UpdateTimerUI();
+
+            if (gameDuration <= 0)
+            {
+                GameOver();
+            }
+        }
+
+        
         timer += Time.deltaTime;
 
         if (timer >= eventBalloonTime)
@@ -53,6 +92,42 @@ public class BalloonMapManager : MonoBehaviour
             }
         }
     }
+
+
+
+    // --------------------------------------------------------------------------------------------
+    // ★ 게임 진행 사항 관리     -----------------------------------------------------------------
+
+
+    // [ 타이머 UI 업데이트 ]
+    void UpdateTimerUI()
+    {
+        int minutes = Mathf.FloorToInt(gameDuration / 60f);
+        int seconds = Mathf.FloorToInt(gameDuration % 60f);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    // ★ 게임 오버 처리 (1분 30초 내에 실패했을 때)
+    void GameOver()
+    {
+        gameEnded = true;
+        Debug.Log("게임 오버! 제한 시간 내에 모든 풍선을 터뜨리지 못했습니다.");
+    }
+
+    // ★ 게임 클리어 처리 (모든 풍선을 터뜨렸을 때)
+    void GameClear()
+    {
+        gameEnded = true;
+        Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
+    }
+
+
+
+
+
+    // -----------------------------------------------------------------------------------------------
+    // ★ 이벤트 풍선 관련 메소드 --------------------------------------------------------------------
+
 
 
     // ★ [ 이벤트 풍선 랜덤 선택 ] ★
@@ -123,9 +198,11 @@ public class BalloonMapManager : MonoBehaviour
 
     // ★ [ 이벤트 풍선을 터치했을 때 처리 ]
     // 
-    // - 이벤트 풍선일 때는 랜덤 색깔 풍선 파괴
-    // - 일반 풍선일 때는 단순 파괴 -> 현재는 Balloon 스크립트에서 해줄거임 
-    //
+    // 1. 풍선 파괴 
+    //   - 이벤트 풍선일 때는 랜덤 색깔 풍선 파괴
+    //   - 일반 풍선일 때는 단순 파괴 -> 현재는 Balloon 스크립트에서 해줄거임 
+    // 2. 슬라이더 업데이트
+    //   - 모든 풍선을 터뜨렸는지 확인
     public void OnBalloonPopped(Balloon balloon)
     {
         if (balloon.isEventBalloon)
@@ -135,6 +212,15 @@ public class BalloonMapManager : MonoBehaviour
         else
         {
             // Destroy(balloon.gameObject);
+        }
+
+
+        poppedBalloons++;
+        balloonSlider.value = poppedBalloons; 
+
+        if (poppedBalloons >= totalBalloons)
+        {
+            GameClear();
         }
     }
 
