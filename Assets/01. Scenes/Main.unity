@@ -3311,7 +3311,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 1
-  far clip plane: 200
+  far clip plane: 100
   field of view: 85
   orthographic: 1
   orthographic size: 300
@@ -5080,7 +5080,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 23}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: 447, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1802564393
@@ -5896,7 +5896,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 23}
+  m_AnchoredPosition: {x: 0, y: 25}
   m_SizeDelta: {x: 447, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1906442354
