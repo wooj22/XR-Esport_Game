@@ -31,6 +31,9 @@ public class BalloonMapManager : MonoBehaviour
     private float gameDuration = 90f;   // 1분 30초(90초) 타이머
     private bool gameEnded = false;     // 게임 종료 여부
 
+
+    [SerializeField] BalloonSoundManager _balloonSoundManager;
+
     // ------------------------------------------------------------------------------------------------------------
 
 
@@ -49,6 +52,18 @@ public class BalloonMapManager : MonoBehaviour
 
         // 처음에 모든 화면을 사용 가능하도록 설정
         availableScreens = new List<GameObject>(balloonScreens);
+
+
+        // BGM 재생
+        _balloonSoundManager.PlayBGM();
+
+    }
+
+
+    // 
+    public void OnBalloonPoped()
+    {
+        _balloonSoundManager.PlaySFX();
     }
 
 
@@ -211,10 +226,14 @@ public class BalloonMapManager : MonoBehaviour
         if (balloon.isEventBalloon)
         {
             DestroyRandomColorBalloons(balloon);
+            _balloonSoundManager.PlaySFX();
+
+            // 이벤트 풍선 SFX 
         }
         else
         {
             // Destroy(balloon.gameObject);
+            _balloonSoundManager.PlaySFX();
         }
 
 
