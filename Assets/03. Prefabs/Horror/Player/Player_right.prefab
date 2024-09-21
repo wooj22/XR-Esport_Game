@@ -106,7 +106,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 1.2, y: 0, z: 0}
+  m_Center: {x: 1.2, y: 0, z: 1}
 --- !u!54 &6927998071278899872
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,6 +146,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlashLight_right
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049393560847168324, guid: 95a0cadba2640054fa3741d62f097cac,
+        type: 3}
+      propertyPath: m_Range
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049393560847168324, guid: 95a0cadba2640054fa3741d62f097cac,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049393560847168324, guid: 95a0cadba2640054fa3741d62f097cac,
+        type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 8254370532447121024, guid: 95a0cadba2640054fa3741d62f097cac,
         type: 3}

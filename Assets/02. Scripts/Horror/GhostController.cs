@@ -6,10 +6,12 @@ using UnityEngine;
 public class GhostController : MonoBehaviour
 {
     [SerializeField] Animator goshAnimator;
+    private HorrorGameManager _gameManager;
 
     private void Start()
     {
         goshAnimator = GetComponent<Animator>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<HorrorGameManager>();
     }
 
     /// 플레이어와 충돌
@@ -17,14 +19,14 @@ public class GhostController : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            StartCoroutine(FoundPlayer());
+            _gameManager.OnPlayerFindGhost();
+            goshAnimator.Play("Attack", 0, 0);
+            StartCoroutine(Dead());
         }
     }
 
-    IEnumerator FoundPlayer()
+    IEnumerator Dead()
     {
-        Debug.Log("귀신 발견");
-        goshAnimator.Play("Attack", 0, 0);
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
