@@ -15,8 +15,8 @@ public class BalloonMapManager : MonoBehaviour
     string[] balloonTags = { "red", "yellow", "green", "blue", "pink", "purple" }; // 풍선 색깔에 해당하는 태그 리스트
 
     Balloon eventBalloon = null;        // 현재 이벤트 풍선 
-    float eventBalloonTime = 20f;       // 30초마다 이벤트 발생
-    float eventDuration = 20f;          // 5초 안에 이벤트 풍선을 터트려야 함 => 현재 시연 위해 변경되어있음
+    float eventBalloonTime = 30f;       // 30초마다 이벤트 발생
+    float eventDuration = 5f;          // 5초 안에 이벤트 풍선을 터트려야 함 => 현재 시연 위해 변경되어있음
     float timer = 0f;
 
 
@@ -70,8 +70,10 @@ public class BalloonMapManager : MonoBehaviour
 
             if (gameDuration <= 0)
             {
+                gameDuration = 0; // 타이머가 음수로 내려가지 않도록 0으로 고정
                 GameOver();
             }
+            UpdateTimerUI(); // 타이머 UI는 계속 업데이트하여 00:00을 포함한 정확한 시간 표시
         }
 
         
@@ -111,6 +113,7 @@ public class BalloonMapManager : MonoBehaviour
     void GameOver()
     {
         gameEnded = true;
+        UpdateTimerUI();  // 게임이 끝나면 타이머를 00:00으로 설정
         Debug.Log("게임 오버! 제한 시간 내에 모든 풍선을 터뜨리지 못했습니다.");
     }
 
