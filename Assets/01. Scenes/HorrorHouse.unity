@@ -818,7 +818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &346544974
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,6 @@ GameObject:
   m_Component:
   - component: {fileID: 825368283}
   - component: {fileID: 825368286}
-  - component: {fileID: 825368285}
   - component: {fileID: 825368284}
   m_Layer: 0
   m_Name: MainCamera
@@ -1489,7 +1488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &825368283
 Transform:
   m_ObjectHideFlags: 0
@@ -1549,14 +1548,6 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
---- !u!81 &825368285
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 825368282}
-  m_Enabled: 1
 --- !u!20 &825368286
 Camera:
   m_ObjectHideFlags: 0
@@ -2211,7 +2202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1317345026
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3720,7 +3711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1852436895
 MonoBehaviour:
   m_ObjectHideFlags: 0
