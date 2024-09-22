@@ -5,7 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/01. Scenes/SpoutSample/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/01. Scenes/MainMap.unity
+    guid: 5d3e276a2c9da1440816757f4f29a245
+  - enabled: 1
+    path: Assets/01. Scenes/HorrorMap.unity
+    guid: 892356597494d16479fbd454988bc03d
+  - enabled: 1
+    path: Assets/01. Scenes/BalloonMap.unity
+    guid: 017f50c956af80b4191479d8147a97a2
+  - enabled: 1
+    path: Assets/01. Scenes/CircusMap.unity
+    guid: 3742d15dbdaebd349b5f0913922f1af8
   m_configObjects: {}
