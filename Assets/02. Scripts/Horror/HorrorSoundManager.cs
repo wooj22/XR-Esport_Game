@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HorrorSoundManager : MonoBehaviour
 {
-    [SerializeField] AudioSource bgmSource;
+    [SerializeField] public AudioSource bgmSource;
     [SerializeField] AudioSource sfxSource;
     [SerializeField] List<AudioClip> bgmClipList;
     [SerializeField] List<AudioClip> sfxClipList;

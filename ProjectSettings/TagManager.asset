@@ -21,7 +21,7 @@ TagManager:
   - Back
   - Right
   - Left
-  - 
+  - Particle
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Particle
+    uniqueID: 3498858771
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
