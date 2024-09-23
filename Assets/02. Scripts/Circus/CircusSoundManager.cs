@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CircusSoundManager : MonoBehaviour
 {
-    [SerializeField] AudioSource bgmSource;
+    [SerializeField] public AudioSource bgmSource;
     [SerializeField] AudioSource sfxSource;
     [SerializeField] AudioClip bgmClip;
     [SerializeField] List<AudioClip> sfxClipList;

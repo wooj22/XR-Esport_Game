@@ -22,6 +22,7 @@ public class HorrorGameManager : MonoBehaviour
     [Header("Managers")]
     [SerializeField] HorrorUIManager _horrorUIManager;
     [SerializeField] HorrorSoundManager _horrorSoundManager;
+    [SerializeField] HorrorSceneManager _horrorSceneManager;
 
 
     private int eatItemCount;       // 현재 라운드에서 플레이어가 먹은 아이템 개수
@@ -94,7 +95,9 @@ public class HorrorGameManager : MonoBehaviour
         }
 
         // 게임성공 UI 띄우고(+성공 효과) 코루틴 멈추고 메인화면 이동
-        Debug.Log("2라운드에서 성공했습니다. 메인 광장으로 이동합니다"); 
+        Debug.Log("2라운드에서 성공했습니다. 메인 광장으로 이동합니다");
+        yield return new WaitForSeconds(5f);
+        _horrorSceneManager.LoadMainMenuMap();
     }
 
 
