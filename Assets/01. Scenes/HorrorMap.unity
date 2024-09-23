@@ -187,6 +187,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_right
       objectReference: {fileID: 0}
+    - target: {fileID: 4545595088828385456, guid: d652df0a260527847a6d9d7795fc39f0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -411,6 +416,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_front
+      objectReference: {fileID: 0}
+    - target: {fileID: 5186348230083764145, guid: 1d1ce22549208174b95b0ba07acef905,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1460,6 +1470,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player_back
       objectReference: {fileID: 0}
+    - target: {fileID: 7749396220371391480, guid: 4678d8a41b05e294b813f66b6a0b4aab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1692,6 +1707,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_left
+      objectReference: {fileID: 0}
+    - target: {fileID: 433901985229905826, guid: e5d846bf6cc8ac0478b29d8a6ec25239,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6401179672983818046, guid: e5d846bf6cc8ac0478b29d8a6ec25239,
         type: 3}
@@ -2050,6 +2070,50 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1217125495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217125497}
+  - component: {fileID: 1217125496}
+  m_Layer: 0
+  m_Name: HorrorSceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1217125496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217125495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70900fac4cb3e1c47a3ee27c623c5781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1217125497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217125495}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 72.844215, y: 199.7145, z: -24.580368}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1273650705
 GameObject:
   m_ObjectHideFlags: 0
@@ -2992,6 +3056,7 @@ MonoBehaviour:
   itemParent: {fileID: 1273650706}
   _horrorUIManager: {fileID: 2015345925}
   _horrorSoundManager: {fileID: 2019340110}
+  _horrorSceneManager: {fileID: 1217125496}
 --- !u!1 &1722740081
 GameObject:
   m_ObjectHideFlags: 0
@@ -4507,6 +4572,7 @@ SceneRoots:
   - {fileID: 1857834827}
   - {fileID: 1307989003}
   - {fileID: 1394658385}
-  - {fileID: 1714591468}
   - {fileID: 2015345924}
   - {fileID: 2019340109}
+  - {fileID: 1714591468}
+  - {fileID: 1217125497}
