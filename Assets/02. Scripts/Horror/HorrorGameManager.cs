@@ -36,10 +36,27 @@ public class HorrorGameManager : MonoBehaviour
     }
 
 
-    /*-------------------------- Gaming -----------------------------*/
+    /*-------------------------- Corutines -----------------------------*/
+    IEnumerator HorrorInstructionStart()
+    {
+        curMap = Instantiate(mapByRoundList[0], mapParent);
+        _horrorSoundManager.PlayBGM(0);
+        yield return new WaitForSeconds(5f);
+        _horrorSoundManager.bgmSource.volume = 0.1f;
+        _horrorSoundManager.PlaySFX("SFX_Horror_announcement1");
+        yield return new WaitForSeconds(48f);
+        _horrorSoundManager.bgmSource.volume = 1f;
+        yield return new WaitForSeconds(10f);
+        _horrorSoundManager.StopBGM();
+        Destroy(curMap);
+    }
 
     IEnumerator HorrorHouseStart()
     {
+        // 안내음성
+        StartCoroutine(HorrorInstructionStart());
+        yield return new WaitForSeconds(64f);
+
         // 1라운드
         Debug.Log("1Round Start");
         curRound = 1;
