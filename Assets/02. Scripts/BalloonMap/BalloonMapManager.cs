@@ -131,7 +131,7 @@ public class BalloonMapManager : MonoBehaviour
     // ★ 게임 종료 후 메인 씬으로 돌아오는 함수 추가
     void ReturnToMainScene()
     {
-        SceneManager.LoadScene("Main"); // 메인 씬 이름을 적절히 변경해주세요
+        SceneManager.LoadScene("MainMap"); 
     }
 
     // ★ 게임 오버 처리 (1분 30초 내에 실패했을 때)
