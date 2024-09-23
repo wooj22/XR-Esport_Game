@@ -3395,7 +3395,7 @@ Transform:
   m_GameObject: {fileID: 1714591467}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.668846, y: 187.97833, z: 1.039978}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4435,7 +4435,7 @@ Transform:
   m_GameObject: {fileID: 2015345923}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.668846, y: 187.97833, z: 1.039978}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4482,7 +4482,7 @@ Transform:
   m_GameObject: {fileID: 2019340108}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.668846, y: 187.97833, z: 1.039978}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4506,7 +4506,7 @@ MonoBehaviour:
   sfxClipList:
   - {fileID: 8300000, guid: cd2267cfaef3b1e438805828aacf9846, type: 3}
   - {fileID: 8300000, guid: b54868ce1a496a04c85e6047f471934a, type: 3}
-  - {fileID: 8300000, guid: fc4b1a2d455b6994592ebb68cf1ded2e, type: 3}
+  - {fileID: 8300000, guid: ab178cbfbda26f844b9d462306865268, type: 3}
 --- !u!82 &2019340111
 AudioSource:
   m_ObjectHideFlags: 0

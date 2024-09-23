@@ -7598,7 +7598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 2019340112}
   sfxSource: {fileID: 2019340111}
-  bgmClip: {fileID: 8300000, guid: 1e1561731aacc3942a90c41f02404236, type: 3}
+  bgmClip: {fileID: 8300000, guid: a81ddec214846284fa054fe50714b1cc, type: 3}
   sfxClipList:
   - {fileID: 8300000, guid: 754b73647a37a5840aa0ac551184b9a3, type: 3}
   - {fileID: 8300000, guid: 754b73647a37a5840aa0ac551184b9a3, type: 3}
@@ -7708,7 +7708,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1e1561731aacc3942a90c41f02404236, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a81ddec214846284fa054fe50714b1cc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.7
   m_Pitch: 1

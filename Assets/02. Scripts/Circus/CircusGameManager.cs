@@ -21,8 +21,8 @@ public class CircusGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         _circusSoundManager.bgmSource.volume = 0.3f;
         // 안내음성 재생
-        _circusSoundManager.PlaySFX("SFX_Horror_announcement");
-        yield return new WaitForSeconds(60f);
+        _circusSoundManager.PlaySFX("SFX_Circus_announcement");
+        yield return new WaitForSeconds(38f);
         _circusSoundManager.bgmSource.volume = 1f;
         yield return new WaitForSeconds(10f);
         _circusSceneManager.LoadMainMenuMap();
