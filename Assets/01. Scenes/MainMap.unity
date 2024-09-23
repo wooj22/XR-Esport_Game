@@ -981,7 +981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorEnum: 0
   sensorManager: {fileID: 699714391}
-  playerPrefab: {fileID: 3649727452751941176, guid: 69864acfecb8d1a42b641a9e61e0ae61,
+  playerPrefab: {fileID: 3649727452751941176, guid: 4965ddb90471c004aaf5aae8acb4e4d3,
     type: 3}
   playerParent: {fileID: 996029769}
   playerList: []
@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorEnum: 0
   sensorManager: {fileID: 1453169775}
-  playerPrefab: {fileID: 3649727452751941176, guid: 69864acfecb8d1a42b641a9e61e0ae61,
+  playerPrefab: {fileID: 3649727452751941176, guid: 2aab26183a5092b46a5c3674312003cb,
     type: 3}
   playerParent: {fileID: 996029769}
   playerList: []
@@ -4847,7 +4847,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorEnum: 0
   sensorManager: {fileID: 1438717314}
-  playerPrefab: {fileID: 3649727452751941176, guid: 69864acfecb8d1a42b641a9e61e0ae61,
+  playerPrefab: {fileID: 3649727452751941176, guid: c137eef648a2cf24891593a3ca88b259,
     type: 3}
   playerParent: {fileID: 996029769}
   playerList: []
@@ -5675,7 +5675,7 @@ GameObject:
   - component: {fileID: 1714591468}
   - component: {fileID: 1714591469}
   m_Layer: 0
-  m_Name: MainSceneManager
+  m_Name: SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6994,7 +6994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensorEnum: 0
   sensorManager: {fileID: 1594631671}
-  playerPrefab: {fileID: 3649727452751941176, guid: 69864acfecb8d1a42b641a9e61e0ae61,
+  playerPrefab: {fileID: 3649727452751941176, guid: 4cd0cd9c46e5f4c4daae9c370f36c0fa,
     type: 3}
   playerParent: {fileID: 996029769}
   playerList: []

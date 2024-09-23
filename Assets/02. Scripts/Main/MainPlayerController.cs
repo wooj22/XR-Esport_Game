@@ -8,7 +8,7 @@ public class MainPlayerController : MonoBehaviour
 
     private void Start()
     {
-        _mainSceneManager = GameObject.Find("MainSceneManager").GetComponent<MainSceneManager>();
+        _mainSceneManager = GameObject.Find("SceneManager").GetComponent<MainSceneManager>();
     }
 
 
