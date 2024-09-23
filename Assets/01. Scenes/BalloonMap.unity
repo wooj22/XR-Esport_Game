@@ -29903,7 +29903,7 @@ MonoBehaviour:
   guideSource: {fileID: 1588860324}
   bgmClip: {fileID: 8300000, guid: b6c84c4278e62fb4cbb9c7048816ef4e, type: 3}
   sfxClip: {fileID: 8300000, guid: 1505d30bbaa5db941b98a2090e4a38c5, type: 3}
-  guideClip: {fileID: 8300000, guid: 696d98bb7482f954fa2de48d0eb4e35a, type: 3}
+  guideClip: {fileID: 8300000, guid: a43bd7516cbed084c877de09a6d6d940, type: 3}
 --- !u!82 &1588860320
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29916,7 +29916,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -30012,7 +30012,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -30131,7 +30131,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
