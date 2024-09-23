@@ -38,7 +38,7 @@ public class BalloonSoundManager : MonoBehaviour
     public void PlayGuide()
     {
         Debug.Log("안내 음성 시작.");
-        bgmSource.volume = originalBgmVolume * 0.3f; // BGM 볼륨 줄이기
+        bgmSource.volume = originalBgmVolume * 0.2f; // BGM 볼륨 줄이기
         guideSource.clip = guideClip;
         guideSource.Play();
         Invoke("RestoreBGMVolume", guideClip.length); // 안내 음성이 끝난 후 BGM 볼륨 복구
