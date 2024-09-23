@@ -43,7 +43,7 @@ public class HorrorGameManager : MonoBehaviour
         _horrorSoundManager.PlayBGM(0);
         yield return new WaitForSeconds(5f);
         _horrorSoundManager.bgmSource.volume = 0.1f;
-        _horrorSoundManager.PlaySFX("SFX_Horror_announcement1");
+        _horrorSoundManager.PlaySFX("SFX_Horror_announcement");
         yield return new WaitForSeconds(48f);
         _horrorSoundManager.bgmSource.volume = 1f;
         yield return new WaitForSeconds(10f);
