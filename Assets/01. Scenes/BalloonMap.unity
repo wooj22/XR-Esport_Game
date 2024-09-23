@@ -9453,6 +9453,7 @@ MonoBehaviour:
   - {fileID: 433339818}
   - {fileID: 181616835}
   - {fileID: 1418032559}
+  Player: {fileID: 704232436}
   balloonSlider: {fileID: 1425248720}
   timerText: {fileID: 1483822799}
   _balloonSoundManager: {fileID: 1588860319}
@@ -13775,7 +13776,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &704232437
 Transform:
   m_ObjectHideFlags: 0
@@ -29084,7 +29085,7 @@ Transform:
   m_GameObject: {fileID: 1554721347}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -116, y: 216, z: -11}
+  m_LocalPosition: {x: -116, y: 27.9, z: -11}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30130,7 +30131,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.57
   m_Pitch: 1
   Loop: 0
   Mute: 0
