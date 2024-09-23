@@ -10,6 +10,8 @@ public class BalloonMapManager : MonoBehaviour
 
     List<GameObject> availableScreens;   // 이벤트 발생하지 않은 벽 리스트
 
+    public GameObject Player;            // 플레이어 오브젝트
+
 
     // [ 이벤트 풍선 ]
     string[] balloonTags = { "red", "yellow", "green", "blue", "pink", "purple" }; // 풍선 색깔에 해당하는 태그 리스트
@@ -27,6 +29,7 @@ public class BalloonMapManager : MonoBehaviour
     private int poppedBalloons = 0;     // 터진 풍선 개수
 
     private float gameDuration = 90f;   // 1분 30초(90초) 타이머
+    private bool gameStarted = false;   // 게임이 시작되었는지 여부
     private bool gameEnded = false;     // 게임 종료 여부
 
     // [ 사운드 관련 ]
@@ -56,11 +59,18 @@ public class BalloonMapManager : MonoBehaviour
         // _balloonSoundManager.PlayBGM();
 
         // BGM 재생 및 안내 음성 실행
-        _balloonSoundManager.PlayBGMWithGuide(); // 안내 음성 기능 추가
+        _balloonSoundManager.PlayBGMWithGuide(StartGameAfterGuide); // 안내 음성 기능 추가
 
     }
 
+    // ★ 안내 음성이 끝난 후 호출될 함수: 게임을 시작
+    void StartGameAfterGuide()
+    {
+        Debug.Log("안내 음성이 끝났습니다. 게임을 시작합니다.");
+        gameStarted = true; // 게임이 시작됨
 
+        Player.SetActive(true); Debug.Log("플레이어가 활성화 됩니다.");
+    }
 
 
     // ★ --------------------------------------- ★
@@ -74,7 +84,7 @@ public class BalloonMapManager : MonoBehaviour
     //
     void Update()
     {
-        if (!gameEnded)
+        if (gameStarted && !gameEnded) // ★ 게임이 시작되고 종료되지 않은 상태에서만 실행
         {
             gameDuration -= Time.deltaTime;
             UpdateTimerUI();
@@ -84,24 +94,22 @@ public class BalloonMapManager : MonoBehaviour
                 gameDuration = 0; // 타이머가 음수로 내려가지 않도록 0으로 고정
                 GameOver();
             }
-            UpdateTimerUI(); // 타이머 UI는 계속 업데이트하여 00:00을 포함한 정확한 시간 표시
-        }
 
-        
-        timer += Time.deltaTime;
+            timer += Time.deltaTime;
 
-        if (timer >= eventBalloonTime)
-        {
-            SelectRandomEventBalloon();
-            timer = 0f; 
-        }
-
-        if (eventBalloon != null && eventBalloon.isEventBalloon)
-        {
-            eventBalloon.timer += Time.deltaTime;
-            if (eventBalloon.timer >= eventDuration)
+            if (timer >= eventBalloonTime)
             {
-                ResetBalloon(eventBalloon); 
+                SelectRandomEventBalloon();
+                timer = 0f;
+            }
+
+            if (eventBalloon != null && eventBalloon.isEventBalloon)
+            {
+                eventBalloon.timer += Time.deltaTime;
+                if (eventBalloon.timer >= eventDuration)
+                {
+                    ResetBalloon(eventBalloon);
+                }
             }
         }
     }
