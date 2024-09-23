@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI; 
 
 public class BalloonMapManager : MonoBehaviour
@@ -11,17 +12,14 @@ public class BalloonMapManager : MonoBehaviour
 
 
     // [ 이벤트 풍선 ]
-
     string[] balloonTags = { "red", "yellow", "green", "blue", "pink", "purple" }; // 풍선 색깔에 해당하는 태그 리스트
-
     Balloon eventBalloon = null;        // 현재 이벤트 풍선 
     float eventBalloonTime = 30f;       // 30초마다 이벤트 발생
-    float eventDuration = 5f;          // 5초 안에 이벤트 풍선을 터트려야 함 => 현재 시연 위해 변경되어있음
+    float eventDuration = 5f;           // 5초 안에 이벤트 풍선을 터트려야 함 => 현재 시연 위해 변경되어있음
     float timer = 0f;
 
 
     // [ 게임 진행상황 표시 ]
-
     public Slider balloonSlider;        // 풍선 개수 표시할 슬라이더
     public Text timerText;              // 남은 시간을 표시할 텍스트 UI
 
@@ -31,7 +29,7 @@ public class BalloonMapManager : MonoBehaviour
     private float gameDuration = 90f;   // 1분 30초(90초) 타이머
     private bool gameEnded = false;     // 게임 종료 여부
 
-
+    // [ 사운드 관련 ]
     [SerializeField] BalloonSoundManager _balloonSoundManager;
 
     // ------------------------------------------------------------------------------------------------------------
@@ -55,16 +53,14 @@ public class BalloonMapManager : MonoBehaviour
 
 
         // BGM 재생
-        _balloonSoundManager.PlayBGM();
+        // _balloonSoundManager.PlayBGM();
+
+        // BGM 재생 및 안내 음성 실행
+        _balloonSoundManager.PlayBGMWithGuide(); // 안내 음성 기능 추가
 
     }
 
 
-    // 
-    public void OnBalloonPoped()
-    {
-        _balloonSoundManager.PlaySFX();
-    }
 
 
     // ★ --------------------------------------- ★
@@ -124,12 +120,19 @@ public class BalloonMapManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    // ★ 게임 종료 후 메인 씬으로 돌아오는 함수 추가
+    void ReturnToMainScene()
+    {
+        SceneManager.LoadScene("Main"); // 메인 씬 이름을 적절히 변경해주세요
+    }
+
     // ★ 게임 오버 처리 (1분 30초 내에 실패했을 때)
     void GameOver()
     {
         gameEnded = true;
-        UpdateTimerUI();  // 게임이 끝나면 타이머를 00:00으로 설정
+        UpdateTimerUI();  // 타이머를 00:00으로 설정
         Debug.Log("게임 오버! 제한 시간 내에 모든 풍선을 터뜨리지 못했습니다.");
+        Invoke("ReturnToMainScene", 3f); // 3초 후 메인 씬으로 이동
     }
 
     // ★ 게임 클리어 처리 (모든 풍선을 터뜨렸을 때)
@@ -137,9 +140,8 @@ public class BalloonMapManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
+        Invoke("ReturnToMainScene", 3f); // 3초 후 메인 씬으로 이동
     }
-
-
 
 
 
@@ -228,7 +230,7 @@ public class BalloonMapManager : MonoBehaviour
             DestroyRandomColorBalloons(balloon);
             _balloonSoundManager.PlaySFX();
 
-            // 이벤트 풍선 SFX 
+            // 이벤트 풍선 SFX 넣기 
         }
         else
         {
@@ -245,6 +247,7 @@ public class BalloonMapManager : MonoBehaviour
             GameClear();
         }
     }
+
 
 
     // ★ [ 시간 초과 시 또는 풍선을 터트린 후 : 이벤트 풍선을 원래 상태로 리셋 ]
