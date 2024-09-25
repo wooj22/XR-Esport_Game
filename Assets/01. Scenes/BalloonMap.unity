@@ -5058,7 +5058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 1
+  sensorEnum: 0
   sensorManager: {fileID: 1941673724}
   playerPrefab: {fileID: 8833586397443314648, guid: 668cd8606d556f64c9fc17ac91bd3a0c,
     type: 3}
@@ -10755,7 +10755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 4
+  sensorEnum: 0
   sensorManager: {fileID: 1690511945}
   playerPrefab: {fileID: 3001141602625613865, guid: 342ff4b5ff906054c87bd79a186c6bfb,
     type: 3}
@@ -14835,7 +14835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 3
+  sensorEnum: 0
   sensorManager: {fileID: 1845690754}
   playerPrefab: {fileID: 3489764995031658290, guid: 1cd675c59f1829245a2cc2623a7a196e,
     type: 3}
@@ -29948,7 +29948,7 @@ MonoBehaviour:
   guideSource: {fileID: 1588860324}
   bgmClip: {fileID: 8300000, guid: b6c84c4278e62fb4cbb9c7048816ef4e, type: 3}
   sfxClip: {fileID: 8300000, guid: 1505d30bbaa5db941b98a2090e4a38c5, type: 3}
-  guideClip: {fileID: 8300000, guid: a43bd7516cbed084c877de09a6d6d940, type: 3}
+  guideClip: {fileID: 8300000, guid: 696d98bb7482f954fa2de48d0eb4e35a, type: 3}
 --- !u!82 &1588860320
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32783,7 +32783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 2
+  sensorEnum: 0
   sensorManager: {fileID: 248972407}
   playerPrefab: {fileID: 1710105167284617226, guid: 0d3cc9a7cb2ab6547951f10dfa6fde23,
     type: 3}
