@@ -9454,6 +9454,7 @@ MonoBehaviour:
   - {fileID: 181616835}
   - {fileID: 1418032559}
   Player: {fileID: 704232436}
+  _balloonSceneManager: {fileID: 625142135}
   balloonSlider: {fileID: 1425248720}
   timerText: {fileID: 1483822799}
   _balloonSoundManager: {fileID: 1588860319}
@@ -12098,6 +12099,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 623010374}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &625142134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625142136}
+  - component: {fileID: 625142135}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &625142135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625142134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef3de7b9b1b94645b681370936e1796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &625142136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625142134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.57772, y: 217.64828, z: -153.89282}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &629896603
 GameObject:
   m_ObjectHideFlags: 0
@@ -15510,7 +15555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &859478061
 Transform:
   m_ObjectHideFlags: 0
@@ -16802,7 +16847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &926619471
 Transform:
   m_ObjectHideFlags: 0
@@ -24845,7 +24890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1353122430
 Transform:
   m_ObjectHideFlags: 0
@@ -35148,7 +35193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1925409024
 Transform:
   m_ObjectHideFlags: 0
@@ -37995,7 +38040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2076834520
 Transform:
   m_ObjectHideFlags: 0
@@ -39664,6 +39709,7 @@ SceneRoots:
   - {fileID: 704232437}
   - {fileID: 1670407322}
   - {fileID: 457066821}
+  - {fileID: 625142136}
   - {fileID: 1588860323}
   - {fileID: 346621235}
   - {fileID: 173269996}
