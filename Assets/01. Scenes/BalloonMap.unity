@@ -5058,7 +5058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 1
+  sensorEnum: 0
   sensorManager: {fileID: 1941673724}
   playerPrefab: {fileID: 8833586397443314648, guid: 668cd8606d556f64c9fc17ac91bd3a0c,
     type: 3}
@@ -9455,6 +9455,7 @@ MonoBehaviour:
   - {fileID: 181616835}
   - {fileID: 1418032559}
   Player: {fileID: 704232436}
+  _balloonSceneManager: {fileID: 625142135}
   balloonSlider: {fileID: 1425248720}
   timerText: {fileID: 1483822799}
   _balloonSoundManager: {fileID: 1588860319}
@@ -10755,7 +10756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 4
+  sensorEnum: 0
   sensorManager: {fileID: 1690511945}
   playerPrefab: {fileID: 3001141602625613865, guid: 342ff4b5ff906054c87bd79a186c6bfb,
     type: 3}
@@ -12099,6 +12100,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 623010374}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &625142134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625142136}
+  - component: {fileID: 625142135}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &625142135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625142134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ef3de7b9b1b94645b681370936e1796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &625142136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625142134}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -23.57772, y: 217.64828, z: -153.89282}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &629896603
 GameObject:
   m_ObjectHideFlags: 0
@@ -14791,7 +14836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 3
+  sensorEnum: 0
   sensorManager: {fileID: 1845690754}
   playerPrefab: {fileID: 3489764995031658290, guid: 1cd675c59f1829245a2cc2623a7a196e,
     type: 3}
@@ -15511,7 +15556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &859478061
 Transform:
   m_ObjectHideFlags: 0
@@ -16803,7 +16848,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &926619471
 Transform:
   m_ObjectHideFlags: 0
@@ -24990,7 +25035,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1353122430
 Transform:
   m_ObjectHideFlags: 0
@@ -30049,7 +30094,7 @@ MonoBehaviour:
   guideSource: {fileID: 1588860324}
   bgmClip: {fileID: 8300000, guid: b6c84c4278e62fb4cbb9c7048816ef4e, type: 3}
   sfxClip: {fileID: 8300000, guid: 1505d30bbaa5db941b98a2090e4a38c5, type: 3}
-  guideClip: {fileID: 8300000, guid: a43bd7516cbed084c877de09a6d6d940, type: 3}
+  guideClip: {fileID: 8300000, guid: 696d98bb7482f954fa2de48d0eb4e35a, type: 3}
 --- !u!82 &1588860320
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33028,7 +33073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 2
+  sensorEnum: 0
   sensorManager: {fileID: 248972407}
   playerPrefab: {fileID: 1710105167284617226, guid: 0d3cc9a7cb2ab6547951f10dfa6fde23,
     type: 3}
@@ -35439,7 +35484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1925409024
 Transform:
   m_ObjectHideFlags: 0
@@ -38359,7 +38404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2076834520
 Transform:
   m_ObjectHideFlags: 0
@@ -40029,6 +40074,7 @@ SceneRoots:
   - {fileID: 704232437}
   - {fileID: 1670407322}
   - {fileID: 457066821}
+  - {fileID: 625142136}
   - {fileID: 1588860323}
   - {fileID: 346621235}
   - {fileID: 173269996}

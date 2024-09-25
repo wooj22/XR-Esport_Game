@@ -11,6 +11,7 @@ public class BalloonMapManager : MonoBehaviour
     List<GameObject> availableScreens;   // 이벤트 발생하지 않은 벽 리스트
 
     public GameObject Player;            // 플레이어 오브젝트
+    [SerializeField] BalloonSceneManager _balloonSceneManager;      // 풍선맵 씬 매니저 
 
 
     // [ 이벤트 풍선 ]
@@ -128,10 +129,12 @@ public class BalloonMapManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    // ★ 게임 종료 후 메인 씬으로 돌아오는 함수 추가
+    // ★ 게임 종료 후 메인 씬으로 돌아오는 함수 => 씬 매니저에서 관리하기로..! 
     void ReturnToMainScene()
     {
-        SceneManager.LoadScene("MainMap"); 
+        // 씬 매니저 스크립트에서 실행 
+        // SceneManager.LoadScene("MainMap");
+        _balloonSceneManager.LoadMainMenuMap();
     }
 
     // ★ 게임 오버 처리 (1분 30초 내에 실패했을 때)
