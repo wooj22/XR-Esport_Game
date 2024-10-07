@@ -225,9 +225,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 969424272}
+  - {fileID: 1217305849}
   - {fileID: 1724296938}
   - {fileID: 1731481613}
-  - {fileID: 1217305849}
   - {fileID: 1680520974}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -554,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &328117497
 Transform:
   m_ObjectHideFlags: 0
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 1
+  sensorEnum: 0
   sensorManager: {fileID: 1724296939}
   playerPrefab: {fileID: 3649727452751941176, guid: 7d98020c73b187a448464b89b09a4d9a,
     type: 3}
@@ -653,7 +653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 56.9}
+  m_AnchoredPosition: {x: 0, y: 57}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &393681836
@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8867924, g: 0.49359196, b: 0.49918318, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -678,7 +678,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 10
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -689,7 +689,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <Game View>
+  m_Text: Game View
 --- !u!222 &393681837
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1377,7 +1377,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1089270763
 Transform:
   m_ObjectHideFlags: 0
@@ -1405,7 +1405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 2
+  sensorEnum: 0
   sensorManager: {fileID: 1731481614}
   playerPrefab: {fileID: 3649727452751941176, guid: 7d98020c73b187a448464b89b09a4d9a,
     type: 3}
@@ -2080,7 +2080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1724296938
 Transform:
   m_ObjectHideFlags: 0
@@ -2109,7 +2109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _oscManager: {fileID: 0}
-  sensorEnum: 1
+  sensorEnum: 0
   sensorGround: {fileID: 7631790944695933601}
 --- !u!1 &1731481612
 GameObject:
@@ -2127,7 +2127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1731481613
 Transform:
   m_ObjectHideFlags: 0
@@ -2156,7 +2156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _oscManager: {fileID: 0}
-  sensorEnum: 2
+  sensorEnum: 0
   sensorGround: {fileID: 9175560347114747307}
 --- !u!20 &1757054837 stripped
 Camera:
@@ -2347,9 +2347,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1800593220}
+  - {fileID: 1235410529}
   - {fileID: 328117497}
   - {fileID: 1089270763}
-  - {fileID: 1235410529}
   - {fileID: 94201702}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

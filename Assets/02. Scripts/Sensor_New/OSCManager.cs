@@ -200,29 +200,29 @@ public class OSCManager : MonoBehaviour
         sensorOSC.SetAddressHandler("/Front/End", GetFrontStopMessage);
         sensorOSC.SetAddressHandler("/Front/Quit", FrontSensorQuit);
 
-        // Right
-        sensorOSC.SetAddressHandler("/Right/Start", GetRightStartMessage);
-        sensorOSC.SetAddressHandler("/Right/Data", GetRightSensorMessage);
-        sensorOSC.SetAddressHandler("/Right/End", GetRightStopMessage);
-        sensorOSC.SetAddressHandler("/Right/Quit", RightSensorQuit);
+        //// Right
+        //sensorOSC.SetAddressHandler("/Right/Start", GetRightStartMessage);
+        //sensorOSC.SetAddressHandler("/Right/Data", GetRightSensorMessage);
+        //sensorOSC.SetAddressHandler("/Right/End", GetRightStopMessage);
+        //sensorOSC.SetAddressHandler("/Right/Quit", RightSensorQuit);
 
-        // Back
-        sensorOSC.SetAddressHandler("/Back/Start", GetBackStartMessage);
-        sensorOSC.SetAddressHandler("/Back/Data", GetBackSensorMessage);
-        sensorOSC.SetAddressHandler("/Back/End", GetBackStopMessage);
-        sensorOSC.SetAddressHandler("/Back/Quit", BackSensorQuit);
+        //// Back
+        //sensorOSC.SetAddressHandler("/Back/Start", GetBackStartMessage);
+        //sensorOSC.SetAddressHandler("/Back/Data", GetBackSensorMessage);
+        //sensorOSC.SetAddressHandler("/Back/End", GetBackStopMessage);
+        //sensorOSC.SetAddressHandler("/Back/Quit", BackSensorQuit);
 
 
-        // Left
-        sensorOSC.SetAddressHandler("/Left/Start", GetLeftStartMessage);
-        sensorOSC.SetAddressHandler("/Left/Data", GetLeftSensorMessage);
-        sensorOSC.SetAddressHandler("/Left/End", GetLeftStopMessage);
-        sensorOSC.SetAddressHandler("/Left/Quit", LeftSensorQuit);
+        //// Left
+        //sensorOSC.SetAddressHandler("/Left/Start", GetLeftStartMessage);
+        //sensorOSC.SetAddressHandler("/Left/Data", GetLeftSensorMessage);
+        //sensorOSC.SetAddressHandler("/Left/End", GetLeftStopMessage);
+        //sensorOSC.SetAddressHandler("/Left/Quit", LeftSensorQuit);
 
         // Down
-        //sensorOSC.SetAddressHandler("/Down/Start", GetDownStartMessage);
-        //sensorOSC.SetAddressHandler("/Down/Data", GetDownSensorMessage);
-        //sensorOSC.SetAddressHandler("/Down/End", GetDownStopMessage);
-        //sensorOSC.SetAddressHandler("/Down/Quit", DownSensorQuit);
+        sensorOSC.SetAddressHandler("/Down/Start", GetDownStartMessage);
+        sensorOSC.SetAddressHandler("/Down/Data", GetDownSensorMessage);
+        sensorOSC.SetAddressHandler("/Down/End", GetDownStopMessage);
+        sensorOSC.SetAddressHandler("/Down/Quit", DownSensorQuit);
     }
 }
