@@ -6,8 +6,8 @@ public class SensorManager : MonoBehaviour
 {
     [Header ("SensorManager")]
     [SerializeField] OSCManager _oscManager;
-    [SerializeField] SensorEnum sensorEnum;                     // 센서 Enum
-    [SerializeField] RectTransform sensorGround;                // 센서 그라운드
+    [SerializeField] SensorEnum sensorEnum;                              // 센서 Enum
+    [SerializeField] RectTransform sensorGround;                         // 센서 그라운드
 
     private List<Vector3> sensorPositionList = new List<Vector3>();      // 포지션 리스트
     private SensorDataFormat SensorData;                                 // 센서 데이터 포멧
@@ -15,6 +15,7 @@ public class SensorManager : MonoBehaviour
 
     void Start()
     {
+        _oscManager = GameObject.Find("OSCManager").GetComponent<OSCManager>();
         StartCoroutine(GetSendsorData());
     }
 
@@ -44,7 +45,7 @@ public class SensorManager : MonoBehaviour
     }
 
 
-    /// 센서 그라운드 면적 계산
+    /// 센서 그라운드 맵핑
     private float Scale(float OldMin, float OldMax, float NewMin, float NewMax, float OldValue)
     {
         float OldRange = (OldMax - OldMin);

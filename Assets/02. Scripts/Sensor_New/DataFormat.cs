@@ -18,7 +18,7 @@ public enum SensorEnum
 {
     Front,
     Right,
-    Back,
     Left,
+    Back,
     Down
 }
