@@ -1391,7 +1391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &520323037
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,7 +1419,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b02e6fb823ad15f49b6847d98f37ab77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spoutCamera: {fileID: 346544973}
 --- !u!1 &526708050
 GameObject:
   m_ObjectHideFlags: 0
@@ -2647,7 +2646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1307989003
 Transform:
   m_ObjectHideFlags: 0
@@ -2814,7 +2813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1394658385
 Transform:
   m_ObjectHideFlags: 0
@@ -3642,7 +3641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1714591468
 Transform:
   m_ObjectHideFlags: 0
@@ -3670,8 +3669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c12f817e36156246a78ae2cb282242e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _circusSoundManager: {fileID: 2019340110}
-  _circusSceneManager: {fileID: 520323038}
 --- !u!1 &1746010120
 GameObject:
   m_ObjectHideFlags: 0
@@ -4264,7 +4261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1857834827
 Transform:
   m_ObjectHideFlags: 0
@@ -4685,7 +4682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2015345924
 Transform:
   m_ObjectHideFlags: 0
@@ -4732,7 +4729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2019340109
 Transform:
   m_ObjectHideFlags: 0
