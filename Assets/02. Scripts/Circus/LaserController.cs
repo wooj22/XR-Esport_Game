@@ -4,29 +4,48 @@ using UnityEngine;
 
 public class LaserController : MonoBehaviour
 {
-    public float laserSpeed = 30f;
+    [SerializeField] private Material redMaterial;
+    private float laserSpeed;
+    private bool isLaserTouchingPlayer = false;
+    private CircusGameManager _circusGameManager;
+
+    private void Start()
+    {
+        _circusGameManager = GameObject.Find("GameManager").GetComponent<CircusGameManager>();
+        laserSpeed = _circusGameManager.currentLaserSpeed;
+    }
 
     private void Update()
     {
-        float moveDir = laserSpeed * Time.deltaTime;
-        transform.Translate(0, 0, moveDir);
+        // 전방향 이동
+        if (!isLaserTouchingPlayer)
+        {
+            float moveDir = laserSpeed * Time.deltaTime;
+            transform.Translate(0, 0, moveDir);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // DownBorder와 충돌
         if(other.gameObject.tag == "LaserDownBorder")
         {
+            _circusGameManager.OnLaserReachBorder();
             Destroy(this.gameObject);
         }
-        else if(other.gameObject.tag == "Player")
+        // Player와 충돌
+        else if (other.gameObject.tag == "Player")
         {
-            // 빨갛게 변하게, 이펙트도 할까?
+            _circusGameManager.OnLaserHitPlayer();
+            isLaserTouchingPlayer = true;
+
+            // 빨간 머테리얼로 교체
+            foreach (Transform child in transform)
+            {
+                MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
+                meshRenderer.material = redMaterial;
+            }
             Destroy(this.gameObject, 3f);
         }
-    }
-
-    public void laserSpeedSetting(float laserSpeed)
-    {
-        this.laserSpeed = laserSpeed;
     }
 }

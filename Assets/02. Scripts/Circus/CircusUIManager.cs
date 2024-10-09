@@ -69,7 +69,7 @@ public class CircusUIManager : MonoBehaviour
         gaugeBar.value--;
     }
 
-    public void GaugeSetting(int maxValue)
+    public void GaugeSetting(float maxValue)
     {
         gaugeBar.maxValue = maxValue;
         gaugeBar.value = 0;

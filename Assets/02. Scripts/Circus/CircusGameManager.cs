@@ -5,8 +5,8 @@ using UnityEngine;
 public class CircusGameManager : MonoBehaviour
 {
     [Header("Levels")]
-    [SerializeField] float currentLaserCycle;      // 현재의 레이저 발생 주기
-    [SerializeField] float currentLaserSpeed;      // 현재의 레이저 속도
+    [SerializeField] private float currentLaserCycle;      // 현재의 레이저 발생 주기
+    [SerializeField] public float currentLaserSpeed;       // 현재의 레이저 속도
 
     [Header("MapData")]
     [SerializeField] float gamePlayTime;           // 전체 게임 진행 시간 120초
@@ -23,6 +23,21 @@ public class CircusGameManager : MonoBehaviour
         _circusSoundManager.PlayBGM();
         _circusUIManager.StartCountDown(5);
         _circusUIManager.StartTimer(gamePlayTime);
-        _circusUIManager.GaugeSetting(5);
+        _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
+    }
+
+    /*-------------------- Gaming ----------------------*/
+
+
+
+    /*-------------------- Event ----------------------*/
+    public void OnLaserHitPlayer()
+    {
+        _circusUIManager.GaugeDown();
+    }
+
+    public void OnLaserReachBorder()
+    {
+        _circusUIManager.GaugeUp();
     }
 }
