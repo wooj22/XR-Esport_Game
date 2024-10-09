@@ -13,4 +13,11 @@ public class CircusGameManager : MonoBehaviour
     [SerializeField] CircusUIManager _circusUIManager;
     [SerializeField] CircusSoundManager _circusSoundManager;
     [SerializeField] CircusSceneManager _circusSceneManager;
+
+    private void Start()
+    {
+        _circusSoundManager.PlayBGM();
+        _circusUIManager.StartCountDown(5);
+        _circusUIManager.StartTimer(gamePlayTime);
+    }
 }

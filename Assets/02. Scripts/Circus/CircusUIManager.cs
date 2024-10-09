@@ -5,22 +5,73 @@ using UnityEngine.UI;
 
 public class CircusUIManager : MonoBehaviour
 {
-    [SerializeField] Text timerLable;
+    [SerializeField] Text timerLabel;
     [SerializeField] Slider gaugeBar;
-    [SerializeField] Text adviceLable;
+    [SerializeField] Text adviceLabel;
     [SerializeField] Image adviceBackImage;
 
-    private int startCount;
-
-    public void StartCountDown()
+    /// 게임시작 전 카운트다운
+    public void StartCountDown(int minute)
     {
-        startCount = 5;
-        StartCoroutine(StartCountDown2());
+        StartCoroutine(StartCountDownCoroutine(minute));
     }
 
-    IEnumerator StartCountDown2()
+    IEnumerator StartCountDownCoroutine(int startCount)
     {
-        yield return new WaitForSeconds(1f);
-        adviceLable.text = startCount.ToString();
+        // 설명
+        adviceLabel.text = "레이저를 피해라!";
+        adviceBackImage.gameObject.SetActive(true);
+        adviceLabel.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        // 카운트다운
+        adviceLabel.text = "";
+        for (int i = startCount; i > 0; i--)
+        {
+            adviceLabel.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+        adviceLabel.gameObject.SetActive(false);
+        adviceBackImage.gameObject.SetActive(false);
+    }
+
+    /// 타이머
+    public void StartTimer(float time)
+    {
+        StartCoroutine(TimerCountdown(time));
+    }
+
+    IEnumerator TimerCountdown(float playTime)
+    {
+        while (playTime > 0)
+        {
+            int minutes = Mathf.FloorToInt(playTime / 60);
+            int seconds = Mathf.FloorToInt(playTime % 60);
+
+            timerLabel.text = string.Format("{0:0}:{1:00}", minutes, seconds);
+            yield return new WaitForSeconds(1f);
+
+            playTime--;
+        }
+
+        timerLabel.text = "0:00";
+    }
+
+
+    /// 게이지
+    public void GaugeUp()
+    {
+        gaugeBar.value++;
+    }
+
+    public void GaugeDown()
+    {
+        gaugeBar.value--;
+    }
+
+    public void GaugeSetting(int maxValue)
+    {
+        gaugeBar.maxValue = maxValue;
+        gaugeBar.value = 0;
     }
 }
