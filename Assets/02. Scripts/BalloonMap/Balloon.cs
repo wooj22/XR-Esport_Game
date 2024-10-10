@@ -7,7 +7,7 @@ public class Balloon : MonoBehaviour
     BalloonMapManager balloonMapManager;
 
     public bool isEventBalloon = false;  // 이벤트 풍선인지 여부
-    public float timer = 0f;             // 이벤트 지속 시간 추적
+    // public float timer = 0f;             // 이벤트 지속 시간 추적
     public Material eventMaterial;       // 이벤트 풍선으로 바꿀 머터리얼
     private Material originalMaterial;   // 원래의 머터리얼
     private Renderer balloonRenderer;    // 풍선의 Renderer 컴포넌트
