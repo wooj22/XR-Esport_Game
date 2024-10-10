@@ -8,11 +8,6 @@ public class MainSceneManager : MonoBehaviour
     [SerializeField] GameObject spoutCamera;
     [SerializeField] MainSoundManager _mainSoundManager;
 
-    void Awake()
-    {
-        spoutCamera.gameObject.SetActive(true);
-    }
-
     /// æ¿ ¿Ãµø
     public void OnLoadSceneByName(string sceneName)
     {
@@ -23,7 +18,6 @@ public class MainSceneManager : MonoBehaviour
     IEnumerator SoundWaiting(string sceneName)
     {
         yield return new WaitForSeconds(3f);
-        spoutCamera.gameObject.SetActive(false);
         SceneManager.LoadScene(sceneName);
     }
 }

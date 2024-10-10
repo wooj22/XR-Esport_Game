@@ -5,16 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CircusSceneManager : MonoBehaviour
 {
-    [SerializeField] GameObject spoutCamera;
-
-    private void Awake()
-    {
-        spoutCamera.gameObject.SetActive(true);
-    }
-
     public void LoadMainMenuMap()
     {
-        spoutCamera.gameObject.SetActive(false);
         SceneManager.LoadScene("MainMap");
     }
 }
