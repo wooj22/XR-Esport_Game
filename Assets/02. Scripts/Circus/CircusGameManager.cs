@@ -23,7 +23,6 @@ public class CircusGameManager : MonoBehaviour
     [SerializeField] CircusSoundManager _circusSoundManager;
     [SerializeField] CircusSceneManager _circusSceneManager;
 
-
     private void Start()
     {
         CircusMapStartSetting();
@@ -31,6 +30,7 @@ public class CircusGameManager : MonoBehaviour
     }
 
     /*-------------------- Gaming ----------------------*/
+    /// 맵 초기 셋팅
     private void CircusMapStartSetting()
     {
         // 레벨 초기화
@@ -45,6 +45,7 @@ public class CircusGameManager : MonoBehaviour
         _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
     }
 
+    /// 게임 진행
     IEnumerator CircusGame()
     {
         // UI 5초 카운트다운 후 Timer 시작
@@ -52,17 +53,22 @@ public class CircusGameManager : MonoBehaviour
         yield return new WaitForSeconds(8f);
         _circusUIManager.StartTimer(gamePlayTime);
 
-        // 레벨 컨트롤
-        StartCoroutine(LevelControl());
-
-        // 레이저 생성
-        StartCoroutine(GenerateLasers());
+        // 게임 시작
+        Coroutine Level = StartCoroutine(LevelControl());
+        Coroutine Laser = StartCoroutine(GenerateLasers());
 
         // 게임 종료
         yield return new WaitForSeconds(gamePlayTime);
-        StopAllCoroutines();
+        StopCoroutine(Level);
+        StopCoroutine(Laser);
+
+        // 게임 결과 확인
+        CheckGameResult();
+        yield return new WaitForSeconds(5f);
+        _circusSceneManager.LoadMainMenuMap();
     }
 
+    /// 레벨 컨트롤
     IEnumerator LevelControl()
     {
         // 30초
@@ -84,6 +90,7 @@ public class CircusGameManager : MonoBehaviour
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
     }
 
+    /// 레이저 생성
     IEnumerator GenerateLasers()
     {
         while (true)
@@ -107,12 +114,41 @@ public class CircusGameManager : MonoBehaviour
             GameObject Laser = Instantiate(laserPrefab, laserParent.position, laserPrefab.transform.rotation, laserParent);
         }
     }
-        
+
+    /// 게임 결과 확인
+    private void CheckGameResult()
+    {
+        if (_circusUIManager.GaugeValueCheck())
+        {
+            // 게임성공
+            this.GetComponent<CircusDirector>().PlayFirecracker();
+            _circusUIManager.GameSuccessUI();
+            _circusSoundManager.PlaySFX("SFX_Circus_cheer");
+            PlayCheerAnimation();
+        }
+        else
+        {
+            // 게임실패
+            _circusUIManager.GameOverUI();
+        }
+    }
+
+    /// 관객 환호 애니메이션
+    private void PlayCheerAnimation()
+    {
+        GameObject[] audiences = GameObject.FindGameObjectsWithTag("Audience");
+        foreach (GameObject audience in audiences)
+        {
+            AudienceController audienceController = audience.GetComponent<AudienceController>();
+            audienceController.PlayCheerAnimation();
+        }
+    }
 
     /*-------------------- Event ----------------------*/
     public void OnLaserHitPlayer()
     {
         _circusUIManager.GaugeDown();
+        _circusSoundManager.PlaySFX("SFX_Circus_laserOver");
     }
 
     public void OnLaserReachBorder()

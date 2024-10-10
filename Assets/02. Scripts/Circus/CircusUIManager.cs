@@ -9,6 +9,8 @@ public class CircusUIManager : MonoBehaviour
     [SerializeField] Slider gaugeBar;
     [SerializeField] Text adviceLabel;
     [SerializeField] Image adviceBackImage;
+    [SerializeField] Image gameSuccessImage;
+    [SerializeField] Image gameOverImage;
 
     /// 게임시작 전 카운트다운
     public void StartCountDown(int minute)
@@ -73,5 +75,32 @@ public class CircusUIManager : MonoBehaviour
     {
         gaugeBar.maxValue = maxValue;
         gaugeBar.value = 0;
+    }
+
+    public bool GaugeValueCheck()
+    {
+        if(gaugeBar.value >= gaugeBar.maxValue)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// 게임 종료 UI
+    public void GameSuccessUI()
+    {
+        timerLabel.gameObject.SetActive(false);
+        gaugeBar.gameObject.SetActive(false);
+        gameSuccessImage.gameObject.SetActive(true);
+    }
+
+    public void GameOverUI()
+    {
+        timerLabel.gameObject.SetActive(false);
+        gaugeBar.gameObject.SetActive(false);
+        gameOverImage.gameObject.SetActive(true);
     }
 }
