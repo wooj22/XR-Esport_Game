@@ -5,5 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CircusSceneManager : MonoBehaviour
 {
-    
+    public void LoadMainMenuMap()
+    {
+        SceneManager.LoadScene("MainMap");
+    }
 }
