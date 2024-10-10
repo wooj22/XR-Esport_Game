@@ -2263,14 +2263,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c12f817e36156246a78ae2cb282242e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevel: 1
   currentLaserCycle: 4
   currentLaserSpeed: 40
   gamePlayTime: 120
   maxLaserCount: 29
+  laserParent: {fileID: 815066736}
   laserPrefabList:
   - {fileID: 3813597070949951770, guid: 4e4d9922765cbbb49a2a6411926655c8, type: 3}
   - {fileID: 8342403819593236831, guid: 25c38a91044bdac40ad0608ce3c0c2d0, type: 3}
   - {fileID: 919023355041617810, guid: 53c7b7b896661e64c9b684d7b134d7aa, type: 3}
+  levelUpTime:
+  - 30
+  - 80
+  - 120
+  laserCycleList:
+  - 3
+  - 2.5
+  - 2
+  laserSpeedList:
+  - 40
+  - 50
+  - 80
   _circusUIManager: {fileID: 637693016}
   _circusSoundManager: {fileID: 1956525948}
   _circusSceneManager: {fileID: 371401463}
