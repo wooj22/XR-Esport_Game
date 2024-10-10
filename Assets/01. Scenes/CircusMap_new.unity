@@ -2267,7 +2267,7 @@ MonoBehaviour:
   currentLaserCycle: 4
   currentLaserSpeed: 40
   gamePlayTime: 120
-  maxLaserCount: 29
+  maxLaserCount: 75
   laserParent: {fileID: 815066736}
   laserPrefabList:
   - {fileID: 3813597070949951770, guid: 4e4d9922765cbbb49a2a6411926655c8, type: 3}
@@ -2279,12 +2279,12 @@ MonoBehaviour:
   - 120
   laserCycleList:
   - 3
-  - 2.5
   - 2
+  - 1
   laserSpeedList:
   - 40
-  - 50
   - 80
+  - 120
   _circusUIManager: {fileID: 637693016}
   _circusSoundManager: {fileID: 1956525948}
   _circusSceneManager: {fileID: 371401463}

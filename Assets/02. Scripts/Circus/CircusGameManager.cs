@@ -52,26 +52,62 @@ public class CircusGameManager : MonoBehaviour
         yield return new WaitForSeconds(8f);
         _circusUIManager.StartTimer(gamePlayTime);
 
-        // 레이저 생성 시작
+        // 레벨 컨트롤
+        StartCoroutine(LevelControl());
+
+        // 레이저 생성
         StartCoroutine(GenerateLasers());
+
+        // 게임 종료
+        yield return new WaitForSeconds(gamePlayTime);
+        StopAllCoroutines();
+    }
+
+    IEnumerator LevelControl()
+    {
+        // 30초
+        yield return new WaitForSeconds(levelUpTime[0]);
+        currentLevel++;
+        currentLaserCycle = laserCycleList[currentLevel - 1];
+        currentLaserSpeed = laserSpeedList[currentLevel - 1];
+
+        // 50초
+        yield return new WaitForSeconds(levelUpTime[1]-levelUpTime[0]);
+        currentLevel++;
+        currentLaserCycle = laserCycleList[currentLevel - 1];
+        currentLaserSpeed = laserSpeedList[currentLevel - 1];
+
+        // 40초
+        yield return new WaitForSeconds(levelUpTime[2] - levelUpTime[1]);
+        currentLevel++;
+        currentLaserCycle = laserCycleList[currentLevel - 1];
+        currentLaserSpeed = laserSpeedList[currentLevel - 1];
     }
 
     IEnumerator GenerateLasers()
     {
-        int laserCount = 0;
         while (true)
         {
             SpawnLaser();
-            laserCount++;
             yield return new WaitForSeconds(currentLaserCycle);
         }
     }
 
     private void SpawnLaser()
     {
-        GameObject laserPrefab = laserPrefabList[Random.Range(0, laserPrefabList.Count)];
-        GameObject Laser = Instantiate(laserPrefab, laserParent.position, laserPrefab.transform.rotation, laserParent);
+        if(currentLevel == 1)
+        {
+            // 1 level
+            GameObject Laser = Instantiate(laserPrefabList[0], laserParent.position, laserPrefabList[0].transform.rotation, laserParent);
+        }
+        else
+        {
+            // 2, 3 level
+            GameObject laserPrefab = laserPrefabList[Random.Range(0, laserPrefabList.Count)];
+            GameObject Laser = Instantiate(laserPrefab, laserParent.position, laserPrefab.transform.rotation, laserParent);
+        }
     }
+        
 
     /*-------------------- Event ----------------------*/
     public void OnLaserHitPlayer()
