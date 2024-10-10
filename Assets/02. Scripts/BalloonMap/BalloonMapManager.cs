@@ -8,11 +8,11 @@ public class BalloonMapManager : MonoBehaviour
 {
     public GameObject[] balloonScreens;  // 벽 오브젝트 배열
     public GameObject Player;            // 플레이어 오브젝트
+    public GameObject eventBalloonPrefab; // 이벤트 풍선 오브젝트 
 
     [SerializeField] BalloonSceneManager _balloonSceneManager;      // 풍선맵 씬 매니저 
 
     // [ 이벤트 풍선 ]
-    Balloon eventBalloon = null;        // 현재 이벤트 풍선 
     float eventBalloonTime = 12f;       // 12초마다 이벤트 발생
     float timer = 0f;
 
@@ -144,7 +144,11 @@ public class BalloonMapManager : MonoBehaviour
     // 1. 랜덤으로 사용 가능한 벽 선택
     //   - 선택된 벽 (오브젝트)의 자식 풍선들 가져옴 
     // 2. 랜덤 풍선 선택
-    //   - 선택된 풍선을 이벤트 풍선으로 설정
+    // 2-1. 선택된 풍선을 이벤트 풍선으로 설정 (오브젝트 자체를 이벤트 풍선 프리팹으로 대체)
+    //      - 기존 풍선 위치 및 회전값 저장
+    //      - 기존 풍선 제거
+    //      - 이벤트 풍선 프리팹 생성
+    //      - 새로 생성된 이벤트 풍선에 추가 작업이 필요한 경우, Balloon 클래스를 참조
     //
     void SelectRandomEventBalloon()
     {
@@ -154,16 +158,23 @@ public class BalloonMapManager : MonoBehaviour
         if (balloons.Length > 0)
         {
             int randomBalloonIndex = Random.Range(0, balloons.Length);
-            eventBalloon = balloons[randomBalloonIndex];
+            Balloon selectedBalloon = balloons[randomBalloonIndex];
 
+            Vector3 balloonPosition = selectedBalloon.transform.position;
+            Quaternion balloonRotation = selectedBalloon.transform.rotation;
+
+            Destroy(selectedBalloon.gameObject);
+
+            GameObject eventBalloonObject = Instantiate(eventBalloonPrefab, balloonPosition, balloonRotation);
+
+            Balloon eventBalloon = eventBalloonObject.GetComponent<Balloon>();
             eventBalloon.isEventBalloon = true;
-            eventBalloon.ChangeToEventBalloonAppearance();
 
-            Debug.Log("이벤트 풍선이 활성화 되었음.");
+            Debug.Log("이벤트 풍선이 생성되었습니다.");
         }
         else
         {
-            Debug.Log("해당 벽에 풍선이 없음"); 
+            Debug.Log("해당 벽에 풍선이 없습니다.");
         }
     }
 
@@ -180,7 +191,6 @@ public class BalloonMapManager : MonoBehaviour
     {
         if (balloon.isEventBalloon)
         {
-            // DestroyRandomColorBalloons(balloon); -> AddTime()
             AddTime();
 
             _balloonSoundManager.PlaySFX();
