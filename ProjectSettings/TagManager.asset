@@ -4,7 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - RedBalloon
+  - red
+  - yellow
+  - green
+  - blue
+  - pink
+  - purple
+  - LaserDownBorder
+  - Audience
   layers:
   - Default
   - TransparentFX
@@ -12,11 +19,11 @@ TagManager:
   - PostProcess
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Front
+  - Back
+  - Right
+  - Left
+  - Particle
   - 
   - 
   - 
@@ -39,6 +46,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Particle
+    uniqueID: 3498858771
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

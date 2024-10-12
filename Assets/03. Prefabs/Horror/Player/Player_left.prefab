@@ -101,7 +101,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -146,6 +146,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FlashLight_left
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049393560847168324, guid: a467db46009d049478d83beda6f718ea,
+        type: 3}
+      propertyPath: m_Range
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049393560847168324, guid: a467db46009d049478d83beda6f718ea,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049393560847168324, guid: a467db46009d049478d83beda6f718ea,
+        type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 8254370532447121024, guid: a467db46009d049478d83beda6f718ea,
         type: 3}
