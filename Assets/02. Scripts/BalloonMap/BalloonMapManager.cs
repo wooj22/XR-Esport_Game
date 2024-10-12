@@ -167,7 +167,8 @@ public class BalloonMapManager : MonoBehaviour
 
             GameObject eventBalloonObject = Instantiate(eventBalloonPrefab, balloonPosition, balloonRotation);
 
-            Balloon eventBalloon = eventBalloonObject.GetComponent<Balloon>();
+            // Balloon eventBalloon = eventBalloonObject.GetComponent<Balloon>(); // 이벤트 풍선에 라이트 없을 때 코드 
+            Balloon eventBalloon = eventBalloonObject.transform.GetChild(0).GetComponent<Balloon>();
             eventBalloon.isEventBalloon = true;
 
             Debug.Log("이벤트 풍선이 생성되었습니다.");
