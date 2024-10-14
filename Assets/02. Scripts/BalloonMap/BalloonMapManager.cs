@@ -31,6 +31,12 @@ public class BalloonMapManager : MonoBehaviour
     // [ 사운드 관련 ]
     [SerializeField] BalloonSoundManager _balloonSoundManager;
 
+    // [ 게임 오버 시, 풍선 떨어짐 관련 ] 
+    private string BalloonTag = "Balloon";
+    private string eventBalloonTag = "EventBalloon"; 
+    public GameObject Barricade1;  
+    public GameObject Barricade2;  
+
 
     // ------------------------------------------------------------------------------------------------------------
 
@@ -51,6 +57,7 @@ public class BalloonMapManager : MonoBehaviour
         // BGM 재생 및 안내 음성 실행
         _balloonSoundManager.PlayBGMWithGuide(StartGameAfterGuide); // 안내 음성 기능 추가
 
+        
     }
 
 
@@ -114,7 +121,8 @@ public class BalloonMapManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
-        Invoke("ReturnToMainScene", 3f); 
+
+        Invoke("ReturnToMainScene", 5f); 
     }
 
     // ★ 게임 오버 처리 (제한시간 내에 실패했을 때)
@@ -123,7 +131,10 @@ public class BalloonMapManager : MonoBehaviour
         gameEnded = true;
         UpdateTimerUI();  // 타이머를 00:00으로 설정
         Debug.Log("게임 오버! 제한 시간 내에 모든 풍선을 터뜨리지 못했습니다.");
-        Invoke("ReturnToMainScene", 3f); 
+
+        DropBalloon();
+
+        Invoke("ReturnToMainScene", 5f); 
     }
 
     // 게임 종료 후 메인 씬으로 돌아가기 (씬 매니저에서 관리)
@@ -225,4 +236,58 @@ public class BalloonMapManager : MonoBehaviour
         print("시간이 6초 추가되었습니다");
     }
 
+
+
+    // [ 게임 오버 시 : 풍선이 떨어짐 ]
+    //
+    // 1. 이벤트 풍선은 모두 제거 
+    // 2. 중력 할당 : 초기 회전력과 랜덤 힘 추가 
+    // 3. 콜라이더 is trigger 해제 
+    // 4. 풍선이 화면 벗어남 방지 위해, 바리게이트 활성화 
+    // 
+    public void DropBalloon()
+    {
+        RemoveEventBalloons();
+
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(BalloonTag);
+        foreach (GameObject obj in objects)
+        {
+            if (obj.GetComponent<Rigidbody>() == null)
+            {
+                Rigidbody rb = obj.AddComponent<Rigidbody>();
+                rb.useGravity = true;
+                rb.mass = 0.5f;
+                rb.drag = 0.2f;
+                rb.angularDrag = 0.1f;
+
+                Vector3 randomTorque = new Vector3( Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f) );
+                rb.AddTorque(randomTorque, ForceMode.Impulse);
+
+                Vector3 randomForce = new Vector3( Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f) );
+                rb.AddForce(randomForce, ForceMode.Impulse);
+
+                // rb.constraints = RigidbodyConstraints.None; // 필요 시 회전 제약 설정
+            }
+
+            Collider[] colliders = obj.GetComponents<Collider>();
+            foreach (Collider col in colliders)
+            {
+                col.isTrigger = false;  // isTrigger 해제
+            }
+        }
+
+        if (Barricade1 != null) Barricade1.SetActive(true);
+        if (Barricade2 != null) Barricade2.SetActive(true);
+    }
+
+    // 'EventBalloon' 태그를 가진 모든 오브젝트 제거
+    public void RemoveEventBalloons()
+    {
+        GameObject[] eventBalloons = GameObject.FindGameObjectsWithTag(eventBalloonTag);
+
+        foreach (GameObject balloon in eventBalloons)
+        {
+            Destroy(balloon);  
+        }
+    }
 }
