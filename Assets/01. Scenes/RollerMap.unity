@@ -8401,6 +8401,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 371401464}
+  - component: {fileID: 371401465}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -8423,6 +8424,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &371401465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371401462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2b5c6831fce19b42ab8e5a23a33b576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &372423225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15608,6 +15621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 637693017}
+  - component: {fileID: 637693018}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -15630,6 +15644,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &637693018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637693015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5acb10d6b30ead5469bddc5b18056806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &637876275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16499,6 +16525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 687307726}
+  - component: {fileID: 687307727}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -16521,6 +16548,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &687307727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687307724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d919e79354e0b941881cf82f033cff8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &690303562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51575,6 +51614,7 @@ GameObject:
   - component: {fileID: 1956525951}
   - component: {fileID: 1956525950}
   - component: {fileID: 1956525949}
+  - component: {fileID: 1956525953}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -51797,6 +51837,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1956525953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956525947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346cfb0a76685b94eb054833eef0e685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmSource: {fileID: 1956525950}
+  sfxSource: {fileID: 1956525949}
+  bgmClip: {fileID: 8300000, guid: 952433d08c202c347ae4314417ea898a, type: 3}
+  sfxClipList: []
 --- !u!1001 &1959635690
 PrefabInstance:
   m_ObjectHideFlags: 0
