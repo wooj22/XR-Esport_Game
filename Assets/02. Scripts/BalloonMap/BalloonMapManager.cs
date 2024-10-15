@@ -35,7 +35,7 @@ public class BalloonMapManager : MonoBehaviour
     private string BalloonTag = "Balloon";
     private string eventBalloonTag = "EventBalloon"; 
     public GameObject Barricade1;  
-    public GameObject Barricade2;  
+    public GameObject Barricade2;
 
 
     // ------------------------------------------------------------------------------------------------------------
@@ -47,8 +47,9 @@ public class BalloonMapManager : MonoBehaviour
         foreach (GameObject screen in balloonScreens)
         {
             totalBalloons += screen.GetComponentsInChildren<Balloon>().Length;
-            print("전체 풍선의 개수 = " + totalBalloons);
+            
         }
+        print("전체 풍선의 개수 = " + totalBalloons);
 
         // 슬라이더 초기화
         balloonSlider.maxValue = totalBalloons;
@@ -57,9 +58,7 @@ public class BalloonMapManager : MonoBehaviour
         // BGM 재생 및 안내 음성 실행
         _balloonSoundManager.PlayBGMWithGuide(StartGameAfterGuide); // 안내 음성 기능 추가
 
-        
     }
-
 
     // ★ 안내 음성이 끝난 후 호출될 함수: 게임을 시작
     void StartGameAfterGuide()
@@ -70,7 +69,6 @@ public class BalloonMapManager : MonoBehaviour
         Player.SetActive(true); Debug.Log("플레이어가 활성화 됩니다.");
     }
 
-
     // ★ --------------------------------------- ★
     //
     // 1. [ 타이머 업데이트 ] 
@@ -80,28 +78,35 @@ public class BalloonMapManager : MonoBehaviour
     //
     void Update()
     {
-        if (gameStarted && !gameEnded) // ★ 게임이 시작되고 종료되지 않은 상태에서만 실행
+        if (gameStarted && !gameEnded) // ★ 게임이 시작되고 종료되지 않은 상태에서만
         {
-            gameDuration -= Time.deltaTime;
-            UpdateTimerUI();
+            UpdateGameTimer();
+            CheckEventBalloonTimer();
+        }
 
-            if (gameDuration <= 0)
-            {
-                gameDuration = 0; // 타이머가 음수로 내려가지 않도록 0으로 고정
-                GameOver();
-            }
+    }
 
-            timer += Time.deltaTime;
+    void UpdateGameTimer()
+    {
+        gameDuration -= Time.deltaTime;
+        UpdateTimerUI();
 
-            if (timer >= eventBalloonTime)
-            {
-                SelectRandomEventBalloon();
-                timer = 0f;
-            }
-
+        if (gameDuration <= 0)
+        {
+            gameDuration = 0; // 타이머가 음수로 내려가지 않도록 0으로 고정
+            GameOver();
         }
     }
 
+    void CheckEventBalloonTimer()
+    {
+        timer += Time.deltaTime;
+        if (timer >= eventBalloonTime)
+        {
+            SelectRandomEventBalloon();
+            timer = 0f;
+        }
+    }
 
 
     // --------------------------------------------------------------------------------------------
@@ -121,6 +126,8 @@ public class BalloonMapManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
+
+        // DropDoll();
 
         Invoke("ReturnToMainScene", 5f); 
     }
@@ -163,6 +170,7 @@ public class BalloonMapManager : MonoBehaviour
     //
     void SelectRandomEventBalloon()
     {
+        /*
         int randomScreenIndex = Random.Range(0, balloonScreens.Length);
         Balloon[] balloons = balloonScreens[randomScreenIndex].GetComponentsInChildren<Balloon>();
 
@@ -187,6 +195,35 @@ public class BalloonMapManager : MonoBehaviour
         else
         {
             Debug.Log("해당 벽에 풍선이 없습니다.");
+        }
+        */
+
+        List<Balloon> availableBalloons = new List<Balloon>();
+
+        foreach (GameObject screen in balloonScreens)
+        {
+            availableBalloons.AddRange(screen.GetComponentsInChildren<Balloon>());
+        }
+
+        if (availableBalloons.Count > 0)
+        {
+            int randomIndex = Random.Range(0, availableBalloons.Count);
+            Balloon selectedBalloon = availableBalloons[randomIndex];
+
+            Vector3 balloonPosition = selectedBalloon.transform.position;
+            Quaternion balloonRotation = selectedBalloon.transform.rotation;
+
+            Destroy(selectedBalloon.gameObject);
+
+            GameObject eventBalloonObject = Instantiate(eventBalloonPrefab, balloonPosition, balloonRotation);
+            Balloon eventBalloon = eventBalloonObject.transform.GetChild(0).GetComponent<Balloon>();
+            eventBalloon.isEventBalloon = true;
+
+            Debug.Log("이벤트 풍선이 생성되었습니다.");
+        }
+        else
+        {
+            Debug.Log("모든 벽에 풍선이 없습니다.");
         }
     }
 
@@ -289,5 +326,15 @@ public class BalloonMapManager : MonoBehaviour
         {
             Destroy(balloon);  
         }
+    }
+
+
+    // [ 게임 클리어 시 : 인형이 떨어짐 ]
+    // 
+    public void DropDall()
+    {
+        // 혹시 모르니 모든 풍선을 끌까...?
+
+        // 
     }
 }
