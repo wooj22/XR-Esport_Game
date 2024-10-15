@@ -37,6 +37,9 @@ public class BalloonMapManager : MonoBehaviour
     public GameObject Barricade1;  
     public GameObject Barricade2;
 
+    // [ 게임 클리어 시, 인형 떨어짐 관련 ]
+    public GameObject Doll;
+    private List<GameObject> dollObjects = new List<GameObject>(); // 자식 오브젝트 리스트
 
     // ------------------------------------------------------------------------------------------------------------
 
@@ -57,6 +60,14 @@ public class BalloonMapManager : MonoBehaviour
 
         // BGM 재생 및 안내 음성 실행
         _balloonSoundManager.PlayBGMWithGuide(StartGameAfterGuide); // 안내 음성 기능 추가
+
+        // 게임 클리어 시, 인형들 할당 
+        int childCount = Doll.transform.childCount;
+        for (int i = 0; i < childCount; i++)
+        {
+            GameObject child = Doll.transform.GetChild(i).gameObject;
+            dollObjects.Add(child); // 리스트에 추가
+        }
 
     }
 
@@ -127,7 +138,7 @@ public class BalloonMapManager : MonoBehaviour
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
 
-        // DropDoll();
+        DropDall();
 
         Invoke("ReturnToMainScene", 5f); 
     }
@@ -157,7 +168,7 @@ public class BalloonMapManager : MonoBehaviour
     // ★ 이벤트 풍선 관련 메소드 --------------------------------------------------------------------
 
 
-    // ★ [ 이벤트 풍선 랜덤 선택 ] ★
+    // ★ [ 이벤트 풍선 랜덤 선택 ] ★ : 특정 벽에 풍선이 없다면 다른 벽을 시도하도록 수정됨 
     // 
     // 1. 랜덤으로 사용 가능한 벽 선택
     //   - 선택된 벽 (오브젝트)의 자식 풍선들 가져옴 
@@ -335,6 +346,32 @@ public class BalloonMapManager : MonoBehaviour
     {
         // 혹시 모르니 모든 풍선을 끌까...?
 
-        // 
+        // 중력 강화 (주의, 모든 Rigidbody에 영향)
+        // Physics.gravity = new Vector3(0, -20f, 0);  // 기본 중력은 -9.81f
+
+        if (Barricade1 != null) Barricade1.SetActive(true);
+        if (Barricade2 != null) Barricade2.SetActive(true);
+
+        // 오브젝트 활성화 및 랜덤한 힘과 회전 적용
+        foreach (GameObject obj in dollObjects)
+        {
+            obj.SetActive(true);
+
+            Rigidbody rb = obj.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false; // 중력 활성화
+                rb.useGravity = true;
+                rb.mass = 0.2f;
+                rb.drag = 0.05f;
+                rb.angularDrag = 0.05f;
+
+                Vector3 randomTorque = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
+                rb.AddTorque(randomTorque, ForceMode.Impulse);
+
+                Vector3 randomForce = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-3f, -5f), Random.Range(-0.5f, 0.5f));
+                rb.AddForce(randomForce, ForceMode.Impulse);
+            }
+        }
     }
 }
