@@ -369,7 +369,7 @@ public class BalloonMapManager : MonoBehaviour
                 Vector3 randomTorque = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
                 rb.AddTorque(randomTorque, ForceMode.Impulse);
 
-                Vector3 randomForce = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-3f, -5f), Random.Range(-0.5f, 0.5f));
+                Vector3 randomForce = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-6f, -10f), Random.Range(-0.5f, 0.5f));
                 rb.AddForce(randomForce, ForceMode.Impulse);
             }
         }
