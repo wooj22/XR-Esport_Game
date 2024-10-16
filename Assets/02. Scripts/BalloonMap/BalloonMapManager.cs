@@ -34,8 +34,8 @@ public class BalloonMapManager : MonoBehaviour
     // [ 게임 오버 시, 풍선 떨어짐 관련 ] 
     private string BalloonTag = "Balloon";
     private string eventBalloonTag = "EventBalloon"; 
-    public GameObject Barricade1;  
-    public GameObject Barricade2;
+    public GameObject Barricade_Clear;  
+    public GameObject Barricade_Clear_Fail;
 
     // [ 게임 클리어 시, 인형 떨어짐 관련 ]
     public GameObject Doll;
@@ -181,43 +181,17 @@ public class BalloonMapManager : MonoBehaviour
     //
     void SelectRandomEventBalloon()
     {
-        /*
-        int randomScreenIndex = Random.Range(0, balloonScreens.Length);
-        Balloon[] balloons = balloonScreens[randomScreenIndex].GetComponentsInChildren<Balloon>();
-
-        if (balloons.Length > 0)
-        {
-            int randomBalloonIndex = Random.Range(0, balloons.Length);
-            Balloon selectedBalloon = balloons[randomBalloonIndex];
-
-            Vector3 balloonPosition = selectedBalloon.transform.position;
-            Quaternion balloonRotation = selectedBalloon.transform.rotation;
-
-            Destroy(selectedBalloon.gameObject);
-
-            GameObject eventBalloonObject = Instantiate(eventBalloonPrefab, balloonPosition, balloonRotation);
-
-            // Balloon eventBalloon = eventBalloonObject.GetComponent<Balloon>(); // 이벤트 풍선에 라이트 없을 때 코드 
-            Balloon eventBalloon = eventBalloonObject.transform.GetChild(0).GetComponent<Balloon>();
-            eventBalloon.isEventBalloon = true;
-
-            Debug.Log("이벤트 풍선이 생성되었습니다.");
-        }
-        else
-        {
-            Debug.Log("해당 벽에 풍선이 없습니다.");
-        }
-        */
 
         List<Balloon> availableBalloons = new List<Balloon>();
 
         foreach (GameObject screen in balloonScreens)
         {
-            availableBalloons.AddRange(screen.GetComponentsInChildren<Balloon>());
+            availableBalloons.AddRange(screen.GetComponentsInChildren<Balloon>()); // 자식의 자식으로 변경해야함 
         }
 
         if (availableBalloons.Count > 0)
         {
+            print("이벤트 풍선으로 변신 가능한 풍선 : "+ availableBalloons.Count);
             int randomIndex = Random.Range(0, availableBalloons.Count);
             Balloon selectedBalloon = availableBalloons[randomIndex];
 
@@ -297,35 +271,43 @@ public class BalloonMapManager : MonoBehaviour
     {
         RemoveEventBalloons();
 
-        GameObject[] objects = GameObject.FindGameObjectsWithTag(BalloonTag);
-        foreach (GameObject obj in objects)
+        GameObject[] parentObjects = GameObject.FindGameObjectsWithTag(BalloonTag);
+
+        foreach (GameObject parent in parentObjects)
         {
-            if (obj.GetComponent<Rigidbody>() == null)
+            // 부모 오브젝트가 자식을 가지고 있는지 확인
+            if (parent.transform.childCount > 0)
             {
-                Rigidbody rb = obj.AddComponent<Rigidbody>();
-                rb.useGravity = true;
-                rb.mass = 0.5f;
-                rb.drag = 0.2f;
-                rb.angularDrag = 0.1f;
+                GameObject firstChild = parent.transform.GetChild(0).gameObject;
 
-                Vector3 randomTorque = new Vector3( Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f) );
-                rb.AddTorque(randomTorque, ForceMode.Impulse);
+                // 부모에 리지드바디가 없는 경우 추가
+                if (parent.GetComponent<Rigidbody>() == null)
+                {
+                    Rigidbody rb = parent.AddComponent<Rigidbody>();
+                    rb.useGravity = true;
+                    rb.mass = 0.5f;
+                    rb.drag = 0.2f;
+                    rb.angularDrag = 0.1f;
 
-                Vector3 randomForce = new Vector3( Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f) );
-                rb.AddForce(randomForce, ForceMode.Impulse);
+                    Vector3 randomTorque = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    rb.AddTorque(randomTorque, ForceMode.Impulse);
 
-                // rb.constraints = RigidbodyConstraints.None; // 필요 시 회전 제약 설정
-            }
+                    Vector3 randomForce = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
+                    rb.AddForce(randomForce, ForceMode.Impulse);
 
-            Collider[] colliders = obj.GetComponents<Collider>();
-            foreach (Collider col in colliders)
-            {
-                col.isTrigger = false;  // isTrigger 해제
+                    // rb.constraints = RigidbodyConstraints.None; // 필요 시 회전 제약 설정
+                }
+
+                // 첫 번째 자식의 모든 콜라이더에 대해 isTrigger 해제
+                Collider[] colliders = firstChild.GetComponents<Collider>();
+                foreach (Collider col in colliders)
+                {
+                    col.isTrigger = false;
+                }
             }
         }
 
-        if (Barricade1 != null) Barricade1.SetActive(true);
-        if (Barricade2 != null) Barricade2.SetActive(true);
+        if (Barricade_Clear_Fail != null) Barricade_Clear_Fail.SetActive(true);
     }
 
     // 'EventBalloon' 태그를 가진 모든 오브젝트 제거
@@ -349,8 +331,8 @@ public class BalloonMapManager : MonoBehaviour
         // 중력 강화 (주의, 모든 Rigidbody에 영향)
         // Physics.gravity = new Vector3(0, -20f, 0);  // 기본 중력은 -9.81f
 
-        if (Barricade1 != null) Barricade1.SetActive(true);
-        if (Barricade2 != null) Barricade2.SetActive(true);
+        if (Barricade_Clear_Fail != null) Barricade_Clear_Fail.SetActive(true);
+        if (Barricade_Clear != null) Barricade_Clear.SetActive(true);
 
         // 오브젝트 활성화 및 랜덤한 힘과 회전 적용
         foreach (GameObject obj in dollObjects)
@@ -369,7 +351,7 @@ public class BalloonMapManager : MonoBehaviour
                 Vector3 randomTorque = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
                 rb.AddTorque(randomTorque, ForceMode.Impulse);
 
-                Vector3 randomForce = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-6f, -10f), Random.Range(-0.5f, 0.5f));
+                Vector3 randomForce = new Vector3(0f, Random.Range(-6f, -10f), 0f);
                 rb.AddForce(randomForce, ForceMode.Impulse);
             }
         }

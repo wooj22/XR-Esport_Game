@@ -11,10 +11,18 @@ public class Balloon : MonoBehaviour
     void Start()
     {
         balloonMapManager = FindObjectOfType<BalloonMapManager>();
-        animator = GetComponent<Animator>();  
+        animator = GetComponent<Animator>();
+
+        // 애니메이션을 랜덤한 시간만큼 지연 후 시작
+        float randomDelay = Random.Range(0f, 2f); // 0~2초 지연
+        animator.StartPlayback();                 // 일시정지 상태로 시작
+        Invoke(nameof(StartAnimation), randomDelay);
     }
 
-
+    void StartAnimation()
+    {
+        animator.StopPlayback(); // 재생 시작
+    }
 
     // -------------------------------------------------------------------------------------
     // ★ [ 충돌 관련 메소드 ] ★ ----------------------------------------------------------
@@ -47,10 +55,14 @@ public class Balloon : MonoBehaviour
             Debug.Log("이벤트 풍선과 충돌했습니다.");
             animator.SetTrigger("Destroy"); 
         }
+        else
+        {
+            animator.SetTrigger("Pop");
+        }
 
         balloonMapManager.OnBalloonPopped(this);
 
-        yield return new WaitForSeconds(1f); 
+        yield return new WaitForSeconds(0.4f); 
         Destroy(gameObject);
     }
 }
