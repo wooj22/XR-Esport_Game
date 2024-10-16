@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+
 
 public class IntroManager : MonoBehaviour
 {
@@ -11,7 +11,16 @@ public class IntroManager : MonoBehaviour
     [SerializeField] Image fade_right;
     [SerializeField] Image fade_left;
     [SerializeField] Image fade_down;
-    
+
+    [Header("Managers")]
+    [SerializeField] IntroSoundManager _introSoundManager;
+    [SerializeField] IntroSceneManager _introSceneManager;
+
+    private void Start()
+    {
+        _introSoundManager.PlayBGM();
+    }
+
     public void StartMidnightCarnival()
     {
         Debug.Log("인트로 시작");
@@ -33,11 +42,6 @@ public class IntroManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(3f);
-        LoadMainMenuMap();
-    }
-
-    public void LoadMainMenuMap()
-    {
-        SceneManager.LoadScene("MainMap_new");
+        _introSceneManager.LoadMainMenuMap();
     }
 }
