@@ -42,14 +42,11 @@ public class CircusGameManager : MonoBehaviour
         // BGM 시작
         _circusSoundManager.PlayBGM();
 
-        // UI 게이지 초기화
-        _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
-
         // 페이드인
         _circusUIManager.FadeInImage();
 
-        // BGM
-        _circusSoundManager.PlayBGM();
+        // UI 게이지 초기화
+        _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
     }
 
     /// 게임 진행
