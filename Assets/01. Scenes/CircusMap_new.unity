@@ -9475,8 +9475,10 @@ MonoBehaviour:
   sfxSource: {fileID: 1956525949}
   bgmClip: {fileID: 8300000, guid: 418000accac9a4849bbf4866c2282084, type: 3}
   sfxClipList:
-  - {fileID: 8300000, guid: cd2267cfaef3b1e438805828aacf9846, type: 3}
   - {fileID: 8300000, guid: b54868ce1a496a04c85e6047f471934a, type: 3}
+  - {fileID: 8300000, guid: ef39df2df34632a4189a9ac7aec81ac7, type: 3}
+  - {fileID: 8300000, guid: cd2267cfaef3b1e438805828aacf9846, type: 3}
+  - {fileID: 8300000, guid: 5e893baa66d04204d8fbec58bebac637, type: 3}
   fadeVolumeTime: 5
 --- !u!82 &1956525949
 AudioSource:

@@ -59,6 +59,7 @@ public class CircusGameManager : MonoBehaviour
         _circusUIManager.StartCountDown(5);
         yield return new WaitForSeconds(8f);
         _circusUIManager.StartTimer(gamePlayTime);
+        StartCoroutine(EndCountDownSound(gamePlayTime));
 
         // 게임 시작
         Coroutine Level = StartCoroutine(LevelControl());
@@ -75,6 +76,13 @@ public class CircusGameManager : MonoBehaviour
 
         // 메인맵 복귀
         StartCoroutine(ReturnMainMap());
+    }
+
+    /// 종료 10초 전 카운트다운
+    IEnumerator EndCountDownSound(float playTime)
+    {
+        yield return new WaitForSeconds(playTime - (playTime - 10f));
+        _circusSoundManager.PlaySFX("SFX_10Count");
     }
 
     /// 레벨 컨트롤
@@ -132,13 +140,14 @@ public class CircusGameManager : MonoBehaviour
             // 게임성공
             this.GetComponent<CircusDirector>().PlayFirecracker();
             _circusUIManager.GameSuccessUI();
-            _circusSoundManager.PlaySFX("SFX_Circus_cheer");
+            _circusSoundManager.PlaySFX("SFX_Circus_GameClear");
             PlayCheerAnimation();
         }
         else
         {
             // 게임실패
             _circusUIManager.GameOverUI();
+            _circusSoundManager.PlaySFX("SFX_Circus_GameOver");
         }
     }
 

@@ -51924,7 +51924,11 @@ MonoBehaviour:
   bgmSource: {fileID: 1956525950}
   sfxSource: {fileID: 1956525949}
   bgmClip: {fileID: 8300000, guid: 952433d08c202c347ae4314417ea898a, type: 3}
-  sfxClipList: []
+  sfxClipList:
+  - {fileID: 8300000, guid: d2a55dfe80d51b84ab236ba5d92a568c, type: 3}
+  - {fileID: 8300000, guid: ef39df2df34632a4189a9ac7aec81ac7, type: 3}
+  - {fileID: 8300000, guid: e6efed7eb3c588f409113316f1dacf5c, type: 3}
+  - {fileID: 8300000, guid: a999c650b860e3e43bc5081a9d08a1b5, type: 3}
   fadeVolumeTime: 5
 --- !u!1001 &1959635690
 PrefabInstance:
