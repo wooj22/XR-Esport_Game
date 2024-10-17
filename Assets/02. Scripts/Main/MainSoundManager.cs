@@ -15,6 +15,7 @@ public class MainSoundManager : MonoBehaviour
     {
         bgmSource.clip = bgmClip;
         bgmSource.loop = true;
+        bgmSource.volume = 0f;
         bgmSource.Play();
         StartCoroutine(FadeInVolume());
     }

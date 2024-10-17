@@ -23,6 +23,7 @@ public class CircusGameManager : MonoBehaviour
     [SerializeField] CircusSoundManager _circusSoundManager;
     [SerializeField] CircusSceneManager _circusSceneManager;
 
+
     private void Start()
     {
         CircusMapStartSetting();
@@ -43,11 +44,20 @@ public class CircusGameManager : MonoBehaviour
 
         // UI 게이지 초기화
         _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
+
+        // 페이드인
+        _circusUIManager.FadeInImage();
+
+        // BGM
+        _circusSoundManager.PlayBGM();
     }
 
     /// 게임 진행
     IEnumerator CircusGame()
     {
+        // 맵 셋팅 대기
+        yield return new WaitForSeconds(5f);
+
         // UI 5초 카운트다운 후 Timer 시작
         _circusUIManager.StartCountDown(5);
         yield return new WaitForSeconds(8f);
@@ -65,7 +75,9 @@ public class CircusGameManager : MonoBehaviour
         // 게임 결과 확인
         CheckGameResult();
         yield return new WaitForSeconds(5f);
-        _circusSceneManager.LoadMainMenuMap();
+
+        // 메인맵 복귀
+        StartCoroutine(ReturnMainMap());
     }
 
     /// 레벨 컨트롤
@@ -142,6 +154,17 @@ public class CircusGameManager : MonoBehaviour
             AudienceController audienceController = audience.GetComponent<AudienceController>();
             audienceController.PlayCheerAnimation();
         }
+    }
+
+
+    /// 메인 맵 복귀
+    IEnumerator ReturnMainMap()
+    {
+        _circusUIManager.FadeOutImage();
+        _circusSoundManager.StopBGM();
+
+        yield return new WaitForSeconds(5f);
+        _circusSceneManager.LoadMainMenuMap();
     }
 
     /*-------------------- Event ----------------------*/
