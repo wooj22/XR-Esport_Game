@@ -14,6 +14,19 @@ public class RollerGameManager : MonoBehaviour
     private void Start()
     {
         RollerMapStartSetting();
+
+        // 맵 개발 전 전체씬 로직 테스트
+        StartCoroutine(test());
+    }
+
+    IEnumerator test()
+    {
+        yield return new WaitForSeconds(5f);
+        _rollerSoundManager.StopBGM();
+        _rollerUIManager.FadeOutImage();
+
+        yield return new WaitForSeconds(5f);
+        _rollerSceneManager.LoadMainMenuMap();
     }
 
     /*-------------- Game -------------------*/
