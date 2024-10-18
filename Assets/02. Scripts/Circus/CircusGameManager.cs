@@ -23,6 +23,7 @@ public class CircusGameManager : MonoBehaviour
     [SerializeField] CircusSoundManager _circusSoundManager;
     [SerializeField] CircusSceneManager _circusSceneManager;
 
+
     private void Start()
     {
         CircusMapStartSetting();
@@ -41,6 +42,9 @@ public class CircusGameManager : MonoBehaviour
         // BGM 시작
         _circusSoundManager.PlayBGM();
 
+        // 페이드인
+        _circusUIManager.FadeInImage();
+
         // UI 게이지 초기화
         _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
     }
@@ -48,24 +52,39 @@ public class CircusGameManager : MonoBehaviour
     /// 게임 진행
     IEnumerator CircusGame()
     {
+        // 맵 셋팅 대기
+        yield return new WaitForSeconds(5f);
+
         // UI 5초 카운트다운 후 Timer 시작
         _circusUIManager.StartCountDown(5);
         yield return new WaitForSeconds(8f);
         _circusUIManager.StartTimer(gamePlayTime);
+        StartCoroutine(EndCountDownSound(gamePlayTime));
 
         // 게임 시작
         Coroutine Level = StartCoroutine(LevelControl());
         Coroutine Laser = StartCoroutine(GenerateLasers());
+        yield return new WaitForSeconds(gamePlayTime + 2f);
 
         // 게임 종료
-        yield return new WaitForSeconds(gamePlayTime);
         StopCoroutine(Level);
         StopCoroutine(Laser);
 
         // 게임 결과 확인
         CheckGameResult();
         yield return new WaitForSeconds(5f);
-        _circusSceneManager.LoadMainMenuMap();
+
+        // 메인맵 복귀
+        StartCoroutine(ReturnMainMap());
+    }
+
+    /// 종료 10초 전 카운트다운
+    IEnumerator EndCountDownSound(float playTime)
+    {
+        yield return new WaitForSeconds(playTime - 8f);
+        _circusSoundManager.PlaySFX("SFX_10Count");
+        yield return new WaitForSeconds(10f);
+        _circusSoundManager.StopSFX();
     }
 
     /// 레벨 컨트롤
@@ -123,13 +142,14 @@ public class CircusGameManager : MonoBehaviour
             // 게임성공
             this.GetComponent<CircusDirector>().PlayFirecracker();
             _circusUIManager.GameSuccessUI();
-            _circusSoundManager.PlaySFX("SFX_Circus_cheer");
+            _circusSoundManager.PlaySFX("SFX_Circus_GameClear");
             PlayCheerAnimation();
         }
         else
         {
             // 게임실패
             _circusUIManager.GameOverUI();
+            _circusSoundManager.PlaySFX("SFX_Circus_GameOver");
         }
     }
 
@@ -142,6 +162,17 @@ public class CircusGameManager : MonoBehaviour
             AudienceController audienceController = audience.GetComponent<AudienceController>();
             audienceController.PlayCheerAnimation();
         }
+    }
+
+
+    /// 메인 맵 복귀
+    IEnumerator ReturnMainMap()
+    {
+        _circusUIManager.FadeOutImage();
+        _circusSoundManager.StopBGM();
+
+        yield return new WaitForSeconds(5f);
+        _circusSceneManager.LoadMainMenuMap();
     }
 
     /*-------------------- Event ----------------------*/
