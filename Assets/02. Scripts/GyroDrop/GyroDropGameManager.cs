@@ -9,6 +9,13 @@ public class GyroDropGameManager : MonoBehaviour
     public GameObject cameraObject;        // 카메라 
     public GameObject[] platformPieces;    // 발판 조각들
 
+    // [ 메터리얼 설정 ]
+    public Material material_gray;                 
+    public Material material_green;                 
+    public Material material_blue;                 
+    public Material material_orange;
+    public Material material_red;
+
     // [ 설정 상수 ]
     private const float RotationSpeed = 10f;     // 원판 회전 속도
     private const float TargetYPosition = 525f;  // 카메라 목표 Y 위치
@@ -34,15 +41,12 @@ public class GyroDropGameManager : MonoBehaviour
     {
         Debug.Log("게임 시작! 원판 위로 올라오세요.");
 
-        // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
-        riseSpeed = (TargetYPosition - InitialRiseAmount) / TotalRiseDuration;
+        riseSpeed = (TargetYPosition - InitialRiseAmount) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
 
-        // 5초 후 카메라 상승 시작
-        Invoke("StartRising", 5f); 
-
-        // 타이머와 발판 구멍 생성 루틴 시작
-        StartCoroutine(GameTimer()); 
+        Invoke("StartRising", 5f);    // 5초 후 카메라 1차 상승 시작
+        
+        StartCoroutine(GameTimer());  // 타이머와 발판 구멍 생성 루틴 시작
 
         StartCoroutine(PlatformHoleRoutine()); 
     }
@@ -54,6 +58,8 @@ public class GyroDropGameManager : MonoBehaviour
         {
             disk.transform.Rotate(Vector3.up, RotationSpeed * Time.deltaTime);
         }
+
+        UpdateDiskMaterial();  // 원판 메터리얼 변경
     }
 
     private void StartRising()
@@ -101,9 +107,12 @@ public class GyroDropGameManager : MonoBehaviour
     {
         while (!gameEnded)
         {
-            GameObject selectedPiece = platformPieces[Random.Range(0, platformPieces.Length)];
-            StartCoroutine(BlinkPlatform(selectedPiece));
-            yield return new WaitForSeconds(10f); // 다음 구멍까지 대기
+            if (cameraObject.transform.position.y >= 40f)  // Y 좌표가 40 이상일 때만 구멍 생성
+            {
+                GameObject selectedPiece = platformPieces[Random.Range(0, platformPieces.Length)];
+                StartCoroutine(BlinkPlatform(selectedPiece));
+            }
+            yield return new WaitForSeconds(10f);
         }
     }
 
@@ -121,13 +130,34 @@ public class GyroDropGameManager : MonoBehaviour
 
         // 구멍 생성
         renderer.enabled = false;
-        collider.enabled = false;
+        // collider.enabled = false;
 
         // 5초 후 복구
         yield return new WaitForSeconds(5f);
         renderer.enabled = true;
-        collider.enabled = true;
+        // collider.enabled = true;
     }
+
+    private void UpdateDiskMaterial()
+    {
+        float heightPercentage = cameraObject.transform.position.y / TargetYPosition;
+
+        Material newMaterial = null;
+        if (heightPercentage >= 0.8f)      newMaterial = material_red;
+        else if (heightPercentage >= 0.6f) newMaterial = material_orange;
+        else if (heightPercentage >= 0.4f) newMaterial = material_blue;
+        else if (heightPercentage >= 0.2f) newMaterial = material_green;
+        else                               newMaterial = material_gray;
+
+        if (newMaterial != null)
+        {
+            foreach (GameObject piece in platformPieces)
+            {
+                piece.GetComponent<Renderer>().material = newMaterial;
+            }
+        }
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -162,6 +192,9 @@ public class GyroDropGameManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log("게임 클리어! 5초 후 빠르게 하강합니다.");
+
+        RestoreAllPlatformPieces(); // 모든 조각의 구멍을 메우기 (복구)
+
         yield return new WaitForSeconds(5f);
         StartCoroutine(Drop(25)); 
     }
@@ -170,6 +203,9 @@ public class GyroDropGameManager : MonoBehaviour
     {
         gameEnded = true; 
         Debug.Log("게임 오버! 5초 후 천천히 하강합니다.");
+
+        RestoreAllPlatformPieces(); // 모든 조각의 구멍을 메우기 (복구)
+
         yield return new WaitForSeconds(5f);
         StartCoroutine(Drop(1)); 
     }
@@ -182,5 +218,19 @@ public class GyroDropGameManager : MonoBehaviour
             yield return null;
         }
         Debug.Log("하강 완료.");
+    }
+
+
+    // 모든 조각을 원상복구하는 메서드
+    private void RestoreAllPlatformPieces()
+    {
+        foreach (GameObject piece in platformPieces)
+        {
+            Renderer renderer = piece.GetComponent<Renderer>();
+            Collider collider = piece.GetComponent<Collider>();
+
+            renderer.enabled = true;  // 조각을 보이게 함
+            collider.enabled = true;  // 상호작용 가능하게 함
+        }
     }
 }
