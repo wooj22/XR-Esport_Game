@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 5860622014050447270}
   effect: {fileID: 5616661107930574814}
+  itemMoveSpeed: 3
 --- !u!135 &2692516864956986107
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -64,7 +65,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
