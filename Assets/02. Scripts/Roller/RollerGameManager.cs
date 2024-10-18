@@ -25,7 +25,7 @@ public class RollerGameManager : MonoBehaviour
         _rollerSoundManager.StopBGM();
         _rollerUIManager.FadeOutImage();
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(8f);
         _rollerSceneManager.LoadMainMenuMap();
     }
 

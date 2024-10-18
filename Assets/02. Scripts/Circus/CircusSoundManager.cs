@@ -32,6 +32,11 @@ public class CircusSoundManager : MonoBehaviour
         sfxSource.PlayOneShot(clipToPlay);
     }
 
+    public void StopSFX()
+    {
+        sfxSource.Stop();
+    }
+
     /// 볼륨 페이드인
     private IEnumerator FadeInVolume()
     {

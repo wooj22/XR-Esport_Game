@@ -66,7 +66,7 @@ public class CircusGameManager : MonoBehaviour
         Coroutine Laser = StartCoroutine(GenerateLasers());
 
         // 게임 종료
-        yield return new WaitForSeconds(gamePlayTime);
+        yield return new WaitForSeconds(gamePlayTime + 2f);
         StopCoroutine(Level);
         StopCoroutine(Laser);
 
@@ -81,8 +81,10 @@ public class CircusGameManager : MonoBehaviour
     /// 종료 10초 전 카운트다운
     IEnumerator EndCountDownSound(float playTime)
     {
-        yield return new WaitForSeconds(playTime - (playTime - 10f));
+        yield return new WaitForSeconds(playTime - 8f);
         _circusSoundManager.PlaySFX("SFX_10Count");
+        yield return new WaitForSeconds(10f);
+        _circusSoundManager.StopSFX();
     }
 
     /// 레벨 컨트롤
