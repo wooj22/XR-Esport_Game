@@ -340,7 +340,7 @@ public class BalloonMapManager : MonoBehaviour
         // 오브젝트 활성화 및 랜덤한 힘과 회전 적용
         foreach (GameObject obj in dollObjects)
         {
-            // obj.SetActive(true);
+            obj.SetActive(true);
 
             Rigidbody rb = obj.GetComponent<Rigidbody>();
             if (rb != null)
