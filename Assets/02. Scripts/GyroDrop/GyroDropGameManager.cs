@@ -20,36 +20,167 @@ public class GyroDropGameManager : MonoBehaviour
     private const float ClearTimeLimit = 120f;   // 게임 제한 시간 (2분)
 
     // [ 상태 플래그 ]
-    private bool isRising_1 = false;         // 첫번째 상승 중인지 여부
-    private bool isRising_2 = false;
-    private bool isPaused = false;           // 상승이 일시 중지 상태인지 여부
+    private bool isRising = false;
     private bool gameEnded = false;          // 게임이 종료되었는지 여부
     private bool hasPlayerEntered = false;   // 플레이어가 구멍에 들어갔는지 확인
+    private bool pausedOnce = false; // 50에서 한 번만 멈추기 위한 플래그
+
 
     // [ 속도 계산 ]
     private float riseSpeed;  // 카메라 상승 속도
 
 
-    // 1. 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
     void Start()
     {
+        Debug.Log("게임 시작! 원판 위로 올라오세요.");
+
+        // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         riseSpeed = (TargetYPosition - InitialRiseAmount) / TotalRiseDuration;
         print("상승 속도 = " + riseSpeed);
 
-        StartCoroutine(GameStart_1());
+        // 5초 후 카메라 상승 시작
+        Invoke("StartRising", 5f); 
+
+        // 타이머와 발판 구멍 생성 루틴 시작
+        StartCoroutine(GameTimer()); 
+
+        StartCoroutine(PlatformHoleRoutine()); 
     }
 
     void Update()
     {
-        
+        // 원판 회전 (게임이 끝나지 않고 상승 중일 때)
+        if (isRising && !gameEnded)
+        {
+            disk.transform.Rotate(Vector3.up, RotationSpeed * Time.deltaTime);
+        }
     }
 
-    IEnumerator GameStart_1()
+    private void StartRising()
     {
-        Debug.Log("게임 시작! 원판 위로 올라오세요.");
-
-        yield return new WaitForSeconds(5f);
-        isRising_1 = true; 
+        isRising = true; // 상승 시작
+        StartCoroutine(RiseCoroutine()); // 카메라 상승 루틴 실행
     }
 
+    private IEnumerator RiseCoroutine()
+    {
+        while (!gameEnded && cameraObject.transform.position.y < TargetYPosition)
+        {
+            float currentY = cameraObject.transform.position.y;
+
+            // Y 좌표가 30일 때 멈추고 5초 대기
+            if (currentY>=30f && !pausedOnce)
+            {
+                Debug.Log("카메라 멈춤! 5초 대기 후 재상승.");
+                yield return new WaitForSeconds(PauseDuration);
+
+                pausedOnce = true; // 멈춘 후 다시 멈추지 않도록 설정
+            }
+
+            // 카메라와 원판을 계속 이동
+            MoveCameraAndDisk(currentY + riseSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+
+        // 목표 높이에 도달하면 게임 클리어 처리
+        if (!gameEnded) StartCoroutine(GameClear()); Debug.Log("일정 높이에 도달 =" + cameraObject.transform.position.y);
+    }
+
+
+    // ★ [ 카메라 - 원판 위치 ] 
+    // 
+    private void MoveCameraAndDisk(float newY)
+    {
+        newY = Mathf.Min(newY, TargetYPosition); // 목표 높이 초과 방지
+        cameraObject.transform.position = new Vector3(cameraObject.transform.position.x, newY, cameraObject.transform.position.z);
+        disk.transform.position = new Vector3(disk.transform.position.x, newY - DiskCameraOffset, disk.transform.position.z);
+    }
+
+    private IEnumerator PlatformHoleRoutine()
+    {
+        while (!gameEnded)
+        {
+            GameObject selectedPiece = platformPieces[Random.Range(0, platformPieces.Length)];
+            StartCoroutine(BlinkPlatform(selectedPiece));
+            yield return new WaitForSeconds(10f); // 다음 구멍까지 대기
+        }
+    }
+
+    private IEnumerator BlinkPlatform(GameObject piece)
+    {
+        Renderer renderer = piece.GetComponent<Renderer>();
+        Collider collider = piece.GetComponent<Collider>();
+
+        // 발판 깜빡임 (5회 반복)
+        for (int i = 0; i < 5; i++)
+        {
+            renderer.enabled = !renderer.enabled;
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        // 구멍 생성
+        renderer.enabled = false;
+        collider.enabled = false;
+
+        // 5초 후 복구
+        yield return new WaitForSeconds(5f);
+        renderer.enabled = true;
+        collider.enabled = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && !hasPlayerEntered)
+        {
+            hasPlayerEntered = true; // 한 번만 처리
+            Debug.Log("구멍 밟음! 5% 하강합니다.");
+            LowerHeight();
+        }
+    }
+
+    private void LowerHeight()
+    {
+        float currentY = cameraObject.transform.position.y;
+        float lowerY = currentY - (TargetYPosition * LowerPercentage);
+        MoveCameraAndDisk(Mathf.Max(lowerY, 0)); // 최소 높이 제한
+    }
+
+    // ★ [ 시간 초과 시 게임 오버 ] 
+    private IEnumerator GameTimer()
+    {
+        yield return new WaitForSeconds(ClearTimeLimit);
+
+        if (!gameEnded) StartCoroutine(GameOver());
+    }
+
+
+    // --------------------------------------------------------------------------------------------------------------
+    // ★ [ 게임 클리어/오버 ] ★ -----------------------------------------------------------------------------------
+
+    IEnumerator GameClear() 
+    {
+        gameEnded = true;
+        Debug.Log("게임 클리어! 5초 후 빠르게 하강합니다.");
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(Drop(25)); 
+    }
+
+    IEnumerator GameOver()
+    {
+        gameEnded = true; 
+        Debug.Log("게임 오버! 5초 후 천천히 하강합니다.");
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(Drop(1)); 
+    }
+
+    private IEnumerator Drop(float speedMultiplier)
+    {
+        while (cameraObject.transform.position.y > 0)
+        {
+            MoveCameraAndDisk(cameraObject.transform.position.y - riseSpeed * speedMultiplier * Time.deltaTime);
+            yield return null;
+        }
+        Debug.Log("하강 완료.");
+    }
 }
