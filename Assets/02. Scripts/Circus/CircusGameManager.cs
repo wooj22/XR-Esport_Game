@@ -64,9 +64,9 @@ public class CircusGameManager : MonoBehaviour
         // 게임 시작
         Coroutine Level = StartCoroutine(LevelControl());
         Coroutine Laser = StartCoroutine(GenerateLasers());
+        yield return new WaitForSeconds(gamePlayTime + 2f);
 
         // 게임 종료
-        yield return new WaitForSeconds(gamePlayTime + 2f);
         StopCoroutine(Level);
         StopCoroutine(Laser);
 

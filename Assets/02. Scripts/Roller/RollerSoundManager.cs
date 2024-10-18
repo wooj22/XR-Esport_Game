@@ -32,6 +32,11 @@ public class RollerSoundManager : MonoBehaviour
         sfxSource.PlayOneShot(clipToPlay);
     }
 
+    public void StopFSX()
+    {
+        sfxSource.Stop();
+    }
+
     /// 볼륨 페이드인
     private IEnumerator FadeInVolume()
     {

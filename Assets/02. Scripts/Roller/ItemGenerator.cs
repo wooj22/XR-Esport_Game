@@ -8,6 +8,7 @@ public class ItemGenerator : MonoBehaviour
     [SerializeField] float itemGenerateTime;
     [SerializeField] List<GameObject> itemList;
     [SerializeField] List<Transform> linePos;
+    public bool isGaming;
 
     [Header("Pulling")]
     [SerializeField] int poolSize;
@@ -16,6 +17,7 @@ public class ItemGenerator : MonoBehaviour
 
     private void Start()
     {
+        isGaming = false;
         PullingItem();
         InvokeRepeating("CreateItem", 0, itemGenerateTime);
     }
@@ -36,13 +38,16 @@ public class ItemGenerator : MonoBehaviour
     /// 아이템 활성화
     private void CreateItem()
     {
-        GameObject item = GetPooledItem();  // 아이템 가져오기
-
-        if (item != null)
+        if(isGaming)
         {
-            int posIndex = Random.Range(0, linePos.Count);        // 위치 지정
-            item.transform.position = linePos[posIndex].position;
-            item.SetActive(true);
+            GameObject item = GetPooledItem();  // 아이템 가져오기
+
+            if (item != null)
+            {
+                int posIndex = Random.Range(0, linePos.Count);        // 위치 지정
+                item.transform.position = linePos[posIndex].position;
+                item.SetActive(true);
+            }
         }
     }
 
@@ -59,5 +64,14 @@ public class ItemGenerator : MonoBehaviour
         }
 
         return null;  // 만약 사용할 수 있는 객체가 없으면 null 반환
+    }
+
+    /// 아이템 스피드 셋팅
+    public void ItemSpeedSetting(float speed)
+    {
+        for (int i = 0; i < pooledItems.Count; i++)
+        {
+            pooledItems[i].GetComponent<TwingController>().itemMoveSpeed = speed;
+        }
     }
 }

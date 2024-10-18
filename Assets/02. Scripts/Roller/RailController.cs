@@ -5,17 +5,20 @@ using UnityEngine;
 public class RailController : MonoBehaviour
 {
     [SerializeField] private Transform railStartPos;
-    [SerializeField] float railMoveSpeed;
-    public bool isMoving;
+    [SerializeField] public float railMoveSpeed;
+    public bool isGaming;
 
     private void Start()
     {
-        isMoving = false;
+        isGaming = false;
     }
 
     private void Update()
     {
-        this.transform.Translate(Vector3.back * railMoveSpeed);
+        if (isGaming)
+        {
+            this.transform.Translate(Vector3.back * railMoveSpeed);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -6,29 +6,44 @@ public class TwingController : MonoBehaviour
 {
     [SerializeField] ParticleSystem item;
     [SerializeField] ParticleSystem effect;
-    [SerializeField] float itemMoveSpeed;
+    [SerializeField] public float itemMoveSpeed;
+    private bool isMoving = true;
+    private RollerGameManager _rollerGameManager;
+    
+
+    private void Start()
+    {
+        _rollerGameManager = GameObject.Find("GameManager").GetComponent<RollerGameManager>();
+    }
 
     private void Update()
     {
-        this.transform.Translate(Vector3.back * itemMoveSpeed);
+        if (isMoving)
+        {
+            this.transform.Translate(Vector3.back * itemMoveSpeed);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
+            isMoving = false;
             item.Stop();
             effect.Play();
+            _rollerGameManager.HitItem();
             Invoke(nameof(SetOff), 3f);
         }
         else if (other.gameObject.name == "DeadLine")
         {
+            _rollerGameManager.LoseItem();
             this.gameObject.SetActive(false);
         }
     }
 
     private void SetOff()
     {
+        isMoving = true;
         this.gameObject.SetActive(false);
     }
 }

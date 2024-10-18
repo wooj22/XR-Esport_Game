@@ -8,7 +8,6 @@ public class RollerUIManager : MonoBehaviour
     [SerializeField] Text timerLabel;
     [SerializeField] Slider gaugeBar;
     [SerializeField] Text adviceLabel;
-    [SerializeField] Image adviceBackImage;
     [SerializeField] Image gameSuccessImage;
     [SerializeField] Image gameOverImage;
 
@@ -27,8 +26,7 @@ public class RollerUIManager : MonoBehaviour
     IEnumerator StartCountDownCoroutine(int startCount)
     {
         // 설명
-        adviceLabel.text = "레이저를 피해라!";
-        adviceBackImage.gameObject.SetActive(true);
+        adviceLabel.text = "아이템을 밟아라!";
         adviceLabel.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
 
@@ -40,7 +38,6 @@ public class RollerUIManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         adviceLabel.gameObject.SetActive(false);
-        adviceBackImage.gameObject.SetActive(false);
     }
 
     /// 타이머
