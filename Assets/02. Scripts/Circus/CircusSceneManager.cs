@@ -7,6 +7,6 @@ public class CircusSceneManager : MonoBehaviour
 {
     public void LoadMainMenuMap()
     {
-        SceneManager.LoadScene("MainMap");
+        SceneManager.LoadScene("MainMap_new");
     }
 }
