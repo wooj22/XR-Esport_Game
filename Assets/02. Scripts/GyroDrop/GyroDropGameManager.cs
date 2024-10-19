@@ -37,8 +37,9 @@ public class GyroDropGameManager : MonoBehaviour
     // [ 상태 플래그 ]
     private bool isRising = false;
     private bool gameEnded = false;          // 게임이 종료되었는지 여부
-    private bool hasPlayerEntered = false;   // 플레이어가 구멍에 들어갔는지 확인
+    // private bool hasPlayerEntered = false;   // 플레이어가 구멍에 들어갔는지 확인
     private bool pausedOnce = false;         // 50에서 한 번만 멈추기 위한 플래그
+    bool IsLower = false;            // 하강 여부 플래그
 
     // [ 회전 및 속도 ]
     private float RotationSpeed = 10f;     // 원판 회전 속도
@@ -208,24 +209,22 @@ public class GyroDropGameManager : MonoBehaviour
 
     private IEnumerator BlinkPlatform(GameObject piece)
     {
-        Renderer renderer = piece.GetComponent<Renderer>();
-        // Collider collider = piece.GetComponent<Collider>();
-
-        // 발판 깜빡임 (5회 반복)
-        for (int i = 0; i < 5; i++)
+        PlatformPiece platformPiece = piece.GetComponent<PlatformPiece>();
+        if (platformPiece != null)
         {
-            renderer.enabled = !renderer.enabled;
-            yield return new WaitForSeconds(0.5f);
+            platformPiece.StartBlinking(0.5f, 5); // 깜빡임 함수 호출
         }
 
-        // 구멍 생성
-        renderer.enabled = false;
-        // collider.enabled = false;
+        // 구멍이 생성된 후 하강 가능
+        // CanLower = true;
 
         yield return new WaitForSeconds(5f); // 5초 후 닫힘 
 
-        renderer.enabled = true;
-        // collider.enabled = true;
+        // 다시 발판을 보이게 하고 충돌 가능하게 함
+        piece.GetComponent<Renderer>().enabled = true;
+        piece.GetComponent<Collider>().enabled = false; 
+
+        // CanLower = false;
     }
 
 
@@ -278,17 +277,20 @@ public class GyroDropGameManager : MonoBehaviour
     // --------------------------------------------------------------------------------------------------------------
     // ★ [ 충돌 관련 ] ★ -----------------------------------------------------------------------------------
 
+    /*
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !hasPlayerEntered)
+        if (other.CompareTag("Player") && CanLower && !hasPlayerEntered)
         {
             hasPlayerEntered = true; // 한 번만 처리
             Debug.Log("구멍 밟음! 5% 하강합니다.");
             LowerHeight();
         }
+        Debug.Log("충돌은 됨.");
     }
+    */
 
-    private void LowerHeight()
+    public void LowerHeight()
     {
         float currentY = cameraObject.transform.position.y;
         float lowerY = currentY - (TargetYPosition * LowerPercentage);
