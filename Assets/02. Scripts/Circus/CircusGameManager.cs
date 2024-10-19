@@ -59,18 +59,19 @@ public class CircusGameManager : MonoBehaviour
         _circusUIManager.StartCountDown(5);
         yield return new WaitForSeconds(8f);
         _circusUIManager.StartTimer(gamePlayTime);
-        StartCoroutine(EndCountDownSound(gamePlayTime));
+        StartCoroutine(EndCountDownSound(gamePlayTime + 2f)); // 연산차이 2초
 
         // 게임 시작
         Coroutine Level = StartCoroutine(LevelControl());
         Coroutine Laser = StartCoroutine(GenerateLasers());
-        yield return new WaitForSeconds(gamePlayTime + 2f);
+        yield return new WaitForSeconds(gamePlayTime + 2f); // 연산차이 2초
 
         // 게임 종료
         StopCoroutine(Level);
         StopCoroutine(Laser);
 
         // 게임 결과 확인
+        yield return new WaitForSeconds(1f);
         CheckGameResult();
         yield return new WaitForSeconds(5f);
 
@@ -81,7 +82,7 @@ public class CircusGameManager : MonoBehaviour
     /// 종료 10초 전 카운트다운
     IEnumerator EndCountDownSound(float playTime)
     {
-        yield return new WaitForSeconds(playTime - 8f);
+        yield return new WaitForSeconds(playTime - 10f);
         _circusSoundManager.PlaySFX("SFX_10Count");
         yield return new WaitForSeconds(10f);
         _circusSoundManager.StopSFX();
@@ -91,19 +92,19 @@ public class CircusGameManager : MonoBehaviour
     IEnumerator LevelControl()
     {
         // 30초
-        yield return new WaitForSeconds(levelUpTime[0]);
+        yield return new WaitForSeconds(levelUpTime[0]);     
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
 
         // 50초
-        yield return new WaitForSeconds(levelUpTime[1]-levelUpTime[0]);
+        yield return new WaitForSeconds(levelUpTime[1]-levelUpTime[0] +1f); // 연산차이 1초
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
 
         // 40초
-        yield return new WaitForSeconds(levelUpTime[2] - levelUpTime[1]);
+        yield return new WaitForSeconds(levelUpTime[2] - levelUpTime[1] +1f); // 연산차이 1초
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];

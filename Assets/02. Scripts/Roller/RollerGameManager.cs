@@ -48,11 +48,11 @@ public class RollerGameManager : MonoBehaviour
         currenLevel = 1;
         LevelSetting(currenLevel);
         MoveSetting(true);
-        yield return new WaitForSeconds(levelSwitchTime[0]);
+        yield return new WaitForSeconds(levelSwitchTime[0] + 2f);   // 연산차이 2초
 
         currenLevel = 2;
         LevelSetting(currenLevel);
-        yield return new WaitForSeconds(levelSwitchTime[1]);
+        yield return new WaitForSeconds(levelSwitchTime[1] + 1f);  // 연산차이 1초
 
         currenLevel = 3;
         LevelSetting(currenLevel);
@@ -67,6 +67,7 @@ public class RollerGameManager : MonoBehaviour
         itemCtrl.GetComponent<ItemGenerator>().ItemSpeedSetting(0.1f);
 
         // 게임 결과 확인
+        yield return new WaitForSeconds(1f);
         CheckGameResult();
         yield return new WaitForSeconds(4f);
 
