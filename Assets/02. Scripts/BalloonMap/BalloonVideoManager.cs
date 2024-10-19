@@ -23,9 +23,9 @@ public class BalloonVideoManager : MonoBehaviour
         videoPlayer_right.prepareCompleted += OnVideoPrepared3;
 
         // 비디오 파일 로드 및 준비
-        videoPlayer_front.url = Application.streamingAssetsPath + "/balloon_front_video.mp4";
-        videoPlayer_left.url = Application.streamingAssetsPath + "/balloon_left_right_video.mp4";
-        videoPlayer_right.url = Application.streamingAssetsPath + "/balloon_left_right_video.mp4";
+        videoPlayer_front.url = Application.streamingAssetsPath + "/balloon_front.mp4";
+        videoPlayer_left.url = Application.streamingAssetsPath + "/balloon_left_right.mp4";
+        videoPlayer_right.url = Application.streamingAssetsPath + "/balloon_left_right.mp4";
 
         videoPlayer_front.Prepare();
         videoPlayer_left.Prepare();
