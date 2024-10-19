@@ -20,6 +20,8 @@ public class PlatformPiece : MonoBehaviour
 
     private IEnumerator BlinkRoutine(float blinkDuration, int blinkCount)
     {
+        pieceCollider.enabled = false;
+
         for (int i = 0; i < blinkCount; i++)
         {
             pieceRenderer.enabled = !pieceRenderer.enabled; // 발판 깜빡임
@@ -33,10 +35,9 @@ public class PlatformPiece : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && pieceRenderer.enabled == false) // 투명할 때만 충돌 처리
+        if (other.CompareTag("Player") && pieceRenderer.enabled == false ) 
         {
-            // 카메라 하강 처리
-            // FindObjectOfType<GyroDropGameManager>().LowerHeight();
+            FindObjectOfType<GyroDropGameManager>().HandleCollision();
         }
     }
 }

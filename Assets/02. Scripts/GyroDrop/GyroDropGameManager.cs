@@ -36,15 +36,15 @@ public class GyroDropGameManager : MonoBehaviour
 
     // [ 상태 플래그 ]
     private bool isRising = false;
-    private bool gameEnded = false;          // 게임이 종료되었는지 여부
-    // private bool hasPlayerEntered = false;   // 플레이어가 구멍에 들어갔는지 확인
-    private bool pausedOnce = false;         // 50에서 한 번만 멈추기 위한 플래그
-    bool IsLower = false;            // 하강 여부 플래그
+    private bool gameEnded = false;           // 게임이 종료되었는지 여부
+    private bool pausedOnce = false;          // 50에서 한 번만 멈추기 위한 플래그
+    public bool isCollisionDetected = false;  // 충돌 발생 여부
+
 
     // [ 회전 및 속도 ]
     private float RotationSpeed = 10f;     // 원판 회전 속도
-    private int RotationDirection = 1;  // 1: 시계 방향, -1: 반시계 방향
-    private float riseSpeed;  // 카메라 상승 속도
+    private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
+    private float riseSpeed;               // 카메라 상승 속도
 
 
 
@@ -59,12 +59,9 @@ public class GyroDropGameManager : MonoBehaviour
 
         Invoke("StartRising", 5f);    // 5초 후 카메라 1차 상승 시작
         
-        StartCoroutine(GameTimer());  
-
         StartCoroutine(PlatformHoleRoutine());
 
-        // Y 좌표가 50 이상일 때부터 회전 방향을 변경하는 루틴 시작
-        StartCoroutine(ChangeRotationDirectionRoutine());
+        StartCoroutine(ChangeRotationDirectionRoutine()); // Y 좌표가 50 이상일 때부터 회전 방향 변경 루틴 시작
 
     }
 
@@ -77,18 +74,15 @@ public class GyroDropGameManager : MonoBehaviour
 
             UpdateDiskMaterial(); // 높이에 따라 메터리얼과 속도 변경
 
-            // 슬라이더 업데이트 (0에서 1로 비율 계산)
-            HeightSlider.value = (cameraObject.transform.position.y / TargetYPosition);
-
-            // 타이머 텍스트 업데이트
-            UpdateTimerText();
+            HeightSlider.value = (cameraObject.transform.position.y / TargetYPosition); // 슬라이더 업데이트 (0에서 1로 비율 계산)
+            UpdateTimerText();                                                          // 타이머 텍스트 업데이트
         }
 
-        // 최고 높이에 도달했을 때 : 원판 메우기 
         if (cameraObject.transform.position.y >= TargetYPosition) 
         {
-            RestoreAllPlatformPieces(); 
+            RestoreAllPlatformPieces();  // 최고 높이에 도달했을 때 : 원판 메우기 
         }
+
     }
 
 
@@ -101,6 +95,7 @@ public class GyroDropGameManager : MonoBehaviour
             if (remainingTime <= 0)
             {
                 remainingTime = 0;  // 타이머가 음수로 내려가지 않도록 0으로 고정
+                StartCoroutine(GameOver());
             }
             else
             {
@@ -135,7 +130,6 @@ public class GyroDropGameManager : MonoBehaviour
                 pausedOnce = true; 
             }
 
-
             // 카메라와 원판을 계속 이동
             MoveCameraAndDisk(currentY + riseSpeed * Time.deltaTime);
             yield return null;
@@ -146,7 +140,7 @@ public class GyroDropGameManager : MonoBehaviour
     }
 
 
-    // ★ [ 카메라 - 원판 위치 ] 
+    // ★ [ 카메라 - 원판 위치 ]  ------------------------------------------------------------------------------------------------
     // 
     private void MoveCameraAndDisk(float newY)
     {
@@ -156,10 +150,15 @@ public class GyroDropGameManager : MonoBehaviour
         XRoom.transform.position = new Vector3(XRoom.transform.position.x, newY, XRoom.transform.position.z); 
     }
 
-    
+
+
+    // ----------------------------------------------------------------------------------------------------------------
+    // ★ [ 원판 관련 ] -------------------------------------------------------------------------------------
 
     private IEnumerator PlatformHoleRoutine()
     {
+        isCollisionDetected = false; // 루틴 시작 시 충돌 플래그 초기화
+
         while (!gameEnded)
         {
             if (cameraObject.transform.position.y >= 40f)  // Y 좌표가 40 이상일 때만 구멍 생성
@@ -184,50 +183,41 @@ public class GyroDropGameManager : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(10f);
+
+            isCollisionDetected = false; // 충돌 플래그 초기화
         }
     }
+
 
     // ★ 높이에 따라 구멍 개수 결정
     private int GetNumberOfHolesBasedOnHeight()
     {
         float height = cameraObject.transform.position.y;
 
-        if (height >= 300f)
-        {
-            return Random.Range(2, 4); // 2개 또는 3개
-        }
-        else if (height >= 100f)
-        {
-            return Random.Range(1, 3); // 1개 또는 2개
-        }
-        else
-        {
-            return 1; // 기본 1개
-        }
+        if      (height >= 300f) { return Random.Range(2, 4);  } // 2개 또는 3개
+        else if (height >= 100f) { return Random.Range(1, 3); } // 1개 또는 2개
+        else                     { return 1; } // 기본 1개
     }
 
 
+    // ★ 원판 깜빡임 함수 호출 (5초 간격)
     private IEnumerator BlinkPlatform(GameObject piece)
     {
         PlatformPiece platformPiece = piece.GetComponent<PlatformPiece>();
         if (platformPiece != null)
         {
-            platformPiece.StartBlinking(0.5f, 5); // 깜빡임 함수 호출
+            platformPiece.StartBlinking(0.5f, 5); 
         }
 
-        // 구멍이 생성된 후 하강 가능
-        // CanLower = true;
+        yield return new WaitForSeconds(5f); 
 
-        yield return new WaitForSeconds(5f); // 5초 후 닫힘 
-
-        // 다시 발판을 보이게 하고 충돌 가능하게 함
-        piece.GetComponent<Renderer>().enabled = true;
+        piece.GetComponent<Renderer>().enabled = true;   // 다시 발판을 보이게 하고 충돌 가능하게 함
         piece.GetComponent<Collider>().enabled = false; 
 
-        // CanLower = false;
     }
 
 
+    // ★ 원판 색상 변경 
     private void UpdateDiskMaterial()
     {
         float heightPercentage = cameraObject.transform.position.y / TargetYPosition;
@@ -255,46 +245,50 @@ public class GyroDropGameManager : MonoBehaviour
         {
             if (cameraObject.transform.position.y >= 50f)
             {
-                RotationDirection *= -1;  // 회전 방향 변경
+                RotationDirection *= -1;  
                 Debug.Log("회전 방향 변경! 현재 방향: " + (RotationDirection == 1 ? "시계" : "반시계"));
             }
 
-            float randomWaitTime = Random.Range(8f, 12f);  // 8~12초 사이 랜덤 대기
+            float randomWaitTime = Random.Range(8f, 12f);  
             yield return new WaitForSeconds(randomWaitTime);
         }
     }
 
-    
-    // ★ [ 시간 초과 시 게임 오버 ] 
-    private IEnumerator GameTimer()
+
+    // ----------------------------------------------------------------------------------------------------------
+    // ★ [ 충돌 발생 시 호출되는 함수 ] ★
+    public void HandleCollision()
     {
-        yield return new WaitForSeconds(ClearTimeLimit);
-
-        if (!gameEnded) StartCoroutine(GameOver());
-    }
-
-
-    // --------------------------------------------------------------------------------------------------------------
-    // ★ [ 충돌 관련 ] ★ -----------------------------------------------------------------------------------
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && CanLower && !hasPlayerEntered)
+        if (!isCollisionDetected)
         {
-            hasPlayerEntered = true; // 한 번만 처리
-            Debug.Log("구멍 밟음! 5% 하강합니다.");
-            LowerHeight();
-        }
-        Debug.Log("충돌은 됨.");
-    }
-    */
+            isCollisionDetected = true;    // 첫 충돌만 인식되도록 
+            Debug.Log("충돌 발생: 하강 시작!");
 
-    public void LowerHeight()
+            StartCoroutine(LowerHeight()); // 하강 실행
+        }
+    }
+
+    // ★ 충돌 시, 하강 
+    // 
+    private IEnumerator LowerHeight()
     {
         float currentY = cameraObject.transform.position.y;
-        float lowerY = currentY - (TargetYPosition * LowerPercentage);
-        MoveCameraAndDisk(Mathf.Max(lowerY, 0)); // 최소 높이 제한
+        float targetY = currentY - (TargetYPosition * LowerPercentage);
+        targetY = Mathf.Max(targetY, 0); // 최소 높이 제한
+
+        float duration = 2f; // 하강에 걸릴 시간 (2초)
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            float newY = Mathf.Lerp(currentY, targetY, elapsedTime / duration);
+            MoveCameraAndDisk(newY);
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        MoveCameraAndDisk(targetY); // 마지막 위치로 정확히 이동
     }
 
 
@@ -316,7 +310,7 @@ public class GyroDropGameManager : MonoBehaviour
         Debug.Log("게임 오버! 5초 후 천천히 하강합니다.");
 
         yield return new WaitForSeconds(5f);
-        StartCoroutine(Drop(1)); 
+        StartCoroutine(Drop(5)); 
     }
 
     private IEnumerator Drop(float speedMultiplier)
@@ -329,14 +323,12 @@ public class GyroDropGameManager : MonoBehaviour
         Debug.Log("하강 완료.");
     }
 
-
-    // 모든 조각을 원상복구하는 메서드
+    // ★ 모든 조각 원상복구(보이도록)
     private void RestoreAllPlatformPieces()
     {
         foreach (GameObject piece in platformPieces)
         {
             piece.GetComponent<Renderer>().enabled = true; // 조각을 보이게 함 
-            // piece.GetComponent<Collider>().enabled = true; // 상호작용 가능하게 함 
         }
     }
 }
