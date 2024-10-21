@@ -39,6 +39,7 @@ public class BalloonMapManager : MonoBehaviour
 
     // [ 게임 클리어 시, 인형 떨어짐 관련 ]
     public GameObject Doll;
+    public GameObject Firework;
     private List<GameObject> dollObjects = new List<GameObject>(); // 자식 오브젝트 리스트
 
     // ------------------------------------------------------------------------------------------------------------
@@ -138,9 +139,9 @@ public class BalloonMapManager : MonoBehaviour
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
 
-        DropDall();
+        Invoke("DropDoll", 1f);
 
-        Invoke("ReturnToMainScene", 5f); 
+        Invoke("ReturnToMainScene", 7f); 
     }
 
     // ★ 게임 오버 처리 (제한시간 내에 실패했을 때)
@@ -324,7 +325,7 @@ public class BalloonMapManager : MonoBehaviour
 
     // [ 게임 클리어 시 : 인형이 떨어짐 ]
     // 
-    public void DropDall()
+    public void DropDoll()
     {
         // 혹시 모르니 모든 풍선을 끌까...?
 
@@ -333,6 +334,8 @@ public class BalloonMapManager : MonoBehaviour
 
         if (Barricade_Clear_Fail != null) Barricade_Clear_Fail.SetActive(true);
         if (Barricade_Clear != null) Barricade_Clear.SetActive(true);
+
+        if(Firework != null) Firework.SetActive(true);
 
         // 오브젝트 활성화 및 랜덤한 힘과 회전 적용
         foreach (GameObject obj in dollObjects)
