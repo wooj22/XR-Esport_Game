@@ -40,25 +40,26 @@ public class IntroManager : MonoBehaviour
         while (true)
         {
             spoutCamera.transform.Translate(Vector3.forward * spoutMoveSpeed);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
             if(spoutCamera.transform.position.z >= -1f)
             {
                 break;
             }
         }
+        spoutCamera.transform.position = Vector3.zero;
     }
 
     /// 페이드아웃 연출
     IEnumerator FadeOut()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         _introSoundManager.StopBGM();
 
         float fadeCount = 0;
         while(fadeCount < 1.0f)
         {
             fadeCount += 0.01f;
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.005f);
 
             fade_front.color = new Color(0, 0, 0, fadeCount);
             fade_right.color = new Color(0, 0, 0, fadeCount);
