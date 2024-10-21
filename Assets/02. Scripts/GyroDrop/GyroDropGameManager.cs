@@ -14,6 +14,7 @@ public class GyroDropGameManager : MonoBehaviour
     // [ UI 요소 ]
     public Text TimerText;                 // 타이머 텍스트
     public Slider HeightSlider;             // 높이 슬라이더
+    public Text WarningText;       // 경고 메시지 UI 텍스트
 
     // 타이머 변수
     private float remainingTime;
@@ -39,6 +40,8 @@ public class GyroDropGameManager : MonoBehaviour
     private bool gameEnded = false;           // 게임이 종료되었는지 여부
     private bool pausedOnce = false;          // 50에서 한 번만 멈추기 위한 플래그
     public bool isCollisionDetected = false;  // 충돌 발생 여부
+    private bool warningDisplayed = false;  // 경고 메시지 1회 출력 플래그
+    private bool isCollisionOngoing = false;
 
 
     // [ 회전 및 속도 ]
@@ -46,7 +49,8 @@ public class GyroDropGameManager : MonoBehaviour
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
     private float riseSpeed;               // 카메라 상승 속도
 
-
+    // [ 사운드 ]
+    public AudioSource warningSound; // 경고음 사운드
 
     void Start()
     {
@@ -238,6 +242,7 @@ public class GyroDropGameManager : MonoBehaviour
         }
     }
 
+
     // ★ 회전 방향을 8~12초 사이 랜덤 간격으로 변경하는 루틴
     private IEnumerator ChangeRotationDirectionRoutine()
     {
@@ -256,7 +261,8 @@ public class GyroDropGameManager : MonoBehaviour
 
 
     // ----------------------------------------------------------------------------------------------------------
-    // ★ [ 충돌 발생 시 호출되는 함수 ] ★
+    // ★ [ 충돌 발생 시 호출되는 함수 ] ★ ---------------------------------------------------------------------
+    
     public void HandleCollision()
     {
         if (!isCollisionDetected)
@@ -276,7 +282,7 @@ public class GyroDropGameManager : MonoBehaviour
         float targetY = currentY - (TargetYPosition * LowerPercentage);
         targetY = Mathf.Max(targetY, 0); // 최소 높이 제한
 
-        float duration = 2f; // 하강에 걸릴 시간 (2초)
+        float duration = 1f; // 하강에 걸릴 시간 (1초)
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -290,6 +296,68 @@ public class GyroDropGameManager : MonoBehaviour
 
         MoveCameraAndDisk(targetY); // 마지막 위치로 정확히 이동
     }
+
+
+    // [ 원판 중간에 서 있을 때 "center" 충돌 ] --------------------------------------------------------------------------
+
+    // 플레이어와 첫 충돌 시 호출
+    public void OnPlayerCollidedWithCenter()
+    {
+        if (!warningDisplayed)
+        {
+            warningDisplayed = true;
+            isCollisionOngoing = true;
+            // warningSound.Play();
+            // WarningText.text = "5초 내로 원판으로 올라와주세요!";
+            print("5초 내로 원판으로 올라와주세요!");
+            // WarningText.gameObject.SetActive(true);
+
+            StartCoroutine(WaitAndCheckCollision(5f));
+        }
+    }
+
+    // 현재 충돌 중인 플레이어가 남아있는지 확인
+    public void CheckCollisionStatus(int remainingCollisions)
+    {
+        if (remainingCollisions == 0)
+        {
+            isCollisionOngoing = false;
+            warningDisplayed = false; // 모든 충돌이 종료되면 초기화
+        }
+    }
+
+    // 5초 대기 후 충돌 여부 확인
+    private IEnumerator WaitAndCheckCollision(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        if (isCollisionOngoing)
+        {
+            StartCoroutine(ContinuousLowering());
+        }
+
+        // WarningText.gameObject.SetActive(false);
+    }
+
+    // 충돌 중일 때 카메라와 원판 하강
+    private IEnumerator ContinuousLowering()
+    {
+        while (isCollisionOngoing && !gameEnded)
+        {
+            print("센터에 서있으므로 하강합니다.");
+            float newY = cameraObject.transform.position.y - (TargetYPosition * LowerPercentage * Time.deltaTime);
+            MoveCameraAndDisk(Mathf.Max(newY, 0));
+
+            if (cameraObject.transform.position.y <= 30)
+            {
+                StartCoroutine(GameOver());
+                break;
+            }
+
+            yield return null;
+        }
+    }
+
 
 
     // --------------------------------------------------------------------------------------------------------------
