@@ -11,6 +11,9 @@ public class IntroManager : MonoBehaviour
     [SerializeField] GameObject spoutCamera;
     [SerializeField] float spoutMoveSpeed;
 
+    [Header ("Front")]
+    [SerializeField] Animator frontDoor;
+
     [Header("FadeOutImage")]
     [SerializeField] Image fade_front;
     [SerializeField] Image fade_right;
@@ -33,6 +36,7 @@ public class IntroManager : MonoBehaviour
         Debug.Log("인트로 시작");
         StartCoroutine(MovingSpoutCamera());
         StartCoroutine(FadeOut());
+        frontDoor.SetBool("IntroStart", true);
     }
 
     /// 카메라 앞으로 이동
