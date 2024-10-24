@@ -447,7 +447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &93993732
 Transform:
   m_ObjectHideFlags: 0
@@ -5138,7 +5138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &969424272
 Transform:
   m_ObjectHideFlags: 0
@@ -5603,7 +5603,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006970367}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: c279812c871f6ea40b0ac8556d4d01f3, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 30444fae25880654cb41e92b583291c3, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -6779,7 +6779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b909030b30fa9498cb74ed01a387ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensorEnum: 0
+  sensorEnum: 4
   sensorManager: {fileID: 1217305850}
   playerPrefab: {fileID: 6545313247437923863, guid: c507c105e3ca28d4da629301a320d621,
     type: 3}
@@ -8355,7 +8355,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1686104857}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: c279812c871f6ea40b0ac8556d4d01f3, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 2d4ce2fa2e2243749ab0bf6b67086a20, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -8814,7 +8814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1800593220
 Transform:
   m_ObjectHideFlags: 0
@@ -10010,7 +10010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2113900931
 Transform:
   m_ObjectHideFlags: 0
@@ -10565,7 +10565,7 @@ PrefabInstance:
     - target: {fileID: 916107929137951371, guid: f6e7e872ece70d14484933b4867d793a,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2212448269674632824, guid: f6e7e872ece70d14484933b4867d793a,
         type: 3}
