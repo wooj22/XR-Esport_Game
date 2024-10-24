@@ -13,6 +13,7 @@ public class RollerGameManager : MonoBehaviour
     [SerializeField] List<float> levelSwitchTime;
     [SerializeField] List<float> speedList;
     [SerializeField] GameObject itemCtrl;
+    [SerializeField] GameObject startItems;
     [SerializeField] List<GameObject> railCtrlList;
 
     [Header("Managers")]
@@ -24,6 +25,7 @@ public class RollerGameManager : MonoBehaviour
     {
         RollerMapStartSetting();
         StartCoroutine(RollerGame());
+        startItems.gameObject.SetActive(false);
     }
 
     /*-------------- Game -------------------*/
@@ -46,6 +48,7 @@ public class RollerGameManager : MonoBehaviour
 
         // 게임 진행
         currenLevel = 1;
+        startItems.gameObject.SetActive(true);
         LevelSetting(currenLevel);
         MoveSetting(true);
         yield return new WaitForSeconds(levelSwitchTime[0] + 2f);   // 연산차이 2초
@@ -56,7 +59,7 @@ public class RollerGameManager : MonoBehaviour
 
         currenLevel = 3;
         LevelSetting(currenLevel);
-        yield return new WaitForSeconds(levelSwitchTime[1] - 10f);
+        yield return new WaitForSeconds(levelSwitchTime[1] - 10f + 1f); // 연산차이 1초
 
         // 종료 10초전
         StartCoroutine(EndCountDownSound());
