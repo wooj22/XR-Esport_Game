@@ -17,6 +17,9 @@ public class CircusGameManager : MonoBehaviour
     [SerializeField] List<float> levelUpTime;              // 레벨 분기 단위
     [SerializeField] List<float> laserCycleList;           // 3레벨 사이클주기 데이터
     [SerializeField] List<float> laserSpeedList;           // 3레벨 스피드 데이터
+    [SerializeField] GameObject bear;
+    [SerializeField] GameObject bearDancing;
+    [SerializeField] Animator bearAni;
 
     [Header("Managers")]
     [SerializeField] CircusUIManager _circusUIManager;
@@ -47,6 +50,10 @@ public class CircusGameManager : MonoBehaviour
 
         // UI 게이지 초기화
         _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
+
+        // 곰
+        bear.gameObject.SetActive(true);
+        bearDancing.gameObject.SetActive(false);
     }
 
     /// 게임 진행
@@ -73,9 +80,9 @@ public class CircusGameManager : MonoBehaviour
         // 게임 결과 확인
         yield return new WaitForSeconds(1f);
         CheckGameResult();
-        yield return new WaitForSeconds(5f);
 
         // 메인맵 복귀
+        yield return new WaitForSeconds(5f);
         StartCoroutine(ReturnMainMap());
     }
 
@@ -110,12 +117,23 @@ public class CircusGameManager : MonoBehaviour
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
     }
 
-    /// 레이저 생성
+    /// 레이저 생성, 곰돌이 애니메이션 제어
     IEnumerator GenerateLasers()
     {
+        bool aniContrl = true;
+
         while (true)
         {
             SpawnLaser();
+            if (aniContrl)
+            {
+                bearAni.SetTrigger("ThrowL");
+            }
+            else
+            {
+                bearAni.SetTrigger("ThrowR");
+            }
+            aniContrl = !aniContrl;
             yield return new WaitForSeconds(currentLaserCycle);
         }
     }
@@ -144,6 +162,8 @@ public class CircusGameManager : MonoBehaviour
             this.GetComponent<CircusDirector>().PlayFirecracker();
             _circusUIManager.GameSuccessUI();
             _circusSoundManager.PlaySFX("SFX_Circus_GameClear");
+            bear.gameObject.SetActive(false);
+            bearDancing.gameObject.SetActive(true);
             PlayCheerAnimation();
         }
         else
@@ -151,6 +171,7 @@ public class CircusGameManager : MonoBehaviour
             // 게임실패
             _circusUIManager.GameOverUI();
             _circusSoundManager.PlaySFX("SFX_Circus_GameOver");
+            bearAni.SetTrigger("Over");
         }
     }
 
