@@ -52,6 +52,10 @@ public class GyroDropGameManager : MonoBehaviour
     // [ 사운드 ]
     public AudioSource warningSound; // 경고음 사운드
 
+
+    [SerializeField] GyroDropSceneManager _gyrodropSceneManager;
+
+
     void Start()
     {
         Debug.Log("게임 시작! 원판 위로 올라오세요.");
@@ -369,7 +373,9 @@ public class GyroDropGameManager : MonoBehaviour
         Debug.Log("게임 클리어! 5초 후 빠르게 하강합니다.");
 
         yield return new WaitForSeconds(5f);
-        StartCoroutine(Drop(25)); 
+        StartCoroutine(Drop(25));
+
+        _gyrodropSceneManager.LoadMainMenuMap();
     }
 
     IEnumerator GameOver()
@@ -378,7 +384,9 @@ public class GyroDropGameManager : MonoBehaviour
         Debug.Log("게임 오버! 5초 후 천천히 하강합니다.");
 
         yield return new WaitForSeconds(5f);
-        StartCoroutine(Drop(5)); 
+        StartCoroutine(Drop(5));
+
+        _gyrodropSceneManager.LoadMainMenuMap();
     }
 
     private IEnumerator Drop(float speedMultiplier)
@@ -389,6 +397,7 @@ public class GyroDropGameManager : MonoBehaviour
             yield return null;
         }
         Debug.Log("하강 완료.");
+
     }
 
     // ★ 모든 조각 원상복구(보이도록)
