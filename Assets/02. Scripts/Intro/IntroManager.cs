@@ -7,8 +7,12 @@ using UnityEngine.UI;
 public class IntroManager : MonoBehaviour
 {
     [Header("SpoutCamera")]
+    [SerializeField] GameObject xRoom;
     [SerializeField] GameObject spoutCamera;
     [SerializeField] float spoutMoveSpeed;
+
+    [Header ("Front")]
+    [SerializeField] Animator frontDoor;
 
     [Header("FadeOutImage")]
     [SerializeField] Image fade_front;
@@ -32,6 +36,7 @@ public class IntroManager : MonoBehaviour
         Debug.Log("인트로 시작");
         StartCoroutine(MovingSpoutCamera());
         StartCoroutine(FadeOut());
+        frontDoor.SetBool("IntroStart", true);
     }
 
     /// 카메라 앞으로 이동
@@ -39,6 +44,7 @@ public class IntroManager : MonoBehaviour
     {
         while (true)
         {
+            xRoom.transform.Translate(Vector3.forward * spoutMoveSpeed);
             spoutCamera.transform.Translate(Vector3.forward * spoutMoveSpeed);
             yield return new WaitForSeconds(0.05f);
             if(spoutCamera.transform.position.z >= -1f)
@@ -46,13 +52,14 @@ public class IntroManager : MonoBehaviour
                 break;
             }
         }
+        xRoom.transform.position = Vector3.zero;
         spoutCamera.transform.position = Vector3.zero;
     }
 
     /// 페이드아웃 연출
     IEnumerator FadeOut()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2f);
         _introSoundManager.StopBGM();
 
         float fadeCount = 0;
