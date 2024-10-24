@@ -7,7 +7,7 @@ public class GyroDropGameManager : MonoBehaviour
 {
     // [ 게임 오브젝트 참조 ]
     public GameObject disk;                // 원판
-    public GameObject cameraObject;        // 카메라 
+    private GameObject cameraObject;        // 카메라 
     public GameObject XRoom;
     public GameObject[] platformPieces;    // 발판 조각들
 
@@ -58,6 +58,8 @@ public class GyroDropGameManager : MonoBehaviour
 
     void Start()
     {
+        cameraObject = GameObject.Find("SpoutCamera");
+
         Debug.Log("게임 시작! 원판 위로 올라오세요.");
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
