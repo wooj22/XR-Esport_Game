@@ -377,7 +377,7 @@ public class GyroDropGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         StartCoroutine(Drop(25));
 
-        _gyrodropSceneManager.LoadMainMenuMap();
+        
     }
 
     IEnumerator GameOver()
@@ -388,7 +388,6 @@ public class GyroDropGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
         StartCoroutine(Drop(5));
 
-        _gyrodropSceneManager.LoadMainMenuMap();
     }
 
     private IEnumerator Drop(float speedMultiplier)
@@ -399,6 +398,8 @@ public class GyroDropGameManager : MonoBehaviour
             yield return null;
         }
         Debug.Log("하강 완료.");
+
+        _gyrodropSceneManager.LoadMainMenuMap();
 
     }
 
