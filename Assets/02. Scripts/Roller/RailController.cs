@@ -17,7 +17,7 @@ public class RailController : MonoBehaviour
     {
         if (isGaming)
         {
-            this.transform.Translate(Vector3.back * railMoveSpeed);
+            this.transform.Translate(Vector3.back * railMoveSpeed * 1.2f);
         }
     }
 

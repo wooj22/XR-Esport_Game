@@ -11,7 +11,7 @@ public class CircusGameManager : MonoBehaviour
 
     [Header("MapData")]
     [SerializeField] float gamePlayTime;                   // 전체 게임 진행 시간 120초
-    [SerializeField] int maxLaserCount;                    // 전체 레이저 개수 29개
+    [SerializeField] float maxLaserCount;                  // 전체 레이저 발생 수
     [SerializeField] Transform laserParent;                // 레이저 생성 위치
     [SerializeField] List<GameObject> laserPrefabList;     // 겹 레이저 프리팹 3개
     [SerializeField] List<float> levelUpTime;              // 레벨 분기 단위
@@ -49,6 +49,7 @@ public class CircusGameManager : MonoBehaviour
         _circusUIManager.FadeInImage();
 
         // UI 게이지 초기화
+        maxLaserCount = (20f/laserCycleList[0])+ (20f / laserCycleList[1])+ (20f / laserCycleList[2]);
         _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
 
         // 곰
@@ -62,16 +63,16 @@ public class CircusGameManager : MonoBehaviour
         // 맵 셋팅 대기
         yield return new WaitForSeconds(5f);
 
-        // UI 5초 카운트다운 후 Timer 시작
+        // 시작 전 카운트다운
         _circusUIManager.StartCountDown(5);
         yield return new WaitForSeconds(8f);
-        _circusUIManager.StartTimer(gamePlayTime);
-        StartCoroutine(EndCountDownSound(gamePlayTime + 2f)); // 연산차이 2초
 
         // 게임 시작
         Coroutine Level = StartCoroutine(LevelControl());
         Coroutine Laser = StartCoroutine(GenerateLasers());
-        yield return new WaitForSeconds(gamePlayTime + 2f); // 연산차이 2초
+        _circusUIManager.StartTimer(gamePlayTime);
+        StartCoroutine(EndCountDownSound(gamePlayTime));
+        yield return new WaitForSeconds(gamePlayTime);
 
         // 게임 종료
         StopCoroutine(Level);
@@ -98,20 +99,14 @@ public class CircusGameManager : MonoBehaviour
     /// 레벨 컨트롤
     IEnumerator LevelControl()
     {
-        // 30초
+        // 2렙
         yield return new WaitForSeconds(levelUpTime[0]);     
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
 
-        // 50초
-        yield return new WaitForSeconds(levelUpTime[1]-levelUpTime[0] +1f); // 연산차이 1초
-        currentLevel++;
-        currentLaserCycle = laserCycleList[currentLevel - 1];
-        currentLaserSpeed = laserSpeedList[currentLevel - 1];
-
-        // 40초
-        yield return new WaitForSeconds(levelUpTime[2] - levelUpTime[1] +1f); // 연산차이 1초
+        // 3렙
+        yield return new WaitForSeconds(levelUpTime[1]);
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
@@ -145,9 +140,15 @@ public class CircusGameManager : MonoBehaviour
             // 1 level
             GameObject Laser = Instantiate(laserPrefabList[0], laserParent.position, laserPrefabList[0].transform.rotation, laserParent);
         }
+        else if(currentLevel == 2) 
+        {
+            // 2 level
+            GameObject laserPrefab = laserPrefabList[Random.Range(0, laserPrefabList.Count - 1)];
+            GameObject Laser = Instantiate(laserPrefab, laserParent.position, laserPrefab.transform.rotation, laserParent);
+        }
         else
         {
-            // 2, 3 level
+            // 3 level
             GameObject laserPrefab = laserPrefabList[Random.Range(0, laserPrefabList.Count)];
             GameObject Laser = Instantiate(laserPrefab, laserParent.position, laserPrefab.transform.rotation, laserParent);
         }
