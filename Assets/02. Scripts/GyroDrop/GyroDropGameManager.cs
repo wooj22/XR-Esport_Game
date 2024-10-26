@@ -7,7 +7,7 @@ public class GyroDropGameManager : MonoBehaviour
 {
     // [ 게임 오브젝트 참조 ]
     public GameObject disk;                // 원판
-    public GameObject cameraObject;        // 카메라 
+    private GameObject cameraObject;        // 카메라 
     public GameObject XRoom;
     public GameObject[] platformPieces;    // 발판 조각들
 
@@ -52,8 +52,14 @@ public class GyroDropGameManager : MonoBehaviour
     // [ 사운드 ]
     public AudioSource warningSound; // 경고음 사운드
 
+
+    [SerializeField] GyroDropSceneManager _gyrodropSceneManager;
+
+
     void Start()
     {
+        cameraObject = GameObject.Find("SpoutCamera");
+
         Debug.Log("게임 시작! 원판 위로 올라오세요.");
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
@@ -369,7 +375,9 @@ public class GyroDropGameManager : MonoBehaviour
         Debug.Log("게임 클리어! 5초 후 빠르게 하강합니다.");
 
         yield return new WaitForSeconds(5f);
-        StartCoroutine(Drop(25)); 
+        StartCoroutine(Drop(25));
+
+        
     }
 
     IEnumerator GameOver()
@@ -378,7 +386,8 @@ public class GyroDropGameManager : MonoBehaviour
         Debug.Log("게임 오버! 5초 후 천천히 하강합니다.");
 
         yield return new WaitForSeconds(5f);
-        StartCoroutine(Drop(5)); 
+        StartCoroutine(Drop(5));
+
     }
 
     private IEnumerator Drop(float speedMultiplier)
@@ -389,6 +398,9 @@ public class GyroDropGameManager : MonoBehaviour
             yield return null;
         }
         Debug.Log("하강 완료.");
+
+        _gyrodropSceneManager.LoadMainMenuMap();
+
     }
 
     // ★ 모든 조각 원상복구(보이도록)
