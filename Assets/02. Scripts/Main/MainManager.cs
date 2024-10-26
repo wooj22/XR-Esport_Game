@@ -15,8 +15,15 @@ public class MainManager : MonoBehaviour
     [SerializeField] Image fade_left;
     [SerializeField] Image fade_down;
 
+    [Header ("Spout Camera")]
+    [SerializeField] GameObject spoutCamera;
+
     public void Start()
     {
+        // 인트로 연산 느릴까봐 제어 추가
+        spoutCamera = GameObject.Find("SpoutCamera");
+        spoutCamera.transform.position = Vector3.zero;
+
         StartCoroutine(FadeIn());
     }
 
