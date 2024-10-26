@@ -15,6 +15,9 @@ public class GyroDropGameManager : MonoBehaviour
     public Text TimerText;                 // 타이머 텍스트
     public Slider HeightSlider;             // 높이 슬라이더
     public Text WarningText;       // 경고 메시지 UI 텍스트
+    public GameObject ArrowObject1; public GameObject ArrowObject2;
+    public Sprite Arrow;            // 화살표 : 기본 시계방향 
+    public Sprite Arrow_reverse;    // 시계반대방향 
 
     // 타이머 변수
     private float remainingTime;
@@ -69,7 +72,7 @@ public class GyroDropGameManager : MonoBehaviour
         remainingTime = ClearTimeLimit; // 남은 시간 초기화
 
         Invoke("StartRising", 5f);    // 5초 후 카메라 1차 상승 시작
-        
+
         StartCoroutine(PlatformHoleRoutine());
 
         StartCoroutine(ChangeRotationDirectionRoutine()); // Y 좌표가 50 이상일 때부터 회전 방향 변경 루틴 시작
@@ -122,6 +125,7 @@ public class GyroDropGameManager : MonoBehaviour
     private void StartRising()
     {
         isRising = true; // 상승 시작
+        
         StartCoroutine(RiseCoroutine()); // 카메라 상승 루틴 실행
     }
 
@@ -257,19 +261,49 @@ public class GyroDropGameManager : MonoBehaviour
         {
             if (cameraObject.transform.position.y >= 50f)
             {
-                RotationDirection *= -1;  
-                Debug.Log("회전 방향 변경! 현재 방향: " + (RotationDirection == 1 ? "시계" : "반시계"));
+                UpdateArrowSprites(); // 스프라이트 업데이트
+
+                // 회전 방향 변경 3초 전 화살표 활성화
+                ActivateArrows();
+
+                yield return new WaitForSeconds(3f); // 3초 대기 후 회전 방향 변경
+
+                // 회전 방향 변경
+                RotationDirection *= -1; // 시계 방향 ↔ 시계 반대 방향 전환
+                
+                DeactivateArrows();
+
             }
 
-            float randomWaitTime = Random.Range(8f, 12f);  
-            yield return new WaitForSeconds(randomWaitTime);
+            // 8~12초 사이에 회전 방향 변경
+            yield return new WaitForSeconds(Random.Range(8f, 12f));
+
         }
     }
 
+    // 화살표 활성화 함수
+    private void ActivateArrows()
+    {
+        ArrowObject1.SetActive(true); ArrowObject2.SetActive(true);
+    }
+
+    // 화살표 비활성화 함수
+    private void DeactivateArrows()
+    {
+        ArrowObject1.SetActive(false); ArrowObject2.SetActive(false);
+    }
+
+    // 회전 방향에 따라 화살표 스프라이트 설정 함수
+    private void UpdateArrowSprites()
+    {
+        Sprite selectedSprite = RotationDirection == 1 ? Arrow_reverse : Arrow;
+
+        ArrowObject1.GetComponent<Image>().sprite = selectedSprite; ArrowObject2.GetComponent<Image>().sprite = selectedSprite;
+    }
 
     // ----------------------------------------------------------------------------------------------------------
     // ★ [ 충돌 발생 시 호출되는 함수 ] ★ ---------------------------------------------------------------------
-    
+
     public void HandleCollision()
     {
         if (!isCollisionDetected)
