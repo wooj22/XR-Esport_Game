@@ -28,12 +28,12 @@ public class GyroDropGameManager : MonoBehaviour
 
     // [ 설정 상수 ]
     private const float TargetYPosition = 525f;  // 카메라 목표 Y 위치
-    private const float DiskCameraOffset = 53f;  // 원판과 카메라 간 오프셋
+    private const float DiskCameraOffset = 41f;  // 원판과 카메라 간 오프셋
     private const float PauseDuration = 5f;      // 상승 멈춤 시간
-    private const float TotalRiseDuration = 90f; // 전체 상승에 걸리는 시간
+    private const float TotalRiseDuration = 60f; // 전체 상승에 걸리는 시간
 
     private const float LowerPercentage = 0.05f; // 하강 비율 (5%)
-    private const float ClearTimeLimit = 120f;   // 게임 제한 시간 (2분)
+    private const float ClearTimeLimit = 90f;   // 게임 제한 시간 (1분30초)
 
     // [ 상태 플래그 ]
     private bool isRising = false;
@@ -45,7 +45,7 @@ public class GyroDropGameManager : MonoBehaviour
 
 
     // [ 회전 및 속도 ]
-    private float RotationSpeed = 10f;     // 원판 회전 속도
+    private float RotationSpeed = 15f;     // 원판 회전 속도
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
     private float riseSpeed;               // 카메라 상승 속도
 
@@ -58,7 +58,8 @@ public class GyroDropGameManager : MonoBehaviour
 
     void Start()
     {
-        cameraObject = GameObject.Find("SpoutCamera");
+        // cameraObject = GameObject.Find("SpoutCamera"); // 시연 시, 필요 
+        cameraObject = GameObject.Find("SpoutCamera_Sample");
 
         Debug.Log("게임 시작! 원판 위로 올라오세요.");
 
@@ -399,8 +400,7 @@ public class GyroDropGameManager : MonoBehaviour
         }
         Debug.Log("하강 완료.");
 
-        _gyrodropSceneManager.LoadMainMenuMap();
-
+        StartCoroutine(ReturnMainMap());
     }
 
     // ★ 모든 조각 원상복구(보이도록)
@@ -410,5 +410,18 @@ public class GyroDropGameManager : MonoBehaviour
         {
             piece.GetComponent<Renderer>().enabled = true; // 조각을 보이게 함 
         }
+    }
+
+
+    // --------------------------------------------------------------------------------------------------------------
+
+    // 메인 맵 복귀
+    IEnumerator ReturnMainMap()
+    {
+        // _gyrodropUIManager.FadeOutImage();
+        // _gyrodropSoundManager.StopBGM();
+
+        yield return new WaitForSeconds(5f);
+        _gyrodropSceneManager.LoadMainMenuMap();
     }
 }
