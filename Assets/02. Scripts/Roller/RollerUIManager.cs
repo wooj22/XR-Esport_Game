@@ -114,7 +114,7 @@ public class RollerUIManager : MonoBehaviour
     private IEnumerator MoveImage(RectTransform rectTransform)
     {
         float startY = -300f;
-        float endY = 0f;
+        float endY = 100f;
         float duration = 1.5f;
         float elapsedTime = 0f;
 

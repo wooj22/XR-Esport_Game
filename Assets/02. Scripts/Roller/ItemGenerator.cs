@@ -19,7 +19,8 @@ public class ItemGenerator : MonoBehaviour
     {
         isGaming = false;
         PullingItem();
-        InvokeRepeating("CreateItem", 0, itemGenerateTime);
+        StartCoroutine(CreateItem2());
+        //InvokeRepeating("CreateItem", 0, itemGenerateTime);
     }
 
     /// 오브젝트 풀링
@@ -35,7 +36,27 @@ public class ItemGenerator : MonoBehaviour
         }
     }
 
-    /// 아이템 활성화
+    /// 아이템 활성화 코루틴
+    IEnumerator CreateItem2()
+    {
+        while (true)
+        {
+            if (isGaming)
+            {
+                GameObject item = GetPooledItem();  // 아이템 가져오기
+
+                if (item != null)
+                {
+                    int posIndex = Random.Range(0, linePos.Count);        // 위치 지정
+                    item.transform.position = linePos[posIndex].position;
+                    item.SetActive(true);
+                }
+            }
+            yield return new WaitForSeconds(itemGenerateTime);
+        }
+    }
+
+    /// 아이템 활성화 - 인보크가 1초 이하는 잘 못따라오는 것 같아서 코루틴으로 수정
     private void CreateItem()
     {
         if(isGaming)
@@ -73,5 +94,11 @@ public class ItemGenerator : MonoBehaviour
         {
             pooledItems[i].GetComponent<TwingController>().itemMoveSpeed = speed;
         }
+    }
+
+    /// 아이템 생성 시간 셋팅
+    public void SetItemGanerateItme(float time)
+    {
+        this.itemGenerateTime = time;
     }
 }
