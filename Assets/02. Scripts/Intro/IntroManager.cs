@@ -46,7 +46,7 @@ public class IntroManager : MonoBehaviour
         {
             xRoom.transform.Translate(Vector3.forward * spoutMoveSpeed);
             spoutCamera.transform.Translate(Vector3.forward * spoutMoveSpeed);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.08f);
             if(spoutCamera.transform.position.z >= -1f)
             {
                 break;
@@ -59,7 +59,7 @@ public class IntroManager : MonoBehaviour
     /// 페이드아웃 연출
     IEnumerator FadeOut()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(10f);
         _introSoundManager.StopBGM();
 
         float fadeCount = 0;
@@ -74,8 +74,7 @@ public class IntroManager : MonoBehaviour
             fade_down.color = new Color(0, 0, 0, fadeCount);
         }
 
-        spoutCamera.transform.position = Vector3.zero;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         _introSceneManager.LoadMainMenuMap();
     }
 }
