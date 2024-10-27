@@ -5,13 +5,15 @@ using UnityEngine;
 public class RollerGameManager : MonoBehaviour
 {
     [Header("Levels")]
-    [SerializeField] int currenLevel;
+    [SerializeField] int currentLevel;
     [SerializeField] float currentSpeed;
+    [SerializeField] float currentGeneTime;
 
     [Header("MapData")]
     [SerializeField] float playTime;
     [SerializeField] List<float> levelSwitchTime;
     [SerializeField] List<float> speedList;
+    [SerializeField] List<float> itemGenerateTimeList;
     [SerializeField] GameObject itemCtrl;
     [SerializeField] GameObject startItems;
     [SerializeField] List<GameObject> railCtrlList;
@@ -47,19 +49,19 @@ public class RollerGameManager : MonoBehaviour
         _rollerUIManager.StartTimer(playTime);
 
         // 게임 진행
-        currenLevel = 1;
+        currentLevel = 1;
         startItems.gameObject.SetActive(true);
-        LevelSetting(currenLevel);
+        LevelSetting(currentLevel);
         MoveSetting(true);
-        yield return new WaitForSeconds(levelSwitchTime[0] + 2f);   // 연산차이 2초
+        yield return new WaitForSeconds(levelSwitchTime[0]); 
 
-        currenLevel = 2;
-        LevelSetting(currenLevel);
-        yield return new WaitForSeconds(levelSwitchTime[1] + 1f);  // 연산차이 1초
+        currentLevel = 2;
+        LevelSetting(currentLevel);
+        yield return new WaitForSeconds(levelSwitchTime[1]);
 
-        currenLevel = 3;
-        LevelSetting(currenLevel);
-        yield return new WaitForSeconds(levelSwitchTime[1] - 10f + 1f); // 연산차이 1초
+        currentLevel = 3;
+        LevelSetting(currentLevel);
+        yield return new WaitForSeconds(levelSwitchTime[1] - 10f);
 
         // 종료 10초전
         StartCoroutine(EndCountDownSound());
@@ -90,12 +92,27 @@ public class RollerGameManager : MonoBehaviour
     private void LevelSetting(int level)
     {
         currentSpeed = speedList[level - 1];
-        SpeedSetting(currentSpeed);
+        currentGeneTime = itemGenerateTimeList[currentLevel - 1];
+        ItemRailLevelSetting(currentSpeed);
+
+        if(level == 1)
+        {
+            return;
+        }
+        else
+        {
+            _rollerUIManager.LevelUpUI();
+            _rollerSoundManager.PlaySFX("SFX_LevelUp");
+        }
     }
 
-    /// 아이템, 레일 스피드 제어
-    private void SpeedSetting(float speed)
+    /// 아이템, 레일 레벨 제어
+    private void ItemRailLevelSetting(float speed)
     {
+        // 아이템 생성 주기
+        itemCtrl.GetComponent<ItemGenerator>().SetItemGanerateItme(currentGeneTime);
+
+        //아이템, 레일 스피드
         itemCtrl.GetComponent<ItemGenerator>().ItemSpeedSetting(speed);
         for (int i = 0; i < railCtrlList.Count; i++)
         {
