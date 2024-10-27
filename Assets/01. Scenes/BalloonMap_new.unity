@@ -938,7 +938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &93993732
 Transform:
   m_ObjectHideFlags: 0
@@ -9815,8 +9815,8 @@ GameObject:
   - component: {fileID: 856066299}
   - component: {fileID: 856066298}
   - component: {fileID: 856066297}
-  - component: {fileID: 856066296}
   - component: {fileID: 856066295}
+  - component: {fileID: 856066296}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -9842,7 +9842,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 100
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -9934,10 +9934,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 856066298}
   sfxSource: {fileID: 856066297}
-  guideSource: {fileID: 856066295}
-  bgmClip: {fileID: 8300000, guid: b6c84c4278e62fb4cbb9c7048816ef4e, type: 3}
-  sfxClip: {fileID: 8300000, guid: 1505d30bbaa5db941b98a2090e4a38c5, type: 3}
-  guideClip: {fileID: 8300000, guid: 696d98bb7482f954fa2de48d0eb4e35a, type: 3}
+  plusSource: {fileID: 856066295}
+  bgmClip: {fileID: 8300000, guid: 035d9986110792c42afe3e3cf895cd1a, type: 3}
+  BalloonClip: {fileID: 8300000, guid: 98b64f70f72fc7c4d927e663a3f7c288, type: 3}
+  EventBalloonClip: {fileID: 8300000, guid: fe91688b227171a4aa05562cd27577e9, type: 3}
+  GameClearClip: {fileID: 8300000, guid: 27ba10743cd321d4ebdf68df3f341913, type: 3}
+  GameOverClip: {fileID: 8300000, guid: d1edcac78ae6b5a4ea094b3bac3a653a, type: 3}
+  CountDownClip: {fileID: 8300000, guid: ef39df2df34632a4189a9ac7aec81ac7, type: 3}
 --- !u!82 &856066297
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9956,7 +9959,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 100
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -10052,7 +10055,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 100
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -26666,7 +26669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2113900931
 Transform:
   m_ObjectHideFlags: 0

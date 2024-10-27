@@ -30,6 +30,7 @@ public class BalloonMapManager : MonoBehaviour
 
     // [ 사운드 관련 ]
     [SerializeField] BalloonSoundManager _balloonSoundManager;
+    private bool isCountdown;
 
     // [ 게임 오버 시, 풍선 떨어짐 관련 ] 
     private string BalloonTag = "Balloon";
@@ -59,8 +60,8 @@ public class BalloonMapManager : MonoBehaviour
         balloonSlider.maxValue = totalBalloons;
         balloonSlider.value = 0;
 
-        // BGM 재생 및 안내 음성 실행
-        _balloonSoundManager.PlayBGMWithGuide(StartGameAfterGuide); // 안내 음성 기능 추가
+        // BGM 재생 
+        _balloonSoundManager.PlayBGM(); 
 
         // 게임 클리어 시, 인형들 할당 
         int childCount = Doll.transform.childCount;
@@ -69,11 +70,11 @@ public class BalloonMapManager : MonoBehaviour
             GameObject child = Doll.transform.GetChild(i).gameObject;
             dollObjects.Add(child); // 리스트에 추가
         }
-
+        gameStarted = true;
     }
 
-    // ★ 안내 음성이 끝난 후 호출될 함수: 게임을 시작
-    void StartGameAfterGuide()
+    // ★ 안내 문구 출력될 메소드 : 게임을 시작
+    void StartGameGuide()
     {
         Debug.Log("안내 음성이 끝났습니다. 게임을 시작합니다.");
         gameStarted = true; 
@@ -108,6 +109,11 @@ public class BalloonMapManager : MonoBehaviour
             gameDuration = 0; // 타이머가 음수로 내려가지 않도록 0으로 고정
             GameOver();
         }
+        else if(gameDuration <= 10 && !isCountdown)
+        {
+            isCountdown = true;
+            _balloonSoundManager.Play_CountDown();
+        }
     }
 
     void CheckEventBalloonTimer()
@@ -138,6 +144,7 @@ public class BalloonMapManager : MonoBehaviour
     {
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
+        _balloonSoundManager.Play_GameClear();
 
         Invoke("DropDoll", 1f);
 
@@ -150,6 +157,7 @@ public class BalloonMapManager : MonoBehaviour
         gameEnded = true;
         UpdateTimerUI();  // 타이머를 00:00으로 설정
         Debug.Log("게임 오버! 제한 시간 내에 모든 풍선을 터뜨리지 못했습니다.");
+        _balloonSoundManager.Play_GameOver();
 
         DropBalloon();
 
