@@ -6,24 +6,22 @@ public class BalloonSoundManager : MonoBehaviour
 {
     [SerializeField] AudioSource bgmSource;  // BGM 오디오 소스
     [SerializeField] AudioSource sfxSource;  // SFX 오디오 소스
-    [SerializeField] AudioSource guideSource; // 안내 음성 오디오 소스 
-
+    
     [SerializeField] AudioClip bgmClip;      // BGM 클립
-    [SerializeField] AudioClip sfxClip;      // SFX 클립
-    [SerializeField] AudioClip guideClip;    // 안내 음성 클립 
+    [SerializeField] AudioClip BalloonClip;      // SFX 클립 : 일반풍선
+    [SerializeField] AudioClip EventBalloonClip; // 이벤트 풍선 
 
-    private float originalBgmVolume;         // BGM 원래 볼륨 저장 변수
-    private System.Action onGuideComplete;   // 안내 음성이 끝난 후 호출될 콜백 함수
+    // [SerializeField] AudioSource guideSource; // 안내 음성 오디오 소스 
+    // [SerializeField] AudioClip guideClip;     // 안내 음성 클립 
+    // private float originalBgmVolume;          // BGM 원래 볼륨 저장 변수
+    // private System.Action onGuideComplete;    // 안내 음성이 끝난 후 호출될 콜백 함수
 
 
-    // BGM 재생 및 안내 음성 시작
-    public void PlayBGMWithGuide(System.Action guideCompleteCallback)
+    private void Start()
     {
-        originalBgmVolume = bgmSource.volume; // BGM의 원래 볼륨 저장
         PlayBGM();
-        onGuideComplete = guideCompleteCallback; // 안내 음성이 끝난 후 실행할 콜백 함수 저장
-        Invoke("PlayGuide", 3f); // 3초 후 안내 음성 재생
     }
+
 
     // BGM 재생
     public void PlayBGM()
@@ -32,6 +30,30 @@ public class BalloonSoundManager : MonoBehaviour
         bgmSource.clip = bgmClip;
         bgmSource.loop = true;
         bgmSource.Play();
+    }
+
+
+    // SFX 재생 : 일반풍선 터짐 
+    public void Balloon_SFX()
+    {
+        sfxSource.PlayOneShot(BalloonClip);
+    }
+    public void EventBalloon_SFX()
+    {
+        sfxSource.PlayOneShot(EventBalloonClip);
+    }
+
+
+
+    /*
+     
+    // BGM 재생 및 안내 음성 시작
+    public void PlayBGMWithGuide(System.Action guideCompleteCallback)
+    {
+        // originalBgmVolume = bgmSource.volume; // BGM의 원래 볼륨 저장
+        PlayBGM();
+        onGuideComplete = guideCompleteCallback; // 안내 음성이 끝난 후 실행할 콜백 함수 저장
+        Invoke("PlayGuide", 3f); // 3초 후 안내 음성 재생
     }
 
     // 안내 음성 재생
@@ -56,11 +78,8 @@ public class BalloonSoundManager : MonoBehaviour
             onGuideComplete();
         }
     }
+    */
 
-    // SFX 재생
-    public void PlaySFX()
-    {
-        sfxSource.PlayOneShot(sfxClip);
-    }
+
 
 }
