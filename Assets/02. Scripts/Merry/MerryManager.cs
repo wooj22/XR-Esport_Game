@@ -56,6 +56,7 @@ public class MerryManager : MonoBehaviour
     IEnumerator MerryStopEnging()
     {
         _merrySoundManager.StopBGM();
+        _merrySoundManager.PlaySFX("SFX_Main_OpenMap");
         _merryUIManager.FadeOutImage();
         yield return new WaitForSeconds(5f);
         _merrySceneManager.LoadMainMenuMap();
