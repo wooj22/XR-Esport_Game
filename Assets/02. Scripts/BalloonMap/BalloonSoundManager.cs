@@ -46,14 +46,14 @@ public class BalloonSoundManager : MonoBehaviour
     // [ 게임 클리어, 오버, 10초 전 -> 메인 볼륨 줄이고 재생 ]
     public void Play_GameClear()
     {
-        bgmSource.volume = originalBgmVolume * 0.3f; // BGM 볼륨 줄이기
+        bgmSource.volume = originalBgmVolume * 0.2f; // BGM 볼륨 줄이기
         plusSource.clip = GameClearClip;
         plusSource.Play();
     }
 
     public void Play_GameOver()
     {
-        bgmSource.volume = originalBgmVolume * 0.3f; // BGM 볼륨 줄이기
+        bgmSource.volume = originalBgmVolume * 0.2f; // BGM 볼륨 줄이기
         plusSource.clip = GameOverClip;
         plusSource.Play();
     }
