@@ -94,6 +94,16 @@ public class RollerGameManager : MonoBehaviour
         currentSpeed = speedList[level - 1];
         currentGeneTime = itemGenerateTimeList[currentLevel - 1];
         ItemRailLevelSetting(currentSpeed);
+
+        if(level == 1)
+        {
+            return;
+        }
+        else
+        {
+            _rollerUIManager.LevelUpUI();
+            _rollerSoundManager.PlaySFX("SFX_LevelUp");
+        }
     }
 
     /// 아이템, 레일 레벨 제어

@@ -104,12 +104,16 @@ public class CircusGameManager : MonoBehaviour
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
+        _circusUIManager.LevelUpUI();
+        _circusSoundManager.PlaySFX("SFX_LevelUp");
 
         // 3렙
         yield return new WaitForSeconds(levelUpTime[1]);
         currentLevel++;
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
+        _circusUIManager.LevelUpUI();
+        _circusSoundManager.PlaySFX("SFX_LevelUp");
     }
 
     /// 레이저 생성, 곰돌이 애니메이션 제어
