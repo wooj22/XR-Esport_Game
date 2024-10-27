@@ -45,7 +45,9 @@ public class GyroDropGameManager : MonoBehaviour
     public bool isCollisionDetected = false;  // 충돌 발생 여부
     private bool warningDisplayed = false;  // 경고 메시지 1회 출력 플래그
     private bool isCollisionOngoing = false;
-
+    private bool isCountdown;
+    private bool isLevelUp;
+     
 
     // [ 회전 및 속도 ]
     private float RotationSpeed = 15f;     // 원판 회전 속도
@@ -57,6 +59,8 @@ public class GyroDropGameManager : MonoBehaviour
 
 
     [SerializeField] GyroDropSceneManager _gyrodropSceneManager;
+    [SerializeField] GyroDropUIManager _gyrodropUIManager;
+    [SerializeField] GyroDropSoundManager _gyrodropSoundManager;
 
 
     void Start()
@@ -64,18 +68,49 @@ public class GyroDropGameManager : MonoBehaviour
         // cameraObject = GameObject.Find("SpoutCamera"); // 시연 시, 필요 
         cameraObject = GameObject.Find("SpoutCamera_Sample");
 
-        Debug.Log("게임 시작! 원판 위로 올라오세요.");
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
 
         remainingTime = ClearTimeLimit; // 남은 시간 초기화
 
-        Invoke("StartRising", 5f);    // 5초 후 카메라 1차 상승 시작
+        // BGM 재생 
+        _gyrodropSoundManager.PlayBGM();
+
+        // 페이드인
+        _gyrodropUIManager.FadeInImage();
+
+        // Invoke("StartRising", 5f);    // 5초 후 카메라 1차 상승 시작
+        StartCoroutine(StartGameGuide());
 
         StartCoroutine(PlatformHoleRoutine());
 
         StartCoroutine(ChangeRotationDirectionRoutine()); // Y 좌표가 50 이상일 때부터 회전 방향 변경 루틴 시작
+
+    }
+
+
+    private void StartRising()
+    {
+        isRising = true; // 상승 시작
+
+        StartCoroutine(RiseCoroutine()); // 카메라 상승 루틴 실행
+    }
+
+    // ★ 안내 문구 출력될 메소드 : 게임을 시작
+    IEnumerator StartGameGuide()
+    {
+        // 맵 셋팅 대기
+        yield return new WaitForSeconds(5f);
+
+        // 시작 전 카운트다운
+        _gyrodropUIManager.StartCountDown(5);
+        yield return new WaitForSeconds(8f);
+
+        Debug.Log("안내 문구 출력 끝. 게임을 시작합니다.");
+        isRising = true; // 상승 시작
+
+        StartCoroutine(RiseCoroutine()); // 카메라 상승 루틴 실행
 
     }
 
@@ -111,6 +146,11 @@ public class GyroDropGameManager : MonoBehaviour
                 remainingTime = 0;  // 타이머가 음수로 내려가지 않도록 0으로 고정
                 StartCoroutine(GameOver());
             }
+            else if (remainingTime <= 10 && !isCountdown)
+            {
+                isCountdown = true;
+                _gyrodropSoundManager.Play_CountDown();
+            }
             else
             {
                 int minutes = Mathf.FloorToInt(remainingTime / 60);
@@ -121,13 +161,6 @@ public class GyroDropGameManager : MonoBehaviour
         
     }
 
-
-    private void StartRising()
-    {
-        isRising = true; // 상승 시작
-        
-        StartCoroutine(RiseCoroutine()); // 카메라 상승 루틴 실행
-    }
 
 
     private IEnumerator RiseCoroutine()
@@ -238,7 +271,7 @@ public class GyroDropGameManager : MonoBehaviour
         float heightPercentage = cameraObject.transform.position.y / TargetYPosition;
 
         Material newMaterial = null;
-        if (heightPercentage >= 0.8f) { newMaterial = material_red; RotationSpeed = 10f * 2.5f; } // 속도 2.5배
+        if (heightPercentage >= 0.8f) { newMaterial = material_red; RotationSpeed = 10f * 2.5f;  } // 속도 2.5배
         else if (heightPercentage >= 0.6f) { newMaterial = material_orange; RotationSpeed = 10f * 2f; } // 속도 2배
         else if (heightPercentage >= 0.4f) { newMaterial = material_blue; RotationSpeed = 10f * 1.7f; } // 속도 1.7배
         else if (heightPercentage >= 0.2f) { newMaterial = material_green; RotationSpeed = 10f * 1.3f; } // 속도 1.3배
@@ -251,6 +284,8 @@ public class GyroDropGameManager : MonoBehaviour
                 piece.GetComponent<Renderer>().material = newMaterial;
             }
         }
+
+        // _gyrodropUIManager.LevelUpUI(); _gyrodropSoundManager.Play_LevelUp();
     }
 
 
@@ -311,9 +346,12 @@ public class GyroDropGameManager : MonoBehaviour
             isCollisionDetected = true;    // 첫 충돌만 인식되도록 
             Debug.Log("충돌 발생: 하강 시작!");
 
+            _gyrodropSoundManager.Hole_SFX();
+
             StartCoroutine(LowerHeight()); // 하강 실행
         }
     }
+
 
     // ★ 충돌 시, 하강 
     // 
@@ -339,7 +377,9 @@ public class GyroDropGameManager : MonoBehaviour
     }
 
 
+
     // [ 원판 중간에 서 있을 때 "center" 충돌 ] --------------------------------------------------------------------------
+
 
     // 플레이어와 첫 충돌 시 호출
     public void OnPlayerCollidedWithCenter()
@@ -348,7 +388,8 @@ public class GyroDropGameManager : MonoBehaviour
         {
             warningDisplayed = true;
             isCollisionOngoing = true;
-            // warningSound.Play();
+            _gyrodropSoundManager.Hole_SFX();
+            _gyrodropUIManager.StartWarning();
             // WarningText.text = "5초 내로 원판으로 올라와주세요!";
             print("5초 내로 원판으로 올라와주세요!");
             // WarningText.gameObject.SetActive(true);
@@ -357,6 +398,7 @@ public class GyroDropGameManager : MonoBehaviour
         }
     }
 
+
     // 현재 충돌 중인 플레이어가 남아있는지 확인
     public void CheckCollisionStatus(int remainingCollisions)
     {
@@ -364,8 +406,10 @@ public class GyroDropGameManager : MonoBehaviour
         {
             isCollisionOngoing = false;
             warningDisplayed = false; // 모든 충돌이 종료되면 초기화
+            _gyrodropUIManager.FinishWarning();
         }
     }
+
 
     // 5초 대기 후 충돌 여부 확인
     private IEnumerator WaitAndCheckCollision(float waitTime)
@@ -379,6 +423,7 @@ public class GyroDropGameManager : MonoBehaviour
 
         // WarningText.gameObject.SetActive(false);
     }
+
 
     // 충돌 중일 때 카메라와 원판 하강
     private IEnumerator ContinuousLowering()
@@ -407,9 +452,15 @@ public class GyroDropGameManager : MonoBehaviour
     IEnumerator GameClear() 
     {
         gameEnded = true;
-        Debug.Log("게임 클리어! 5초 후 빠르게 하강합니다.");
+        Debug.Log("게임 클리어! 10초 후 빠르게 하강합니다.");
+
+        _gyrodropSoundManager.Play_GameClear();
+        _gyrodropUIManager.GameClearUI();
 
         yield return new WaitForSeconds(5f);
+        _gyrodropSoundManager.Play_DropWarning();
+
+        yield return new WaitForSeconds(12f);
         StartCoroutine(Drop(25));
 
         
@@ -418,9 +469,15 @@ public class GyroDropGameManager : MonoBehaviour
     IEnumerator GameOver()
     {
         gameEnded = true; 
-        Debug.Log("게임 오버! 5초 후 천천히 하강합니다.");
+        Debug.Log("게임 오버! 10초 후 천천히 하강합니다.");
+
+        _gyrodropSoundManager.Play_GameOver();
+        _gyrodropUIManager.GameOverUI();
 
         yield return new WaitForSeconds(5f);
+        _gyrodropSoundManager.Play_DropWarning();
+
+        yield return new WaitForSeconds(12f);
         StartCoroutine(Drop(5));
 
     }
@@ -452,7 +509,7 @@ public class GyroDropGameManager : MonoBehaviour
     // 메인 맵 복귀
     IEnumerator ReturnMainMap()
     {
-        // _gyrodropUIManager.FadeOutImage();
+        _gyrodropUIManager.FadeOutImage();
         // _gyrodropSoundManager.StopBGM();
 
         yield return new WaitForSeconds(5f);

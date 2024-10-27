@@ -43,43 +43,6 @@ public class BalloonUIManager : MonoBehaviour
         adviceBackImage.gameObject.SetActive(false);
     }
 
-
-    IEnumerator FlyingImage(RectTransform rectTransform)
-    {
-        float downY = -500f;
-        float highY = 0f;
-        float duration = 0.6f;
-        float elapsedTime = 0f;
-
-        // 초기 위치
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, downY);
-
-        // 위로 이동
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float newY = Mathf.Lerp(downY, highY, elapsedTime / duration);
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(3f);
-
-        // 아래로 이동
-        elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float newY = Mathf.Lerp(highY, downY, elapsedTime / duration);
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
-            yield return null;
-        }
-
-        // 최종 위치
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, downY);
-        // levelUpImage.gameObject.SetActive(false);
-    }
-
     /// 게임 종료 UI
     public void GameClearUI()
     {
