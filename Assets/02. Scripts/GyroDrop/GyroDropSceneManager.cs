@@ -8,8 +8,10 @@ public class GyroDropSceneManager : MonoBehaviour
     GameObject Front, Left, Right, Down;
 
 
-    // [ 스파우트 카메라 조정 ]
-    // 
+    // 각 카메라의 원래 설정값을 저장할 딕셔너리
+    Dictionary<GameObject, CameraSettings> originalCameraSettings = new Dictionary<GameObject, CameraSettings>();
+
+
     void Start()
     {
         Front = GameObject.Find("SpoutCamera").transform.Find("Front").gameObject;
@@ -17,17 +19,13 @@ public class GyroDropSceneManager : MonoBehaviour
         Left = GameObject.Find("SpoutCamera").transform.Find("Left").gameObject;
         Down = GameObject.Find("SpoutCamera").transform.Find("Down").gameObject;
 
-        // Front : Field of View : 37.3
-        //         Clipping Planes : Near 98.7 / Far 1781 
-        // Right : Field of View : 48.454
-        //         Clipping Planes : Near 74 / Far 1337
-        // Left : Field of View : 48.454
-        //         Clipping Planes : Near 74 / Far 1325
-        // Down : Field of View : 142.7  => (progection을 perspective로 변경)
-        //         Clipping Planes : Near 33.3 / Far 596.1 
+        // 초기 설정 저장
+        SaveCameraSettings(Front);
+        SaveCameraSettings(Right);
+        SaveCameraSettings(Left);
+        SaveCameraSettings(Down);
 
-
-        // 각 카메라의 설정 변경
+        // 각 카메라 설정 변경
         ModifyCameraSettings(Front, 37.3f, 98.7f, 1781f);
         ModifyCameraSettings(Right, 48.454f, 74f, 1337f);
         ModifyCameraSettings(Left, 48.454f, 74f, 1325f);
@@ -39,7 +37,35 @@ public class GyroDropSceneManager : MonoBehaviour
     }
 
 
-    // 카메라 설정을 변경하는 메서드
+    // [ 카메라 설정 저장 ]
+    void SaveCameraSettings(GameObject cameraObj)
+    {
+        Camera cam = cameraObj.GetComponent<Camera>();
+        if (cam != null)
+        {
+            originalCameraSettings[cameraObj] = new CameraSettings(cam.fieldOfView, cam.nearClipPlane, cam.farClipPlane, cam.orthographic);
+        }
+    }
+
+
+    // [ 카메라 설정 복원 ]
+    void RestoreCameraSettings(GameObject cameraObj)
+    {
+        if (originalCameraSettings.TryGetValue(cameraObj, out CameraSettings settings))
+        {
+            Camera cam = cameraObj.GetComponent<Camera>();
+            if (cam != null)
+            {
+                cam.fieldOfView = settings.FieldOfView;
+                cam.nearClipPlane = settings.NearClipPlane;
+                cam.farClipPlane = settings.FarClipPlane;
+                cam.orthographic = settings.IsOrthographic;
+            }
+        }
+    }
+
+
+    // [ 카메라 설정 변경 ]
     void ModifyCameraSettings(GameObject cameraObj, float fov, float near, float far)
     {
         Camera cam = cameraObj.GetComponent<Camera>();
@@ -56,8 +82,32 @@ public class GyroDropSceneManager : MonoBehaviour
     }
 
 
+    // [ 메인 메뉴로 이동하기 전 카메라 설정 복원하고 씬 이동 ]
     public void LoadMainMenuMap()
     {
+        RestoreCameraSettings(Front);
+        RestoreCameraSettings(Right);
+        RestoreCameraSettings(Left);
+        RestoreCameraSettings(Down);
+
         SceneManager.LoadScene("MainMap_new");
+    }
+
+
+    // [ 카메라 설정 저장하는 구조체 ]
+    struct CameraSettings
+    {
+        public float FieldOfView;
+        public float NearClipPlane;
+        public float FarClipPlane;
+        public bool IsOrthographic;
+
+        public CameraSettings(float fov, float near, float far, bool isOrthographic)
+        {
+            FieldOfView = fov;
+            NearClipPlane = near;
+            FarClipPlane = far;
+            IsOrthographic = isOrthographic;
+        }
     }
 }
