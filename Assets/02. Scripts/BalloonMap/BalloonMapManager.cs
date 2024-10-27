@@ -228,16 +228,16 @@ public class BalloonMapManager : MonoBehaviour
         {
             AddTime();
 
-            _balloonSoundManager.PlaySFX();
+            // _balloonSoundManager.PlaySFX();
 
             // 이벤트 풍선 SFX 넣기 
+            _balloonSoundManager.EventBalloon_SFX();
         }
         else
         {
             // Destroy(balloon.gameObject);
-            _balloonSoundManager.PlaySFX();
+            _balloonSoundManager.Balloon_SFX();
         }
-
 
         poppedBalloons++;
         balloonSlider.value = poppedBalloons;
@@ -248,6 +248,7 @@ public class BalloonMapManager : MonoBehaviour
         {
             GameClear();
         }
+
     }
 
 
