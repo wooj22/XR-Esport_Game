@@ -18,16 +18,16 @@ public class GyroDropSoundManager : MonoBehaviour
     [SerializeField] AudioClip CountDownClip;
     [SerializeField] AudioClip LevelUpClip;
 
-    private float originalBgmVolume;          // BGM 원래 볼륨 저장 변수
-    private float originalSfxVolume;          // BGM 원래 볼륨 저장 변수
+    private float originalBgmVolume;         
+    private float originalSfxVolume;          
+    private float originalPlusVolume;
 
 
     private void Start()
     {
         originalBgmVolume = bgmSource.volume; // 원래 볼륨 저장
-        originalSfxVolume = sfxSource.volume; 
-
-        // PlayBGM();
+        originalSfxVolume = sfxSource.volume;
+        originalPlusVolume = plusSource.volume;
     }
 
 
@@ -41,7 +41,7 @@ public class GyroDropSoundManager : MonoBehaviour
 
 
     // SFX 재생 : 구멍 밟았을 때 
-    public void Hole_SFX() { sfxSource.PlayOneShot(HoleClip); }
+    public void Hole_SFX() { sfxSource.PlayOneShot(HoleClip); sfxSource.volume = originalSfxVolume * 1.5f; Invoke("RestoreVolume", HoleClip.length); }
 
 
     // [ 게임 클리어, 오버, 10초 전 -> 메인 볼륨 줄이고 재생 ]
@@ -52,6 +52,7 @@ public class GyroDropSoundManager : MonoBehaviour
         sfxSource.Play();
     }
 
+
     public void Play_GameOver()
     {
         bgmSource.volume = originalBgmVolume * 0.5f; // BGM 볼륨 줄이기
@@ -59,9 +60,10 @@ public class GyroDropSoundManager : MonoBehaviour
         sfxSource.Play();
     }
 
+
     public void Play_CountDown()
     {
-        bgmSource.volume = originalBgmVolume * 0.3f; // BGM 볼륨 줄이기
+        bgmSource.volume = originalBgmVolume * 0.5f; // BGM 볼륨 줄이기
         sfxSource.clip = CountDownClip;
         sfxSource.Play();
     }
@@ -73,23 +75,27 @@ public class GyroDropSoundManager : MonoBehaviour
         plusSource.Play();
     }
 
+
     // 떨어짐 경고 음성 
     public void Play_DropWarning()
     {
-        bgmSource.volume = originalBgmVolume * 0.3f; // BGM 볼륨 줄이기
-        sfxSource.volume = originalSfxVolume * 0.3f; // SFX 볼륨 줄이기
+        bgmSource.volume = originalBgmVolume * 0.5f; // BGM 볼륨 줄이기
+        sfxSource.volume = originalSfxVolume * 0.5f; // SFX 볼륨 줄이기
+        plusSource.volume = originalPlusVolume * 3f;
+
         plusSource.clip = WarningClip;
         plusSource.Play();
 
         Invoke("RestoreVolume", WarningClip.length); // 안내 음성이 끝난 후 BGM 볼륨 복구
     }
 
+
     // 볼륨 복구
     public void RestoreVolume()
     {
         bgmSource.volume = originalBgmVolume;
         sfxSource.volume = originalSfxVolume;
-        
+        plusSource.volume = originalPlusVolume;
     }
 
 

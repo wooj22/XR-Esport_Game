@@ -16,7 +16,6 @@ public class GyroDropUIManager : MonoBehaviour
     [SerializeField] Image fade_right;
     [SerializeField] Image fade_left;
     [SerializeField] Image fade_down;
-    // [SerializeField] Image fade_down_sub;
 
 
     // 게임시작 전 카운트다운
@@ -171,7 +170,6 @@ public class GyroDropUIManager : MonoBehaviour
             fade_right.color = new Color(0, 0, 0, fadeCount);
             fade_left.color = new Color(0, 0, 0, fadeCount);
             fade_down.color = new Color(0, 0, 0, fadeCount);
-            // fade_down_sub.color = new Color(0, 0, 0, fadeCount);
         }
     }
 
@@ -187,7 +185,6 @@ public class GyroDropUIManager : MonoBehaviour
             fade_right.color = new Color(0, 0, 0, fadeCount);
             fade_left.color = new Color(0, 0, 0, fadeCount);
             fade_down.color = new Color(0, 0, 0, fadeCount);
-            // fade_down_sub.color = new Color(0, 0, 0, fadeCount);
         }
     }
 
@@ -203,4 +200,23 @@ public class GyroDropUIManager : MonoBehaviour
         adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
     }
+
+
+    public void StartCountDown2()
+    {
+        StartCoroutine(StartCountDownCoroutine2());
+    }
+
+    IEnumerator StartCountDownCoroutine2()
+    {
+        // 설명
+        adviceLabel.text = "시작합니다!";
+        adviceBackImage.gameObject.SetActive(true);
+        adviceLabel.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        adviceLabel.gameObject.SetActive(false);
+        adviceBackImage.gameObject.SetActive(false);
+    }
 }
+
