@@ -8,6 +8,7 @@ public class PhotoTrigger : MonoBehaviour
     [SerializeField] TextMesh photoCount;
     [SerializeField] BoxCollider bc;
     [SerializeField] List<ParticleSystem> vfxLists;
+    [SerializeField] MerrySoundManager _merrySoundManager;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,6 +22,8 @@ public class PhotoTrigger : MonoBehaviour
     IEnumerator PhotoCounting()
     {
         bc.enabled = false;
+        _merrySoundManager.PlaySFX("SFX_Particle");
+
         for (int i = 3; i >=1; i--)
         {
             photoCount.text = i.ToString();
@@ -37,7 +40,9 @@ public class PhotoTrigger : MonoBehaviour
     // 포토 파티클 재생
     private void PlayPhotoParticle()
     {
-        for(int i=0; i< vfxLists.Count; i++)
+        _merrySoundManager.PlaySFX("SFX_Fire");
+
+        for (int i=0; i< vfxLists.Count; i++)
         {
             vfxLists[i].Play();
         }
