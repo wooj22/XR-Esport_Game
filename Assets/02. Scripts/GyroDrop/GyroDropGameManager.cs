@@ -15,7 +15,9 @@ public class GyroDropGameManager : MonoBehaviour
     private GameObject cameraObject;        
     public GameObject XRoom;
     public GameObject[] platformPieces;    
-    public GameObject Player;           
+    public GameObject Player;
+    public GameObject Firework;
+    public GameObject Light1, Light2;
 
     // [ UI ]
     public Text TimerText;                 
@@ -436,6 +438,7 @@ public class GyroDropGameManager : MonoBehaviour
     IEnumerator GameClear() 
     {
         gameEnded = true;
+        Firework.SetActive(true);
 
         _gyrodropSoundManager.Play_GameClear();
         _gyrodropUIManager.GameClearUI();
@@ -457,8 +460,9 @@ public class GyroDropGameManager : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
         _gyrodropSoundManager.Play_DropWarning();
+        StartCoroutine(TurnOffLight());
 
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(5f);
         StartCoroutine(Drop(6));
 
     }
@@ -488,10 +492,19 @@ public class GyroDropGameManager : MonoBehaviour
     // ∏ﬁ¿Œ ∏  ∫π±Õ
     IEnumerator ReturnMainMap()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         _gyrodropUIManager.FadeOutImage();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         _gyrodropSceneManager.LoadMainMenuMap();
+    }
+
+    IEnumerator TurnOffLight()
+    {
+        yield return new WaitForSeconds(2f);
+        Light1.SetActive(false);
+
+        yield return new WaitForSeconds(3f);
+        Light2.SetActive(false);
     }
 }
