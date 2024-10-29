@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MainMapTrigger : MonoBehaviour
 {
     [SerializeField] MainManager _mainManager;
+    [SerializeField] EasterEgg easterEgg;
     [SerializeField] Image guage;
     [SerializeField] float fillSpeed = 0.2f; 
     private Coroutine fillCoroutine;         // 코루틴 제어
@@ -14,6 +15,7 @@ public class MainMapTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            easterEgg.AddNameList(this.gameObject.name);    // 이스터에그
             fillCoroutine = StartCoroutine(FillGauge());
         }
     }
