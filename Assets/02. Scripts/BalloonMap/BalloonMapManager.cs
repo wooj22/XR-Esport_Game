@@ -6,42 +6,42 @@ using UnityEngine.UI;
 
 public class BalloonMapManager : MonoBehaviour
 {
+    [SerializeField] BalloonUIManager _balloonUIManager;
+    [SerializeField] BalloonSceneManager _balloonSceneManager;
+    [SerializeField] BalloonSoundManager _balloonSoundManager;
+
     public GameObject[] balloonScreens;  // 벽 오브젝트 배열
     public GameObject Player;            // 플레이어 오브젝트
     public GameObject eventBalloonPrefab; // 이벤트 풍선 오브젝트 
-
-    [SerializeField] BalloonSceneManager _balloonSceneManager;      // 풍선맵 씬 매니저 
 
     // [ 이벤트 풍선 ]
     float eventBalloonTime = 12f;       // 12초마다 이벤트 발생
     float timer = 0f;
 
-
-    // [ 게임 진행상황 표시 ]
+    // [ 게임 진행상황 ]
     public Slider balloonSlider;        // 풍선 개수 표시할 슬라이더
     public Text timerText;              // 남은 시간을 표시할 텍스트 UI
-
     private int totalBalloons = 0;      // 전체 풍선 개수
     private int poppedBalloons = 0;     // 터진 풍선 개수
-
     private float gameDuration = 30f;   // 30초 타이머
+
+    // [ 플래그 ]
     private bool gameStarted = false;   // 게임이 시작되었는지 여부
     private bool gameEnded = false;     // 게임 종료 여부
-
-    // [ 사운드 관련 ]
-    [SerializeField] BalloonSoundManager _balloonSoundManager;
     private bool isCountdown;
 
-    // [ 게임 오버 시, 풍선 떨어짐 관련 ] 
+    // [ 게임 오버 ] 
     private string BalloonTag = "Balloon";
     private string eventBalloonTag = "EventBalloon"; 
     public GameObject Barricade_Clear;  
     public GameObject Barricade_Clear_Fail;
 
-    // [ 게임 클리어 시, 인형 떨어짐 관련 ]
+
+    // [ 게임 클리어 ]
     public GameObject Doll;
     public GameObject Firework;
     private List<GameObject> dollObjects = new List<GameObject>(); // 자식 오브젝트 리스트
+
 
     // ------------------------------------------------------------------------------------------------------------
 
@@ -61,7 +61,10 @@ public class BalloonMapManager : MonoBehaviour
         balloonSlider.value = 0;
 
         // BGM 재생 
-        _balloonSoundManager.PlayBGM(); 
+        _balloonSoundManager.PlayBGM();
+
+        // 페이드인
+        _balloonUIManager.FadeInImage();
 
         // 게임 클리어 시, 인형들 할당 
         int childCount = Doll.transform.childCount;
@@ -70,17 +73,27 @@ public class BalloonMapManager : MonoBehaviour
             GameObject child = Doll.transform.GetChild(i).gameObject;
             dollObjects.Add(child); // 리스트에 추가
         }
-        gameStarted = true;
+
+        StartCoroutine(StartGameGuide());
     }
 
+
     // ★ 안내 문구 출력될 메소드 : 게임을 시작
-    void StartGameGuide()
+    IEnumerator StartGameGuide()
     {
-        Debug.Log("안내 음성이 끝났습니다. 게임을 시작합니다.");
-        gameStarted = true; 
+        // 맵 셋팅 대기
+        yield return new WaitForSeconds(5f);
+
+        // 시작 전 카운트다운
+        _balloonUIManager.StartCountDown(5);
+        yield return new WaitForSeconds(8f);
+
+        Debug.Log("안내 문구 출력 끝. 게임을 시작합니다.");
+        gameStarted = true;
 
         Player.SetActive(true); Debug.Log("플레이어가 활성화 됩니다.");
     }
+
 
     // ★ --------------------------------------- ★
     //
@@ -145,10 +158,14 @@ public class BalloonMapManager : MonoBehaviour
         gameEnded = true;
         Debug.Log("게임 클리어! 모든 풍선을 터뜨렸습니다.");
         _balloonSoundManager.Play_GameClear();
+        _balloonUIManager.GameClearUI();
+        
 
         Invoke("DropDoll", 1f);
 
-        Invoke("ReturnToMainScene", 7f); 
+        Invoke("FadeOut", 7f);
+
+        Invoke("ReturnToMainScene", 10f); 
     }
 
     // ★ 게임 오버 처리 (제한시간 내에 실패했을 때)
@@ -158,10 +175,18 @@ public class BalloonMapManager : MonoBehaviour
         UpdateTimerUI();  // 타이머를 00:00으로 설정
         Debug.Log("게임 오버! 제한 시간 내에 모든 풍선을 터뜨리지 못했습니다.");
         _balloonSoundManager.Play_GameOver();
+        _balloonUIManager.GameOverUI();
 
         DropBalloon();
 
-        Invoke("ReturnToMainScene", 5f); 
+        Invoke("FadeOut", 7f);
+
+        Invoke("ReturnToMainScene", 10f); 
+    }
+
+    void FadeOut()
+    {
+        _balloonUIManager.FadeOutImage();
     }
 
     // 게임 종료 후 메인 씬으로 돌아가기 (씬 매니저에서 관리)

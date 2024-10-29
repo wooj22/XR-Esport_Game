@@ -7,11 +7,15 @@ public class Balloon : MonoBehaviour
     BalloonMapManager balloonMapManager;
     public bool isEventBalloon = false;  // 이벤트 풍선 여부
     private Animator animator;
+    private GameObject confetti; // 꽃가루 
+    // private GameObject effect; // 이벤트 풍선 이펙트 
 
     void Start()
     {
         balloonMapManager = FindObjectOfType<BalloonMapManager>();
         animator = GetComponent<Animator>();
+
+        confetti = transform.GetChild(1).gameObject;
 
         // 애니메이션을 랜덤한 시간만큼 지연 후 시작
         float randomDelay = Random.Range(0f, 2f); // 0~2초 지연
@@ -58,6 +62,7 @@ public class Balloon : MonoBehaviour
         else
         {
             animator.SetTrigger("Pop");
+            confetti.SetActive(true);
         }
 
         balloonMapManager.OnBalloonPopped(this);
