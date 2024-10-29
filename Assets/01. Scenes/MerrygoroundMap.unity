@@ -1746,7 +1746,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90606810}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -16}
+  m_LocalPosition: {x: 0, y: 0, z: -6.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2260,7 +2260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &151843686
 Transform:
   m_ObjectHideFlags: 0
@@ -4565,7 +4565,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334247863}
-  m_Text: Photo
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -4630,9 +4630,9 @@ Transform:
   m_GameObject: {fileID: 334247863}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -33, z: -15.2}
+  m_LocalScale: {x: 0.70649, y: 0.70649, z: 0.70649}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1375003987}
   - {fileID: 2030024021}
@@ -4650,6 +4650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c658fd0cba9d8e342b55125336fa6c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 745070068}
   photoCount: {fileID: 334247866}
   bc: {fileID: 334247865}
   vfxLists:
@@ -12517,7 +12518,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153622855}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14802,9 +14803,9 @@ Transform:
   m_GameObject: {fileID: 1375003986}
   serializedVersion: 2
   m_LocalRotation: {x: -0.706509, y: 0.029069487, z: -0.029069487, w: 0.706509}
-  m_LocalPosition: {x: -131.86, y: 1.1, z: 2.2}
-  m_LocalScale: {x: 0.26021117, y: 0.26021114, z: 0.19044076}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: -156.34, y: -0.21996, z: 2.4117}
+  m_LocalScale: {x: 0.30825204, y: 0.3145172, z: 0.26328644}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 334247868}
   m_LocalEulerAnglesHint: {x: -85.288, y: 90, z: -90}
@@ -17012,7 +17013,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1567178767
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17799,7 +17800,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608291663}
-  m_Text: 'Back
+  m_Text: '
 
 '
   m_OffsetZ: 0

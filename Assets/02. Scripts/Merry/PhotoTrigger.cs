@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PhotoTrigger : MonoBehaviour
 {
+    [SerializeField] Image image;
     [SerializeField] TextMesh photoCount;
     [SerializeField] BoxCollider bc;
     [SerializeField] List<ParticleSystem> vfxLists;
@@ -22,6 +23,7 @@ public class PhotoTrigger : MonoBehaviour
     IEnumerator PhotoCounting()
     {
         bc.enabled = false;
+        image.gameObject.SetActive(false);
         _merrySoundManager.PlaySFX("SFX_Particle");
 
         for (int i = 3; i >=1; i--)
@@ -33,7 +35,7 @@ public class PhotoTrigger : MonoBehaviour
 
         PlayPhotoParticle();
         yield return new WaitForSeconds(10f);
-        photoCount.text = "Photo";
+        image.gameObject.SetActive(true);
         bc.enabled = true;
     }
 
