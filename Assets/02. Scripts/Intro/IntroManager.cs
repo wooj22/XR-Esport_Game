@@ -59,7 +59,7 @@ public class IntroManager : MonoBehaviour
     /// 페이드아웃 연출
     IEnumerator FadeOut()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         _introSoundManager.StopBGM();
 
         float fadeCount = 0;

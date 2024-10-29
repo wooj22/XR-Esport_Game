@@ -50,7 +50,7 @@ public class CircusGameManager : MonoBehaviour
 
         // UI 게이지 초기화
         maxLaserCount = (20f/laserCycleList[0])+ (20f / laserCycleList[1])+ (20f / laserCycleList[2]);
-        _circusUIManager.GaugeSetting(maxLaserCount * 0.9f);
+        _circusUIManager.GaugeSetting(maxLaserCount * 0.5f);
 
         // 곰
         bear.gameObject.SetActive(true);
