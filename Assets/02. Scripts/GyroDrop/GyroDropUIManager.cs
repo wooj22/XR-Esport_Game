@@ -52,8 +52,8 @@ public class GyroDropUIManager : MonoBehaviour
 
     IEnumerator FlyingImage(RectTransform rectTransform)
     {
-        float downY = -500f;
-        float highY = 0f;
+        float downY = -400f;
+        float highY = 100f;
         float duration = 0.6f;
         float elapsedTime = 0f;
 
@@ -217,6 +217,12 @@ public class GyroDropUIManager : MonoBehaviour
 
         adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
+    }
+
+    public void RemoveUI()
+    {
+        adviceBackImage.gameObject.SetActive(false);
+        adviceLabel.gameObject.SetActive(false);
     }
 }
 
