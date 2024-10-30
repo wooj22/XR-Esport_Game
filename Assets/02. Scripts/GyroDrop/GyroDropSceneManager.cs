@@ -90,6 +90,8 @@ public class GyroDropSceneManager : MonoBehaviour
         RestoreCameraSettings(Left);
         RestoreCameraSettings(Down);
 
+        print("카메라 세팅을 복원하고 돌아갑니다.");
+
         SceneManager.LoadScene("MainMap_new");
     }
 

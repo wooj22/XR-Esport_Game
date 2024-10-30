@@ -67,8 +67,8 @@ public class GyroDropGameManager : MonoBehaviour
     void Start()
     {
         // ★ 시연 시, 필요 
-        // cameraObject = GameObject.Find("SpoutCamera"); 
-        cameraObject = GameObject.Find("SpoutCamera_Sample");
+        cameraObject = GameObject.Find("SpoutCamera"); 
+        // cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
