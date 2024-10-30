@@ -9,6 +9,7 @@ public class BalloonUIManager : MonoBehaviour
     [SerializeField] Image adviceBackImage;
     [SerializeField] Image gameSuccessImage;
     [SerializeField] Image gameOverImage;
+    [SerializeField] Image levelUpImage;
 
     [Header("FadeOutImage")]
     [SerializeField] Image fade_front;
@@ -41,6 +42,49 @@ public class BalloonUIManager : MonoBehaviour
         }
         adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
+    }
+
+    /// 레벨업 UI
+    public void LevelUpUI()
+    {
+        levelUpImage.gameObject.SetActive(true);
+        StartCoroutine(FlyingImage(levelUpImage.GetComponent<RectTransform>()));
+    }
+
+    IEnumerator FlyingImage(RectTransform rectTransform)
+    {
+        float downY = -500f;
+        float highY = 0f;
+        float duration = 0.6f;
+        float elapsedTime = 0f;
+
+        // 초기 위치
+        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, downY);
+
+        // 위로 이동
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newY = Mathf.Lerp(downY, highY, elapsedTime / duration);
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        // 아래로 이동
+        elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float newY = Mathf.Lerp(highY, downY, elapsedTime / duration);
+            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newY);
+            yield return null;
+        }
+
+        // 최종 위치
+        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, downY);
+        levelUpImage.gameObject.SetActive(false);
     }
 
     /// 게임 종료 UI

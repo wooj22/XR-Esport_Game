@@ -2188,6 +2188,7 @@ RectTransform:
   - {fileID: 781554868}
   - {fileID: 1091727361}
   - {fileID: 1687402194}
+  - {fileID: 934584123}
   - {fileID: 1528615365}
   - {fileID: 689014446}
   - {fileID: 705656377}
@@ -11289,6 +11290,81 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 923383953}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &934584122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 934584123}
+  - component: {fileID: 934584125}
+  - component: {fileID: 934584124}
+  m_Layer: 5
+  m_Name: LevelUpUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &934584123
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934584122}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000474, y: 1.0000474, z: 1.0000474}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 186064345}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -610.61395}
+  m_SizeDelta: {x: 833.094, y: 371.217}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &934584124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934584122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f5a3824b41f56514f87a45c13d84cd09, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &934584125
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934584122}
+  m_CullTransparentMesh: 1
 --- !u!1001 &949796866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17425,6 +17501,7 @@ MonoBehaviour:
   adviceBackImage: {fileID: 1091727362}
   gameSuccessImage: {fileID: 1528615366}
   gameOverImage: {fileID: 689014447}
+  levelUpImage: {fileID: 934584124}
   fade_front: {fileID: 705656378}
   fade_right: {fileID: 1887368718}
   fade_left: {fileID: 1567483176}

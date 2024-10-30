@@ -8,6 +8,7 @@ public class GyroDropGameManager : MonoBehaviour
     [SerializeField] GyroDropSceneManager _gyrodropSceneManager;
     [SerializeField] GyroDropUIManager _gyrodropUIManager;
     [SerializeField] GyroDropSoundManager _gyrodropSoundManager;
+    [SerializeField] Center _center;
 
 
     // [ 게임 오브젝트 참조 ]
@@ -51,6 +52,7 @@ public class GyroDropGameManager : MonoBehaviour
     private bool isCollisionOngoing = false;
     private bool isCountdown;
     private bool isLevelUp;
+    public bool isTrigger_center = false;
      
     // [ 회전 및 속도 ]
     private float RotationSpeed = 15f;     // 원판 회전 속도
@@ -119,6 +121,7 @@ public class GyroDropGameManager : MonoBehaviour
             RestoreAllPlatformPieces();  
         }
 
+        if(isTrigger_center) { OnPlayerCollidedWithCenter(); }
     }
 
     // 타이머 관리 
@@ -356,7 +359,6 @@ public class GyroDropGameManager : MonoBehaviour
 
     // [ 원판 중간에 서 있을 때 "center" 충돌 ] --------------------------------------------------------------------------
 
-
     public void OnPlayerCollidedWithCenter()
     {
         if (!warningDisplayed && !gameEnded)
@@ -381,7 +383,6 @@ public class GyroDropGameManager : MonoBehaviour
             _gyrodropUIManager.FinishWarning();
         }
     }
-
 
     // 5초 대기 후 충돌 여부 확인
     private IEnumerator WaitAndCheckCollision(float waitTime)

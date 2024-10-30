@@ -17,13 +17,14 @@ public class Center : MonoBehaviour
             gameManager.OnPlayerCollidedWithCenter();  // 충돌 감지 알림
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") && collidingPlayers.Contains(other.gameObject))
         {
             collidingPlayers.Remove(other.gameObject);
             gameManager.CheckCollisionStatus(collidingPlayers.Count);  // 충돌 종료 여부 확인
+
         }
     }
+
 }
