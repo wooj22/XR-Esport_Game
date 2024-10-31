@@ -9,7 +9,6 @@ public class GyroDropGameManager : MonoBehaviour
     [SerializeField] GyroDropUIManager _gyrodropUIManager;
     [SerializeField] GyroDropSoundManager _gyrodropSoundManager;
 
-
     // [ 게임 오브젝트 참조 ]
     public GameObject disk;                
     private GameObject cameraObject;        
@@ -17,7 +16,7 @@ public class GyroDropGameManager : MonoBehaviour
     public GameObject[] platformPieces;    
     public GameObject Player;
     public GameObject Firework;
-    public GameObject Light1, Light2;
+    public GameObject[] Lights;
 
     // [ UI ]
     public Text TimerText;                 
@@ -44,16 +43,17 @@ public class GyroDropGameManager : MonoBehaviour
 
     // [ 상태 플래그 ]
     private bool isRising = false;
-    private bool gameEnded = false;           // 게임이 종료되었는지 여부
-    private bool pausedOnce = false;          // 50에서 한 번만 멈추기 위한 플래그
+    public bool gameEnded = false;           // 게임이 종료되었는지 여부
+    public bool pausedOnce = false;          // 50에서 한 번만 멈추기 위한 플래그
     public bool isCollisionDetected = false;  // 충돌 발생 여부
-    private bool warningDisplayed = false;  // 경고 메시지 1회 출력 플래그
-    private bool isCollisionOngoing = false;
+    public bool isCollisionOngoing = false;
     private bool isCountdown;
-    private bool isLevelUp;
-     
+    public bool isTrigger_center = false;
+
+    // private bool warningDisplayed = false;  // 경고 메시지 1회 출력 플래그
+
     // [ 회전 및 속도 ]
-    private float RotationSpeed = 15f;     // 원판 회전 속도
+    private float RotationSpeed = 20f;     // 원판 회전 속도
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
     private float riseSpeed;               // 카메라 상승 속도
 
@@ -67,8 +67,8 @@ public class GyroDropGameManager : MonoBehaviour
     void Start()
     {
         // ★ 시연 시, 필요 
-        // cameraObject = GameObject.Find("SpoutCamera"); 
-        cameraObject = GameObject.Find("SpoutCamera_Sample");
+        cameraObject = GameObject.Find("SpoutCamera"); 
+        // cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
@@ -119,6 +119,7 @@ public class GyroDropGameManager : MonoBehaviour
             RestoreAllPlatformPieces();  
         }
 
+        // if(isTrigger_center) { OnPlayerCollidedWithCenter(); }
     }
 
     // 타이머 관리 
@@ -356,7 +357,8 @@ public class GyroDropGameManager : MonoBehaviour
 
     // [ 원판 중간에 서 있을 때 "center" 충돌 ] --------------------------------------------------------------------------
 
-
+    #region 임시 Center 충돌 로직 : 비활성화 감지 X 
+    /*
     public void OnPlayerCollidedWithCenter()
     {
         if (!warningDisplayed && !gameEnded)
@@ -370,7 +372,6 @@ public class GyroDropGameManager : MonoBehaviour
         }
     }
 
-
     // 현재 충돌 중인 플레이어가 남아있는지 확인
     public void CheckCollisionStatus(int remainingCollisions)
     {
@@ -381,7 +382,6 @@ public class GyroDropGameManager : MonoBehaviour
             _gyrodropUIManager.FinishWarning();
         }
     }
-
 
     // 5초 대기 후 충돌 여부 확인
     private IEnumerator WaitAndCheckCollision(float waitTime)
@@ -395,9 +395,8 @@ public class GyroDropGameManager : MonoBehaviour
 
     }
 
-
     // 충돌 중일 때 카메라와 원판 하강
-    private IEnumerator ContinuousLowering()
+    public IEnumerator ContinuousLowering()
     {
         while (isCollisionOngoing && !gameEnded)
         {
@@ -413,9 +412,39 @@ public class GyroDropGameManager : MonoBehaviour
             yield return null;
         }
     }
+    */
+    #endregion
+
+
+    public void CenterDrop()
+    {
+        if (isCollisionOngoing && !gameEnded)
+        {
+            StartCoroutine(DropLowering());
+        }
+
+    }
+
+    public IEnumerator DropLowering()
+    {
+        while (isCollisionOngoing && !gameEnded)
+        {
+            float newY = cameraObject.transform.position.y - (TargetYPosition * LowerPercentage * Time.deltaTime);
+            MoveCameraAndDisk(Mathf.Max(newY, 0));
+
+            if (cameraObject.transform.position.y <= 30)
+            {
+                StartCoroutine(GameOver());
+                break;
+            }
+            yield return null;
+        }
+    }
+
 
 
     // [ UI ] -------------------------------------------------------------------------------------------------------
+
     void UpdateLevel()
     {
         float heightPercentage = cameraObject.transform.position.y / TargetYPosition;
@@ -441,6 +470,7 @@ public class GyroDropGameManager : MonoBehaviour
         Firework.SetActive(true);
 
         _gyrodropSoundManager.Play_GameClear();
+        _gyrodropUIManager.RemoveUI();
         _gyrodropUIManager.GameClearUI();
 
         yield return new WaitForSeconds(5f);
@@ -453,9 +483,9 @@ public class GyroDropGameManager : MonoBehaviour
 
     IEnumerator GameOver()
     {
-        gameEnded = true; 
-
+        gameEnded = true;
         _gyrodropSoundManager.Play_GameOver();
+        _gyrodropUIManager.RemoveUI();
         _gyrodropUIManager.GameOverUI();
 
         yield return new WaitForSeconds(5f);
@@ -501,10 +531,13 @@ public class GyroDropGameManager : MonoBehaviour
 
     IEnumerator TurnOffLight()
     {
-        yield return new WaitForSeconds(2f);
-        Light1.SetActive(false);
-
-        yield return new WaitForSeconds(3f);
-        Light2.SetActive(false);
+        foreach (GameObject light in Lights)
+        {
+            if (light != null) 
+            {
+                light.SetActive(false);
+            }
+            yield return new WaitForSeconds(1f); // 1초 간격
+        }
     }
 }
