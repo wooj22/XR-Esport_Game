@@ -29,10 +29,9 @@ public class BalloonUIManager : MonoBehaviour
 
     IEnumerator StartCountDownCoroutine()
     {
-        // 게임 설명 
         adviceBackImage.gameObject.SetActive(true);
         adviceImage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         adviceImage.gameObject.SetActive(false);
 
         for (int i = countDownImages.Length - 1; i >= 0; i--)

@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class GyroDropUIManager : MonoBehaviour
 {
-    [SerializeField] Text adviceLabel;
     [SerializeField] Image adviceBackImage;
+    [SerializeField] GameObject adviceImage;  // 게임 설명
+    [SerializeField] Image[] countDownImages; // 카운트다운 숫자 (4,3,2,1)
+    [SerializeField] GameObject startImage;
+    [SerializeField] GameObject wariningImage;
+
     [SerializeField] Image gameClearImage;
     [SerializeField] Image gameOverImage;
     [SerializeField] Image levelUpImage;
@@ -19,27 +23,24 @@ public class GyroDropUIManager : MonoBehaviour
 
 
     // 게임시작 전 카운트다운
-    public void StartCountDown(int minute)
+    public void StartCountDown( )
     {
-        StartCoroutine(StartCountDownCoroutine(minute));
+        StartCoroutine(StartCountDownCoroutine( ));
     }
 
-    IEnumerator StartCountDownCoroutine(int startCount)
+    IEnumerator StartCountDownCoroutine( )
     {
-        // 설명
-        adviceLabel.text = "구멍이 생기는 발판을 피해라!";
         adviceBackImage.gameObject.SetActive(true);
-        adviceLabel.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        adviceImage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        adviceImage.gameObject.SetActive(false);
 
-        // 카운트다운
-        adviceLabel.text = "";
-        for (int i = startCount; i > 0; i--)
+        for (int i = countDownImages.Length - 1; i >= 0; i--)
         {
-            adviceLabel.text = i.ToString();
+            countDownImages[i].gameObject.SetActive(true);
             yield return new WaitForSeconds(1f);
+            countDownImages[i].gameObject.SetActive(false);
         }
-        adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
     }
 
@@ -188,17 +189,14 @@ public class GyroDropUIManager : MonoBehaviour
         }
     }
 
-    public void StartWarning()
+    public void StartWarning() // 가운데 구멍을 밟지 마세요! 
     {
-        adviceLabel.text = "가운데 구멍을 밟지 마세요!";
-        adviceBackImage.gameObject.SetActive(true);
-        adviceLabel.gameObject.SetActive(true);
+        wariningImage.SetActive(true);
     }
 
     public void FinishWarning()
     {
-        adviceLabel.gameObject.SetActive(false);
-        adviceBackImage.gameObject.SetActive(false);
+        wariningImage.SetActive(false);
     }
 
 
@@ -209,20 +207,22 @@ public class GyroDropUIManager : MonoBehaviour
 
     IEnumerator StartCountDownCoroutine2()
     {
-        // 설명
-        adviceLabel.text = "시작합니다!";
         adviceBackImage.gameObject.SetActive(true);
-        adviceLabel.gameObject.SetActive(true);
+        startImage.SetActive(true);
         yield return new WaitForSeconds(3f);
 
-        adviceLabel.gameObject.SetActive(false);
+        startImage.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
+
     }
 
-    public void RemoveUI()
+    // 게임 오버/클리어 시 UI 초기화 
+    /*
+    public void RemoveUI() 
     {
         adviceBackImage.gameObject.SetActive(false);
         adviceLabel.gameObject.SetActive(false);
     }
+    */
 }
 

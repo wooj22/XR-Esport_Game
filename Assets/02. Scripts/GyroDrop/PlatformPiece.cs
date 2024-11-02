@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlatformPiece : MonoBehaviour
 {
+    [SerializeField] GyroDropUIManager _gyrodropUIManager;
+
     private Renderer pieceRenderer;
     private Collider pieceCollider;
 
@@ -38,6 +40,8 @@ public class PlatformPiece : MonoBehaviour
         if (other.CompareTag("Player") && pieceRenderer.enabled == false ) 
         {
             FindObjectOfType<GyroDropGameManager>().HandleCollision();
+
+            _gyrodropUIManager.StartWarning(); // 하강하면서 Finish 실행해줌 
         }
     }
 }
