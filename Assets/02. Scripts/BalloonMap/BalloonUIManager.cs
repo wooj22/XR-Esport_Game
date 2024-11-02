@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class BalloonUIManager : MonoBehaviour
 {
-    [SerializeField] Text adviceLabel;
     [SerializeField] Image adviceBackImage;
+    [SerializeField] GameObject adviceImage;  // 게임 설명
+    [SerializeField] Image[] countDownImages; // 카운트다운 숫자 (4,3,2,1)
+
     [SerializeField] Image gameSuccessImage;
     [SerializeField] Image gameOverImage;
     [SerializeField] Image levelUpImage;
@@ -20,27 +22,25 @@ public class BalloonUIManager : MonoBehaviour
 
 
     // 게임시작 전 카운트다운
-    public void StartCountDown(int minute)
+    public void StartCountDown()
     {
-        StartCoroutine(StartCountDownCoroutine(minute));
+        StartCoroutine(StartCountDownCoroutine());
     }
 
-    IEnumerator StartCountDownCoroutine(int startCount)
+    IEnumerator StartCountDownCoroutine()
     {
-        // 설명
-        adviceLabel.text = "풍선을 터트려라!";
+        // 게임 설명 
         adviceBackImage.gameObject.SetActive(true);
-        adviceLabel.gameObject.SetActive(true);
+        adviceImage.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
+        adviceImage.gameObject.SetActive(false);
 
-        // 카운트다운
-        adviceLabel.text = "";
-        for (int i = startCount; i > 0; i--)
+        for (int i = countDownImages.Length - 1; i >= 0; i--)
         {
-            adviceLabel.text = i.ToString();
-            yield return new WaitForSeconds(1f);
+            countDownImages[i].gameObject.SetActive(true); 
+            yield return new WaitForSeconds(1f);           
+            countDownImages[i].gameObject.SetActive(false); 
         }
-        adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
     }
 
