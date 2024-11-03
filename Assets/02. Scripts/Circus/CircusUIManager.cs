@@ -29,7 +29,7 @@ public class CircusUIManager : MonoBehaviour
     IEnumerator StartCountDownCoroutine(int startCount)
     {
         // 설명
-        adviceLabel.text = "레이저를 피해라!";
+        adviceLabel.text = "서커스장의 레이저를 피해라!";
         adviceBackImage.gameObject.SetActive(true);
         adviceLabel.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
