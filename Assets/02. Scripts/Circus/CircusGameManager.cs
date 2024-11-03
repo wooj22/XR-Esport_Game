@@ -63,9 +63,9 @@ public class CircusGameManager : MonoBehaviour
         // 맵 셋팅 대기
         yield return new WaitForSeconds(5f);
 
-        // 시작 전 카운트다운
+        // 시작 전 설명
         _circusUIManager.StartCountDown(5);
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(12f);
 
         // 게임 시작
         Coroutine Level = StartCoroutine(LevelControl());

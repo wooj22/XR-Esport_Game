@@ -11,6 +11,8 @@ public class RollerUIManager : MonoBehaviour
     [SerializeField] Image levelUpImage;
     [SerializeField] Image gameSuccessImage;
     [SerializeField] Image gameOverImage;
+    [SerializeField] Image infoImage;
+    [SerializeField] Image backgroundImage;
 
     [Header("FadeOutImage")]
     [SerializeField] Image fade_front;
@@ -26,10 +28,16 @@ public class RollerUIManager : MonoBehaviour
 
     IEnumerator StartCountDownCoroutine(int startCount)
     {
-        // 설명
-        adviceLabel.text = "아이템을 밟아라!";
+        // 설명 on
+        adviceLabel.text = "달리는 롤러코스터에서 아이템을 밟아라!";
         adviceLabel.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        infoImage.gameObject.SetActive(true);
+        backgroundImage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(5f);
+
+        // 설명 off
+        adviceLabel.rectTransform.anchoredPosition = Vector3.zero;
+        infoImage.gameObject.SetActive(false);
 
         // 카운트다운
         adviceLabel.text = "";
@@ -38,7 +46,14 @@ public class RollerUIManager : MonoBehaviour
             adviceLabel.text = i.ToString();
             yield return new WaitForSeconds(1f);
         }
+
+        // 게임 시작
+        adviceLabel.text = "Game Start!";
+        yield return new WaitForSeconds(2f);
         adviceLabel.gameObject.SetActive(false);
+        backgroundImage.gameObject.SetActive(false);
+        timerLabel.gameObject.SetActive(true);
+        gaugeBar.gameObject.SetActive(true);
     }
 
     /// 타이머

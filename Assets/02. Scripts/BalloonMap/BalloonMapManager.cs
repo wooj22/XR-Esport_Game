@@ -265,6 +265,7 @@ public class BalloonMapManager : MonoBehaviour
 
             // 이벤트 풍선 SFX 넣기 
             _balloonSoundManager.EventBalloon_SFX();
+            _balloonUIManager.LevelUpUI();
         }
         else
         {
