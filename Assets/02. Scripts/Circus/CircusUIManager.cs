@@ -12,6 +12,7 @@ public class CircusUIManager : MonoBehaviour
     [SerializeField] Image levelUpImage;
     [SerializeField] Image gameSuccessImage;
     [SerializeField] Image gameOverImage;
+    [SerializeField] GameObject infoImages;
 
     [Header("FadeOutImage")]
     [SerializeField] Image fade_front;
@@ -28,11 +29,16 @@ public class CircusUIManager : MonoBehaviour
 
     IEnumerator StartCountDownCoroutine(int startCount)
     {
-        // 설명
+        // 설명 on
         adviceLabel.text = "서커스장의 레이저를 피해라!";
         adviceBackImage.gameObject.SetActive(true);
         adviceLabel.gameObject.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        infoImages.SetActive(true);
+
+        // 설명 off
+        yield return new WaitForSeconds(5f);
+        infoImages.SetActive(false);
+        adviceLabel.rectTransform.anchoredPosition = Vector3.zero;
 
         // 카운트다운
         adviceLabel.text = "";
@@ -43,6 +49,8 @@ public class CircusUIManager : MonoBehaviour
         }
         adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
+        timerLabel.gameObject.SetActive(true);
+        gaugeBar.gameObject.SetActive(true);
     }
 
     /// 타이머
