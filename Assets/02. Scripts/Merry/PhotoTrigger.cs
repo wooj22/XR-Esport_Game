@@ -17,6 +17,7 @@ public class PhotoTrigger : MonoBehaviour
 
     [Header("Animations")]
     [SerializeField] Animator merryAni;
+    [SerializeField] List<Animator> elseAnis;
 
     [Header("Rendering")]
     [SerializeField] Volume volume;
@@ -78,9 +79,17 @@ public class PhotoTrigger : MonoBehaviour
     IEnumerator PlayPhotoAni()
     {
         merryAni.SetBool("isMerry", true);
+        for(int i=0; i< elseAnis.Count; i++)
+        {
+            elseAnis[i].SetBool("isMerry", true);
+        }
 
         yield return new WaitForSeconds(duration);
         merryAni.SetBool("isMerry", false);
+        for (int i = 0; i < elseAnis.Count; i++)
+        {
+            elseAnis[i].SetBool("isMerry", false);
+        }
     }
 
     // 포스트프로세싱 연출
