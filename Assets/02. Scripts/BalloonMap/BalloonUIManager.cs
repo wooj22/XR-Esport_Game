@@ -8,6 +8,7 @@ public class BalloonUIManager : MonoBehaviour
     [SerializeField] Image adviceBackImage;
     [SerializeField] GameObject adviceImage;  // 게임 설명
     [SerializeField] Image[] countDownImages; // 카운트다운 숫자 (4,3,2,1)
+    [SerializeField] Image clockImage;
 
     [SerializeField] Image gameSuccessImage;
     [SerializeField] Image gameOverImage;
@@ -169,4 +170,16 @@ public class BalloonUIManager : MonoBehaviour
             fade_down_sub.color = new Color(0, 0, 0, fadeCount);
         }
     }
+
+    public void ActiveClock()
+    {
+        clockImage.gameObject.SetActive(true);
+    }
+
+    /*
+    public void DeactiveClock()
+    {
+        clockImage.gameObject.SetActive(false);
+    }
+    */
 }

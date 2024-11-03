@@ -50,8 +50,6 @@ public class GyroDropGameManager : MonoBehaviour
     private bool isCountdown;
     public bool isTrigger_center = false;
 
-    // private bool warningDisplayed = false;  // 경고 메시지 1회 출력 플래그
-
     // [ 회전 및 속도 ]
     private float RotationSpeed = 20f;     // 원판 회전 속도
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
@@ -93,9 +91,13 @@ public class GyroDropGameManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         _gyrodropUIManager.StartCountDown( );
-        yield return new WaitForSeconds(9f);
+        yield return new WaitForSeconds(7f);
 
-        isRising = true; 
+        ActivateArrows();
+        yield return new WaitForSeconds(4f);
+
+        isRising = true;  
+        DeactivateArrows();
 
         StartCoroutine(RiseCoroutine()); // 상승 : 1차 멈춤 있음 
     }
@@ -119,7 +121,6 @@ public class GyroDropGameManager : MonoBehaviour
             RestoreAllPlatformPieces();  
         }
 
-        // if(isTrigger_center) { OnPlayerCollidedWithCenter(); }
     }
 
     // 타이머 관리 
@@ -250,7 +251,12 @@ public class GyroDropGameManager : MonoBehaviour
         yield return new WaitForSeconds(8f); 
 
         piece.GetComponent<Renderer>().enabled = true;   // 원판 복구 
-        piece.GetComponent<Collider>().enabled = false; 
+        piece.GetComponent<Collider>().enabled = false;
+
+        if (platformPiece != null)
+        {
+            platformPiece.DeactivateWarningUI(); // 원판 복구 후 WarningUI 비활성화
+        }
 
     }
 
