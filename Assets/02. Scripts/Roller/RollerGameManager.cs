@@ -43,9 +43,9 @@ public class RollerGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        // 카운트다운
+        // 시작 전 설명
         _rollerUIManager.StartCountDown(5);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(12f);
         _rollerUIManager.StartTimer(playTime);
 
         // 게임 진행

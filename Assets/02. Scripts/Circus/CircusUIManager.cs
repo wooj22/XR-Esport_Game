@@ -47,6 +47,10 @@ public class CircusUIManager : MonoBehaviour
             adviceLabel.text = i.ToString();
             yield return new WaitForSeconds(1f);
         }
+
+        // 게임 시작
+        adviceLabel.text = "Game Start!";
+        yield return new WaitForSeconds(2f);
         adviceLabel.gameObject.SetActive(false);
         adviceBackImage.gameObject.SetActive(false);
         timerLabel.gameObject.SetActive(true);
