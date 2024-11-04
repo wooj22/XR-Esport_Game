@@ -50,8 +50,6 @@ public class GyroDropGameManager : MonoBehaviour
     private bool isCountdown;
     public bool isTrigger_center = false;
 
-    // private bool warningDisplayed = false;  // 경고 메시지 1회 출력 플래그
-
     // [ 회전 및 속도 ]
     private float RotationSpeed = 20f;     // 원판 회전 속도
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
@@ -67,8 +65,8 @@ public class GyroDropGameManager : MonoBehaviour
     void Start()
     {
         // ★ 시연 시, 필요 
-        cameraObject = GameObject.Find("SpoutCamera"); 
-        // cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
+        // cameraObject = GameObject.Find("SpoutCamera"); 
+        cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
@@ -92,10 +90,14 @@ public class GyroDropGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
 
-        _gyrodropUIManager.StartCountDown(5);
-        yield return new WaitForSeconds(8f);
+        _gyrodropUIManager.StartCountDown( );
+        yield return new WaitForSeconds(7f);
 
-        isRising = true; 
+        ActivateArrows();
+        yield return new WaitForSeconds(4f);
+
+        isRising = true;  
+        DeactivateArrows();
 
         StartCoroutine(RiseCoroutine()); // 상승 : 1차 멈춤 있음 
     }
@@ -119,7 +121,6 @@ public class GyroDropGameManager : MonoBehaviour
             RestoreAllPlatformPieces();  
         }
 
-        // if(isTrigger_center) { OnPlayerCollidedWithCenter(); }
     }
 
     // 타이머 관리 
@@ -162,7 +163,7 @@ public class GyroDropGameManager : MonoBehaviour
             {
                 _gyrodropUIManager.StartCountDown2();
 
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(3f);
 
                 Player.SetActive(true); Debug.Log("플레이어가 활성화 됩니다.");
                 pausedOnce = true; 
@@ -247,10 +248,15 @@ public class GyroDropGameManager : MonoBehaviour
             platformPiece.StartBlinking(0.5f, 5); 
         }
 
-        yield return new WaitForSeconds(5f); 
+        yield return new WaitForSeconds(8f); 
 
         piece.GetComponent<Renderer>().enabled = true;   // 원판 복구 
-        piece.GetComponent<Collider>().enabled = false; 
+        piece.GetComponent<Collider>().enabled = false;
+
+        if (platformPiece != null)
+        {
+            platformPiece.DeactivateWarningUI(); // 원판 복구 후 WarningUI 비활성화
+        }
 
     }
 
@@ -352,6 +358,8 @@ public class GyroDropGameManager : MonoBehaviour
         }
 
         MoveCameraAndDisk(targetY); // 마지막 위치로 정확히 이동
+
+        _gyrodropUIManager.FinishWarning(); // PlatformPiece에서 Start 실행 
     }
 
 
@@ -470,7 +478,7 @@ public class GyroDropGameManager : MonoBehaviour
         Firework.SetActive(true);
 
         _gyrodropSoundManager.Play_GameClear();
-        _gyrodropUIManager.RemoveUI();
+        _gyrodropUIManager.FinishWarning();
         _gyrodropUIManager.GameClearUI();
 
         yield return new WaitForSeconds(5f);
@@ -485,7 +493,7 @@ public class GyroDropGameManager : MonoBehaviour
     {
         gameEnded = true;
         _gyrodropSoundManager.Play_GameOver();
-        _gyrodropUIManager.RemoveUI();
+        _gyrodropUIManager.FinishWarning();
         _gyrodropUIManager.GameOverUI();
 
         yield return new WaitForSeconds(5f);

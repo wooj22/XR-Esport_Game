@@ -85,10 +85,9 @@ public class BalloonMapManager : MonoBehaviour
         yield return new WaitForSeconds(5f);
 
         // 시작 전 카운트다운
-        _balloonUIManager.StartCountDown(5);
-        yield return new WaitForSeconds(8f);
+        _balloonUIManager.StartCountDown();
+        yield return new WaitForSeconds(12f);
 
-        Debug.Log("안내 문구 출력 끝. 게임을 시작합니다.");
         gameStarted = true;
 
         Player.SetActive(true); Debug.Log("플레이어가 활성화 됩니다.");
@@ -126,6 +125,7 @@ public class BalloonMapManager : MonoBehaviour
         {
             isCountdown = true;
             _balloonSoundManager.Play_CountDown();
+            _balloonUIManager.ActiveClock();
         }
     }
 
