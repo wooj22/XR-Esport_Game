@@ -10613,11 +10613,11 @@ MonoBehaviour:
   bgmSource: {fileID: 856066298}
   sfxSource: {fileID: 856066297}
   plusSource: {fileID: 856066295}
-  bgmClip: {fileID: 8300000, guid: 035d9986110792c42afe3e3cf895cd1a, type: 3}
-  BalloonClip: {fileID: 8300000, guid: 98b64f70f72fc7c4d927e663a3f7c288, type: 3}
-  EventBalloonClip: {fileID: 8300000, guid: fe91688b227171a4aa05562cd27577e9, type: 3}
-  GameClearClip: {fileID: 8300000, guid: 27ba10743cd321d4ebdf68df3f341913, type: 3}
-  GameOverClip: {fileID: 8300000, guid: d1edcac78ae6b5a4ea094b3bac3a653a, type: 3}
+  bgmClip: {fileID: 8300000, guid: d2d09aaa9a7e75f49a6282dca34f1472, type: 3}
+  BalloonClip: {fileID: 8300000, guid: 4358975d97d664b4f9d778e061cf5ad4, type: 3}
+  EventBalloonClip: {fileID: 8300000, guid: a0510d0d26413e541bc075ea082e09f5, type: 3}
+  GameClearClip: {fileID: 8300000, guid: f08b9ef0db84fe14cbf729daead4eeaa, type: 3}
+  GameOverClip: {fileID: 8300000, guid: d0a3cbaf72cbe994faf77c769f51203a, type: 3}
   CountDownClip: {fileID: 8300000, guid: ef39df2df34632a4189a9ac7aec81ac7, type: 3}
 --- !u!82 &856066297
 AudioSource:
@@ -11024,8 +11024,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 13.3098}
-  m_SizeDelta: {x: 1160.436, y: 76.7187}
+  m_AnchoredPosition: {x: 0, y: 12}
+  m_SizeDelta: {x: 1160.436, y: 105.2055}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &865579213
 MonoBehaviour:
@@ -11047,7 +11047,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aa920f181605db94780c5360e0426fed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b5389601fa34bdd41b05402af375d354, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
