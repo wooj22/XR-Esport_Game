@@ -105,7 +105,7 @@ public class CircusGameManager : MonoBehaviour
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
         _circusUIManager.LevelUpUI();
-        _circusSoundManager.PlaySFX("SFX_LevelUp");
+        _circusSoundManager.PlaySFX("SFX_LevelUP");
 
         // 3렙
         yield return new WaitForSeconds(levelUpTime[1]);
@@ -113,7 +113,7 @@ public class CircusGameManager : MonoBehaviour
         currentLaserCycle = laserCycleList[currentLevel - 1];
         currentLaserSpeed = laserSpeedList[currentLevel - 1];
         _circusUIManager.LevelUpUI();
-        _circusSoundManager.PlaySFX("SFX_LevelUp");
+        _circusSoundManager.PlaySFX("SFX_LevelUP");
     }
 
     /// 레이저 생성, 곰돌이 애니메이션 제어
@@ -166,7 +166,7 @@ public class CircusGameManager : MonoBehaviour
             // 게임성공
             this.GetComponent<CircusDirector>().PlayFirecracker();
             _circusUIManager.GameSuccessUI();
-            _circusSoundManager.PlaySFX("SFX_Circus_GameClear");
+            _circusSoundManager.PlaySFX("SFX_GameSuccess");
             bear.gameObject.SetActive(false);
             bearDancing.gameObject.SetActive(true);
             PlayCheerAnimation();
@@ -175,7 +175,7 @@ public class CircusGameManager : MonoBehaviour
         {
             // 게임실패
             _circusUIManager.GameOverUI();
-            _circusSoundManager.PlaySFX("SFX_Circus_GameOver");
+            _circusSoundManager.PlaySFX("SFX_GameOver");
             bearAni.SetTrigger("Over");
         }
     }
@@ -206,7 +206,7 @@ public class CircusGameManager : MonoBehaviour
     public void OnLaserHitPlayer()
     {
         _circusUIManager.GaugeDown();
-        _circusSoundManager.PlaySFX("SFX_Circus_laserOver");
+        _circusSoundManager.PlaySFX("SFX_Circus_LaserHit");
     }
 
     public void OnLaserReachBorder()

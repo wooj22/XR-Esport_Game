@@ -39,7 +39,7 @@ public class PhotoTrigger : MonoBehaviour
     {
         bc.enabled = false;
         image.gameObject.SetActive(false);
-        _merrySoundManager.PlaySFX("SFX_Particle");
+        _merrySoundManager.PlaySFX("SFX_MerryOn");
 
         for (int i = 3; i >=1; i--)
         {
@@ -61,7 +61,7 @@ public class PhotoTrigger : MonoBehaviour
     // 포토 파티클 재생
     IEnumerator PlayPhotoParticle()
     {
-        _merrySoundManager.PlaySFX("SFX_Fire");
+        _merrySoundManager.PlaySFX("SFX_MerryEffect");
 
         for (int i=0; i< vfxLists.Count; i++)
         {

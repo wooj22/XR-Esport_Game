@@ -29,6 +29,7 @@ public class RollerUIManager : MonoBehaviour
     IEnumerator StartCountDownCoroutine(int startCount)
     {
         // 설명 on
+        adviceLabel.fontSize = 100;
         adviceLabel.text = "달리는 롤러코스터에서 아이템을 밟아라!";
         adviceLabel.gameObject.SetActive(true);
         infoImage.gameObject.SetActive(true);
@@ -48,6 +49,7 @@ public class RollerUIManager : MonoBehaviour
         }
 
         // 게임 시작
+        adviceLabel.fontSize = 150;
         adviceLabel.text = "Game Start!";
         yield return new WaitForSeconds(2f);
         adviceLabel.gameObject.SetActive(false);

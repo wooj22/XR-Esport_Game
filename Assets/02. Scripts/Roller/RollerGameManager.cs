@@ -102,7 +102,7 @@ public class RollerGameManager : MonoBehaviour
         else
         {
             _rollerUIManager.LevelUpUI();
-            _rollerSoundManager.PlaySFX("SFX_LevelUp");
+            _rollerSoundManager.PlaySFX("SFX_LevelUP");
         }
     }
 
@@ -137,13 +137,13 @@ public class RollerGameManager : MonoBehaviour
         {
             // 게임성공
             _rollerUIManager.GameSuccessUI();
-            _rollerSoundManager.PlaySFX("SFX_Roller_GameClear");
+            _rollerSoundManager.PlaySFX("SFX_GameSuccess");
         }
         else
         {
             // 게임실패
             _rollerUIManager.GameOverUI();
-            _rollerSoundManager.PlaySFX("SFX_Roller_GameOver");
+            _rollerSoundManager.PlaySFX("SFX_GameOver");
         }
     }
 

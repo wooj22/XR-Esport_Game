@@ -4825,7 +4825,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 10, z: 20}
+  m_Size: {x: 20, y: 20, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!102 &334247866
 TextMesh:
@@ -4900,8 +4900,8 @@ Transform:
   m_GameObject: {fileID: 334247863}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -33, z: -15.2}
-  m_LocalScale: {x: 0.70649, y: 0.70649, z: 0.70649}
+  m_LocalPosition: {x: 0, y: -33, z: -15.275}
+  m_LocalScale: {x: 0.63194114, y: 0.63194114, z: 0.63194114}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1375003987}
@@ -15568,8 +15568,8 @@ Transform:
   m_GameObject: {fileID: 1375003986}
   serializedVersion: 2
   m_LocalRotation: {x: -0.706509, y: 0.029069487, z: -0.029069487, w: 0.706509}
-  m_LocalPosition: {x: -156.34, y: -0.21996, z: 2.4117}
-  m_LocalScale: {x: 0.30825204, y: 0.3145172, z: 0.26328644}
+  m_LocalPosition: {x: -124.3, y: -0.9, z: 2.4}
+  m_LocalScale: {x: 0.2461485, y: 0.3145172, z: 0.22227168}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 334247868}
@@ -18757,7 +18757,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 20, y: 10, z: 20}
+  m_Size: {x: 35, y: 10, z: 20}
   m_Center: {x: 0, y: 3, z: 0}
 --- !u!102 &1608291666
 TextMesh:
@@ -18834,7 +18834,7 @@ Transform:
   m_GameObject: {fileID: 1608291663}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -35.8, z: -77.5}
+  m_LocalPosition: {x: 0, y: -35.8, z: -72.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21869,11 +21869,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 1956525950}
   sfxSource: {fileID: 1956525949}
-  bgmClip: {fileID: 8300000, guid: 301c7407ff5360a43a11dfb5efee6eac, type: 3}
+  bgmClip: {fileID: 8300000, guid: 8462ccae4e563684dbefeead38233fb2, type: 3}
   sfxClipList:
-  - {fileID: 8300000, guid: dc78c712b67ee4245a70bc72856ef307, type: 3}
-  - {fileID: 8300000, guid: 7a2b467a670eac946a3db13d2a2e510a, type: 3}
-  - {fileID: 8300000, guid: 2908a916c0694884c8e4eb8bbb082b81, type: 3}
+  - {fileID: 8300000, guid: 692c53508e6fa2546878e93366485178, type: 3}
+  - {fileID: 8300000, guid: 8e174002d5015194597e24605c1b69ea, type: 3}
+  - {fileID: 8300000, guid: e68be6caf1eea19489aa28bf5456b02a, type: 3}
   fadeVolumeTime: 5
 --- !u!1001 &1970017327
 PrefabInstance:

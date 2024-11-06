@@ -30,6 +30,7 @@ public class CircusUIManager : MonoBehaviour
     IEnumerator StartCountDownCoroutine(int startCount)
     {
         // 설명 on
+        adviceLabel.fontSize = 100;
         adviceLabel.text = "서커스장의 레이저를 피해라!";
         adviceBackImage.gameObject.SetActive(true);
         adviceLabel.gameObject.SetActive(true);
@@ -42,6 +43,7 @@ public class CircusUIManager : MonoBehaviour
 
         // 카운트다운
         adviceLabel.text = "";
+        adviceLabel.fontSize = 150;
         for (int i = startCount; i > 0; i--)
         {
             adviceLabel.text = i.ToString();
