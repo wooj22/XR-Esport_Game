@@ -54,7 +54,7 @@ public class MainManager : MonoBehaviour
     /// ÆäÀÌµå¾Æ¿ô ÈÄ ¸Ê ÀüÈ¯
     IEnumerator FadeOutEndSwitchMap(string sceneName)
     {
-        _mainSoundManager.PlaySFX("SFX_Main_OpenMap");
+        _mainSoundManager.PlaySFX("SFX_Open");
         _mainSoundManager.StopBGM();
 
         float fadeCount = 0;
