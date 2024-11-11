@@ -1640,7 +1640,7 @@ MonoBehaviour:
   speedList:
   - 1.5
   - 2
-  - 3.5
+  - 3
   itemGenerateTimeList:
   - 0.7
   - 0.3
@@ -1890,7 +1890,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 202}
-  m_SizeDelta: {x: 1600, y: 100}
+  m_SizeDelta: {x: 1600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &760533190
 MonoBehaviour:
@@ -1905,7 +1905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5153079, g: 0.7082081, b: 0.7283019, a: 0.9254902}
+  m_Color: {r: 0.40875044, g: 0.7056604, b: 0.58582324, a: 0.9254902}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1942,13 +1942,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760533188}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.23773581, g: 0.09105728, b: 0.09105728, a: 0.5}
-  m_EffectDistance: {x: 2, y: -2}
+  m_EffectColor: {r: 0.4943396, g: 0.4943396, b: 0.4943396, a: 0.5}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!1 &764617830
 GameObject:
@@ -5201,13 +5201,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 1951178885}
   sfxSource: {fileID: 1951178884}
-  bgmClip: {fileID: 8300000, guid: 952433d08c202c347ae4314417ea898a, type: 3}
+  bgmClip: {fileID: 8300000, guid: a6e5598c820b44e48ad1cf7e75f6dd46, type: 3}
   sfxClipList:
   - {fileID: 8300000, guid: ef39df2df34632a4189a9ac7aec81ac7, type: 3}
-  - {fileID: 8300000, guid: e6efed7eb3c588f409113316f1dacf5c, type: 3}
-  - {fileID: 8300000, guid: a999c650b860e3e43bc5081a9d08a1b5, type: 3}
-  - {fileID: 8300000, guid: d2a55dfe80d51b84ab236ba5d92a568c, type: 3}
-  - {fileID: 8300000, guid: 62265c4435c8da0488df6e3903c67c42, type: 3}
+  - {fileID: 8300000, guid: fddb3f4ce48f5d84f84c579c71ed913d, type: 3}
+  - {fileID: 8300000, guid: 1f4bab368b81fee40857904da88e09a4, type: 3}
+  - {fileID: 8300000, guid: 1ab2beeb5e1ff854e931dead15642c87, type: 3}
+  - {fileID: 8300000, guid: 332ffaafc731d34428292ec39d5fad9a, type: 3}
   fadeVolumeTime: 5
 --- !u!82 &1951178884
 AudioSource:

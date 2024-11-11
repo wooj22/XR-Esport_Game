@@ -9298,7 +9298,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 215}
-  m_SizeDelta: {x: 1600, y: 100}
+  m_SizeDelta: {x: 1600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1829645278
 MonoBehaviour:
@@ -10091,13 +10091,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 1956525950}
   sfxSource: {fileID: 1956525949}
-  bgmClip: {fileID: 8300000, guid: 418000accac9a4849bbf4866c2282084, type: 3}
+  bgmClip: {fileID: 8300000, guid: a6e0586ecc727bb44bd8317244b844c0, type: 3}
   sfxClipList:
-  - {fileID: 8300000, guid: b54868ce1a496a04c85e6047f471934a, type: 3}
+  - {fileID: 8300000, guid: befc1fab958b70149969616e6caa9f8c, type: 3}
   - {fileID: 8300000, guid: ef39df2df34632a4189a9ac7aec81ac7, type: 3}
-  - {fileID: 8300000, guid: cd2267cfaef3b1e438805828aacf9846, type: 3}
-  - {fileID: 8300000, guid: 5e893baa66d04204d8fbec58bebac637, type: 3}
-  - {fileID: 8300000, guid: 62265c4435c8da0488df6e3903c67c42, type: 3}
+  - {fileID: 8300000, guid: 1f4bab368b81fee40857904da88e09a4, type: 3}
+  - {fileID: 8300000, guid: fddb3f4ce48f5d84f84c579c71ed913d, type: 3}
+  - {fileID: 8300000, guid: 332ffaafc731d34428292ec39d5fad9a, type: 3}
   fadeVolumeTime: 5
 --- !u!82 &1956525949
 AudioSource:
