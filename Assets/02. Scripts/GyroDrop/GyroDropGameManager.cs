@@ -65,8 +65,8 @@ public class GyroDropGameManager : MonoBehaviour
     void Start()
     {
         // ★ 시연 시, 필요 
-        // cameraObject = GameObject.Find("SpoutCamera"); 
-        cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
+        cameraObject = GameObject.Find("SpoutCamera"); 
+        // cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
@@ -93,11 +93,11 @@ public class GyroDropGameManager : MonoBehaviour
         _gyrodropUIManager.StartCountDown( );
         yield return new WaitForSeconds(7f);
 
-        ActivateArrows();
+        _gyrodropUIManager.ShowStartArrows( );
         yield return new WaitForSeconds(4f);
 
-        isRising = true;  
-        DeactivateArrows();
+        isRising = true;
+        _gyrodropUIManager.HideStartArrows();
 
         StartCoroutine(RiseCoroutine()); // 상승 : 1차 멈춤 있음 
     }
@@ -291,21 +291,22 @@ public class GyroDropGameManager : MonoBehaviour
         {
             if (cameraObject.transform.position.y >= 50f)
             {
-                UpdateArrowSprites(); 
+                _gyrodropUIManager.UpdateArrowSprites(RotationDirection); 
 
-                ActivateArrows();  // 3초 전 화살표 활성화
+                _gyrodropUIManager.ShowArrows( );
+
                 yield return new WaitForSeconds(3f); 
 
                 RotationDirection *= -1; // 방향 변경 : 시계 방향 ↔ 시계 반대 방향 전환
-                
-                DeactivateArrows();
+
+                _gyrodropUIManager.HideArrows();
             }
 
             yield return new WaitForSeconds(Random.Range(8f, 12f));
 
         }
     }
-
+    /*
     // 화살표 활성화
     private void ActivateArrows() { ArrowObject1.SetActive(true); ArrowObject2.SetActive(true); }
 
@@ -318,7 +319,7 @@ public class GyroDropGameManager : MonoBehaviour
         Sprite selectedSprite = RotationDirection == 1 ? Arrow_reverse : Arrow;
         ArrowObject1.GetComponent<Image>().sprite = selectedSprite; ArrowObject2.GetComponent<Image>().sprite = selectedSprite;
     }
-
+    */
 
     // ----------------------------------------------------------------------------------------------------------
     // ★ [ 충돌 발생 시 호출되는 함수 ] ★ ---------------------------------------------------------------------
@@ -479,6 +480,7 @@ public class GyroDropGameManager : MonoBehaviour
 
         _gyrodropSoundManager.Play_GameClear();
         _gyrodropUIManager.FinishWarning();
+        _gyrodropUIManager.HideArrows();
         _gyrodropUIManager.GameClearUI();
 
         yield return new WaitForSeconds(5f);
@@ -494,6 +496,7 @@ public class GyroDropGameManager : MonoBehaviour
         gameEnded = true;
         _gyrodropSoundManager.Play_GameOver();
         _gyrodropUIManager.FinishWarning();
+        _gyrodropUIManager.HideArrows();
         _gyrodropUIManager.GameOverUI();
 
         yield return new WaitForSeconds(5f);

@@ -21,6 +21,30 @@ public class GyroDropUIManager : MonoBehaviour
     [SerializeField] Image fade_left;
     [SerializeField] Image fade_down;
 
+    [Header("Arrow_Down")]
+    [SerializeField] GameObject DownArrow1;
+    [SerializeField] GameObject DownArrow2;
+    [SerializeField] Sprite down_clockwiseArrow;
+    [SerializeField] Sprite down_Arrow;
+
+    [Header("Arrow_front")]
+    [SerializeField] GameObject FrontText;
+    [SerializeField] GameObject FrontArrow;
+    [SerializeField] Sprite front_clockwiseArrow;
+    [SerializeField] Sprite front_Arrow;
+
+    [Header("Arrow_left")]
+    [SerializeField] GameObject LeftArrow1;
+    [SerializeField] GameObject LeftArrow2;
+    [SerializeField] Sprite left_clockwiseArrow;
+    [SerializeField] Sprite left_Arrow;
+
+    [Header("Arrow_right")]
+    [SerializeField] GameObject RightArrow1;
+    [SerializeField] GameObject RightArrow2;
+    [SerializeField] Sprite right_clockwiseArrow;
+    [SerializeField] Sprite right_Arrow;
+
 
     // 게임시작 전 카운트다운
     public void StartCountDown( )
@@ -224,5 +248,101 @@ public class GyroDropUIManager : MonoBehaviour
         adviceLabel.gameObject.SetActive(false);
     }
     */
+
+    // 화살표 방향 설정
+    public void UpdateArrowSprites(int rotationDirection)
+    {
+        /*
+        Sprite selectedSprite = rotationDirection == 1 ? down_Arrow : down_clockwiseArrow;
+        DownArrow1.GetComponent<Image>().sprite = selectedSprite;
+        DownArrow2.GetComponent<Image>().sprite = selectedSprite;
+        */
+        if(rotationDirection == 1) // 반시계방향
+        {
+            FrontArrow.GetComponent<Image>().sprite = front_Arrow;
+
+            DownArrow1.GetComponent<Image>().sprite = down_Arrow;
+            DownArrow2.GetComponent<Image>().sprite = down_Arrow;
+
+            LeftArrow1.GetComponent<Image>().sprite = left_Arrow;
+            LeftArrow2.GetComponent<Image>().sprite = left_Arrow;
+            RightArrow1.GetComponent<Image>().sprite = right_Arrow;
+            RightArrow2.GetComponent<Image>().sprite = right_Arrow;
+        }
+        else if(rotationDirection == -1) // 시계방향 
+        {
+            FrontArrow.GetComponent<Image>().sprite = front_clockwiseArrow;
+
+            DownArrow1.GetComponent<Image>().sprite = down_clockwiseArrow;
+            DownArrow2.GetComponent<Image>().sprite = down_clockwiseArrow;
+
+            LeftArrow1.GetComponent<Image>().sprite = left_clockwiseArrow;
+            LeftArrow2.GetComponent<Image>().sprite = left_clockwiseArrow;
+            RightArrow1.GetComponent<Image>().sprite = right_clockwiseArrow;
+            RightArrow2.GetComponent<Image>().sprite = right_clockwiseArrow;
+        }
+        else
+        {
+            print("화살표 표시 오류입니다!");
+        }
+    }
+
+    public void ShowArrows( )
+    {
+        adviceBackImage.gameObject.SetActive(true);
+
+        FrontText.SetActive(true);
+        FrontArrow.SetActive(true);
+
+        DownArrow1.SetActive(true);
+        DownArrow2.SetActive(true);
+        
+        LeftArrow1.SetActive(true);
+        LeftArrow2.SetActive(true);
+        RightArrow1.SetActive(true);
+        RightArrow2.SetActive(true);
+
+    }
+    
+    public void HideArrows()
+    {
+        adviceBackImage.gameObject.SetActive(false);
+
+        FrontText.SetActive(false);
+        FrontArrow.SetActive(false);
+
+        DownArrow1.SetActive(false);
+        DownArrow2.SetActive(false);
+
+        LeftArrow1.SetActive(false);
+        LeftArrow2.SetActive(false);
+        RightArrow1.SetActive(false);
+        RightArrow2.SetActive(false);
+    }
+
+    // 처음 시작할 때는 front 제외하고 화살표 보여주기 
+
+    public void ShowStartArrows()
+    {
+        DownArrow1.SetActive(true);
+        DownArrow2.SetActive(true);
+
+        LeftArrow1.SetActive(true);
+        LeftArrow2.SetActive(true);
+        RightArrow1.SetActive(true);
+        RightArrow2.SetActive(true);
+    }
+    public void HideStartArrows()
+    {
+        DownArrow1.SetActive(false);
+        DownArrow2.SetActive(false);
+
+        LeftArrow1.SetActive(false);
+        LeftArrow2.SetActive(false);
+        RightArrow1.SetActive(false);
+        RightArrow2.SetActive(false);
+    }
+
+
 }
 
