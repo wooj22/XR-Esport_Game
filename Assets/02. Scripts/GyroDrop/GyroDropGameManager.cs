@@ -233,9 +233,9 @@ public class GyroDropGameManager : MonoBehaviour
     {
         float height = cameraObject.transform.position.y;
 
-        if      (height >= 300f) { return Random.Range(2, 4);  } // 2개 또는 3개
-        else if (height >= 100f) { return Random.Range(1, 3); } // 1개 또는 2개
-        else                     { return 1; } // 기본 1개
+        if      (height >= 300f) { return Random.Range(3, 5);  } // 3개 또는 4개
+        else if (height >= 100f) { return Random.Range(2, 4); } // 2개 또는 3개
+        else                     { return 2; } // 기본 2개
     }
 
 
@@ -245,6 +245,7 @@ public class GyroDropGameManager : MonoBehaviour
         PlatformPiece platformPiece = piece.GetComponent<PlatformPiece>();
         if (platformPiece != null)
         {
+            _gyrodropSoundManager.HoleWarining_SFX();
             platformPiece.StartBlinking(0.5f, 5); 
         }
 
@@ -463,8 +464,8 @@ public class GyroDropGameManager : MonoBehaviour
             if (heightPercentage >= thresholds[i] && !levelUpExecuted[i])
             {
                 levelUpExecuted[i] = true; // 해당 구간 플래그 설정
-                _gyrodropUIManager.LevelUpUI();
-                _gyrodropSoundManager.Play_LevelUp();
+                // _gyrodropUIManager.LevelUpUI();
+                // _gyrodropSoundManager.Play_LevelUp();
             }
         }
     }
