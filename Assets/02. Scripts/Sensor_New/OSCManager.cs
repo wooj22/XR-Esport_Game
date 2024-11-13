@@ -195,10 +195,10 @@ public class OSCManager : MonoBehaviour
     void SetOSC_Event()
     {
         // Front
-        sensorOSC.SetAddressHandler("/Front/Start", GetFrontStartMessage);
-        sensorOSC.SetAddressHandler("/Front/Data", GetFrontSensorMessage);
-        sensorOSC.SetAddressHandler("/Front/End", GetFrontStopMessage);
-        sensorOSC.SetAddressHandler("/Front/Quit", FrontSensorQuit);
+        //sensorOSC.SetAddressHandler("/Front/Start", GetFrontStartMessage);
+        //sensorOSC.SetAddressHandler("/Front/Data", GetFrontSensorMessage);
+        //sensorOSC.SetAddressHandler("/Front/End", GetFrontStopMessage);
+        //sensorOSC.SetAddressHandler("/Front/Quit", FrontSensorQuit);
 
         //// Right
         //sensorOSC.SetAddressHandler("/Right/Start", GetRightStartMessage);
