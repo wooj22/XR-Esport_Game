@@ -10,9 +10,12 @@ public class BalloonMapManager : MonoBehaviour
     [SerializeField] BalloonSceneManager _balloonSceneManager;
     [SerializeField] BalloonSoundManager _balloonSoundManager;
 
-    public GameObject[] balloonScreens;  // 벽 오브젝트 배열
+    // public GameObject[] balloonScreens;  // 벽 오브젝트 배열
+    public GameObject DownBalloons;
+    public GameObject FrontBalloons;
     public GameObject Player;            // 플레이어 오브젝트
     public GameObject eventBalloonPrefab; // 이벤트 풍선 오브젝트 
+
 
     // [ 이벤트 풍선 ]
     float eventBalloonTime = 12f;       // 12초마다 이벤트 발생
@@ -49,11 +52,14 @@ public class BalloonMapManager : MonoBehaviour
     void Start()
     {
         // 게임 시작 시 전체 풍선 개수 계산
+        /*
         foreach (GameObject screen in balloonScreens)
         {
             totalBalloons += screen.GetComponentsInChildren<Balloon>().Length;
             
         }
+        */
+        totalBalloons += DownBalloons.GetComponentsInChildren<Balloon>().Length;
         print("전체 풍선의 개수 = " + totalBalloons);
 
         // 슬라이더 초기화
@@ -217,12 +223,13 @@ public class BalloonMapManager : MonoBehaviour
     {
 
         List<Balloon> availableBalloons = new List<Balloon>();
-
+        /*
         foreach (GameObject screen in balloonScreens)
         {
             availableBalloons.AddRange(screen.GetComponentsInChildren<Balloon>()); // 자식의 자식으로 변경해야함 
         }
-
+        */
+        availableBalloons.AddRange(DownBalloons.GetComponentsInChildren<Balloon>()); // 자식의 자식으로 변경해야함 
         if (availableBalloons.Count > 0)
         {
             print("이벤트 풍선으로 변신 가능한 풍선 : "+ availableBalloons.Count);
@@ -363,6 +370,7 @@ public class BalloonMapManager : MonoBehaviour
     public void DropDoll()
     {
         // 혹시 모르니 모든 풍선을 끌까...?
+        FrontBalloons.SetActive(false);
 
         // 중력 강화 (주의, 모든 Rigidbody에 영향)
         // Physics.gravity = new Vector3(0, -20f, 0);  // 기본 중력은 -9.81f
