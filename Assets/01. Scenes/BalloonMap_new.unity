@@ -8756,6 +8756,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpoutCamera_new2
       objectReference: {fileID: 0}
+    - target: {fileID: 6746698202735975324, guid: c555ac4d3be5966478360408302ef315,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
