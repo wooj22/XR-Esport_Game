@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GyroDropSceneManager : MonoBehaviour
 {
-    GameObject Front, Left, Right, Down;
+    GameObject Front,Down;
 
 
     // 각 카메라의 원래 설정값을 저장할 딕셔너리
@@ -15,25 +15,20 @@ public class GyroDropSceneManager : MonoBehaviour
     void Start()
     {
         Front = GameObject.Find("SpoutCamera").transform.Find("Front").gameObject;
-        Right = GameObject.Find("SpoutCamera").transform.Find("Right").gameObject;
-        Left = GameObject.Find("SpoutCamera").transform.Find("Left").gameObject;
         Down = GameObject.Find("SpoutCamera").transform.Find("Down").gameObject;
 
         // 초기 설정 저장
-        SaveCameraSettings(Front);
-        SaveCameraSettings(Right);
-        SaveCameraSettings(Left);
+        SaveCameraSettings(Front);;
         SaveCameraSettings(Down);
 
         // 각 카메라 설정 변경
-        ModifyCameraSettings(Front, 37.3f, 98.7f, 1781f);
-        ModifyCameraSettings(Right, 48.454f, 74f, 1337f);
-        ModifyCameraSettings(Left, 48.454f, 74f, 1325f);
+        ModifyCameraSettings(Front, 37f, 98.7f, 1781f);
+
 
         // Down 카메라는 Perspective 모드로 변경
         Camera downCam = Down.GetComponent<Camera>();
         downCam.orthographic = false;
-        ModifyCameraSettings(Down, 142.7f, 33.3f, 596.1f);
+        ModifyCameraSettings(Down, 130f, 33.05f, 596.1f);
     }
 
 
@@ -86,8 +81,6 @@ public class GyroDropSceneManager : MonoBehaviour
     public void LoadMainMenuMap()
     {
         RestoreCameraSettings(Front);
-        RestoreCameraSettings(Right);
-        RestoreCameraSettings(Left);
         RestoreCameraSettings(Down);
 
         print("카메라 세팅을 복원하고 돌아갑니다.");
