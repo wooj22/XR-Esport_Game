@@ -307,20 +307,7 @@ public class GyroDropGameManager : MonoBehaviour
 
         }
     }
-    /*
-    // 화살표 활성화
-    private void ActivateArrows() { ArrowObject1.SetActive(true); ArrowObject2.SetActive(true); }
-
-    // 화살표 비활성화
-    private void DeactivateArrows() { ArrowObject1.SetActive(false); ArrowObject2.SetActive(false); }
-
-    // 화살표 방향 설정
-    private void UpdateArrowSprites()
-    {
-        Sprite selectedSprite = RotationDirection == 1 ? Arrow_reverse : Arrow;
-        ArrowObject1.GetComponent<Image>().sprite = selectedSprite; ArrowObject2.GetComponent<Image>().sprite = selectedSprite;
-    }
-    */
+    
 
     // ----------------------------------------------------------------------------------------------------------
     // ★ [ 충돌 발생 시 호출되는 함수 ] ★ ---------------------------------------------------------------------
@@ -488,7 +475,7 @@ public class GyroDropGameManager : MonoBehaviour
         _gyrodropSoundManager.Play_DropWarning();
 
         yield return new WaitForSeconds(8f);
-        StartCoroutine(Drop(35));
+        StartCoroutine(Drop(60));
 
     }
 

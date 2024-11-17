@@ -8,7 +8,6 @@ public class Balloon : MonoBehaviour
     public bool isEventBalloon = false;  // ¿Ã∫•∆Æ «≥º± ø©∫Œ
     private Animator animator;
     private GameObject confetti; // ≤…∞°∑Á 
-    // private GameObject effect; // ¿Ã∫•∆Æ «≥º± ¿Ã∆Â∆Æ 
 
     void Start()
     {
