@@ -488,7 +488,7 @@ public class GyroDropGameManager : MonoBehaviour
         _gyrodropSoundManager.Play_DropWarning();
 
         yield return new WaitForSeconds(8f);
-        StartCoroutine(Drop(35));
+        StartCoroutine(Drop(60));
 
     }
 
