@@ -14555,6 +14555,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Balloon_blue (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5255829445623281186, guid: c6e915fb44540804ba09426dc74491ab,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 5710877474534383008, guid: c6e915fb44540804ba09426dc74491ab,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -29210,6 +29215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6097637922550940996, guid: 906f73c257bc55a408887f6551df2a5d,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 7296971619421283547, guid: 906f73c257bc55a408887f6551df2a5d,
         type: 3}
