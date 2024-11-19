@@ -38,6 +38,7 @@ public class LaserController : MonoBehaviour
         {
             _circusGameManager.OnLaserHitPlayer();
             isLaserTouchingPlayer = true;
+            GetComponent<BoxCollider>().enabled = false;
 
             // 빨간 머테리얼로 교체
             foreach (Transform child in transform)
