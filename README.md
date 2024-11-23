@@ -17,6 +17,8 @@ YouTube | https://www.youtube.com/@midnightcarnival-o5i
 
 
 
+
+
 ❗ commit convention
 커밋 메세지 컨벤션은 아래 표를 기준으로 `아이콘 요약 | 상세 내용` 으로 작성합니다. 
 
