@@ -5,11 +5,11 @@
 **팀 미나몽즈**가 개발한 **XR 기반 체험형 e스포츠 게임**입니다.  
 4면 공간을 활용한 실감형 즐거움을 선사합니다.  
 
----
+
 
 ## 📺 [YouTube 채널 바로가기](https://www.youtube.com/@midnightcarnival-o5i)  
 
----
+
 
 ## 🗓️ 전시 일정  
 
