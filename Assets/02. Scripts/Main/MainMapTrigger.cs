@@ -15,8 +15,9 @@ public class MainMapTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            easterEgg.AddNameList(this.gameObject.name);    // 이스터에그
-            fillCoroutine = StartCoroutine(FillGauge());
+            //easterEgg.AddNameList(this.gameObject.name);    // 이스터에그
+            easterEgg.TimeInitialization();                   // 이스터에그 타임체크 초기화
+            //fillCoroutine = StartCoroutine(FillGauge());
         }
     }
 
@@ -34,19 +35,23 @@ public class MainMapTrigger : MonoBehaviour
         }
     }
 
-    /// 맵 이동 게이지 채우기
-    private IEnumerator FillGauge()
+    private void OnTriggerStay(Collider other)
     {
-        while (guage.fillAmount < 1f)
+        if (other.CompareTag("Player"))
         {
-            guage.fillAmount += fillSpeed * Time.deltaTime;
-            yield return null;
-        }
+            if (guage.fillAmount < 1f)
+            {
+                guage.fillAmount += fillSpeed * Time.deltaTime;
+            }
 
-        MaxGuage();
+            if (guage.fillAmount >= 1f)
+            {
+                MaxGuage();
+            }
+        }
     }
 
-    /// 맵 이동 게이지 Max, 맵 전환 호출하기
+    /// 맵 이동 게이지 Max, 맵 전환 호출
     private void MaxGuage()
     {
         _mainManager.SwitchMap(this.gameObject.name);  // 맵 전환

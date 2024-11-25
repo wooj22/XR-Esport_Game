@@ -28,6 +28,7 @@ public class TwingController : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
+            this.gameObject.GetComponent<SphereCollider>().enabled = false;
             isMoving = false;
             item.Stop();
             effect.Play();
