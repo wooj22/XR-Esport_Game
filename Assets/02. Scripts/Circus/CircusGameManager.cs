@@ -205,7 +205,7 @@ public class CircusGameManager : MonoBehaviour
     /*-------------------- Event ----------------------*/
     public void OnLaserHitPlayer()
     {
-        _circusUIManager.GaugeDown();
+        //_circusUIManager.GaugeDown();
         _circusSoundManager.PlaySFX("SFX_Circus_LaserHit");
     }
 

@@ -36,6 +36,7 @@ public class LaserController : MonoBehaviour
         // Player¿Í Ãæµ¹
         else if (other.gameObject.tag == "Player")
         {
+            this.gameObject.GetComponent<BoxCollider>().enabled = false;
             _circusGameManager.OnLaserHitPlayer();
             isLaserTouchingPlayer = true;
 
