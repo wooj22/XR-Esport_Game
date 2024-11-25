@@ -51,7 +51,7 @@ public class GyroDropGameManager : MonoBehaviour
     public bool isTrigger_center = false;
 
     // [ 회전 및 속도 ]
-    private float RotationSpeed = 20f;     // 원판 회전 속도
+    private float RotationSpeed = 30f;     // 원판 회전 속도
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
     private float riseSpeed;               // 카메라 상승 속도
 
@@ -233,8 +233,8 @@ public class GyroDropGameManager : MonoBehaviour
     {
         float height = cameraObject.transform.position.y;
 
-        if      (height >= 300f) { return Random.Range(3, 5);  } // 3개 또는 4개
-        else if (height >= 100f) { return Random.Range(2, 4); } // 2개 또는 3개
+        if      (height >= 300f) { return Random.Range(5, 7);  } // 5개 또는 6개
+        else if (height >= 100f) { return Random.Range(4, 6); } // 4개 또는 5개
         else                     { return 2; } // 기본 2개
     }
 
