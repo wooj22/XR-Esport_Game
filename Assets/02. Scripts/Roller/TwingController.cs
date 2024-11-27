@@ -39,6 +39,7 @@ public class TwingController : MonoBehaviour
         {
             _rollerGameManager.LoseItem();
             this.gameObject.SetActive(false);
+            this.gameObject.GetComponent<SphereCollider>().enabled = true;
         }
     }
 
@@ -46,5 +47,6 @@ public class TwingController : MonoBehaviour
     {
         isMoving = true;
         this.gameObject.SetActive(false);
+        this.gameObject.GetComponent<SphereCollider>().enabled = true;
     }
 }

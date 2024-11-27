@@ -11,6 +11,11 @@ public class MainMapTrigger : MonoBehaviour
     [SerializeField] float fillSpeed = 0.2f; 
     private Coroutine fillCoroutine;         // 코루틴 제어
 
+    private void Start()
+    {
+        GetComponent<BoxCollider>().enabled = true;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -55,5 +60,6 @@ public class MainMapTrigger : MonoBehaviour
     private void MaxGuage()
     {
         _mainManager.SwitchMap(this.gameObject.name);  // 맵 전환
+        GetComponent<BoxCollider>().enabled = false;
     }
 }
