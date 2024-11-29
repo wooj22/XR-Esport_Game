@@ -111,7 +111,7 @@ public class GyroDropSceneManager : MonoBehaviour
         RestoreCameraSettings(Down);
 
         // 카메라 위치 복원
-        RestoreCameraPositions();
+        // RestoreCameraPositions();
 
         print("카메라 세팅을 복원하고 돌아갑니다.");
 
