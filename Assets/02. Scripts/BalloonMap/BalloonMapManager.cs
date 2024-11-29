@@ -89,6 +89,8 @@ public class BalloonMapManager : MonoBehaviour
         yield return new WaitForSeconds(12f);
 
         gameStarted = true;
+        balloonSlider.gameObject.SetActive(true);
+        timerText.gameObject.SetActive(true);
 
         Player.SetActive(true); Debug.Log("플레이어가 활성화 됩니다.");
     }
