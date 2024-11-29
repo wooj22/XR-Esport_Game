@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GyroDropSceneManager : MonoBehaviour
 {
-    GameObject Front, Left, Right, Down;
-
+    GameObject Front, Down;
 
     // 각 카메라의 원래 설정값을 저장할 딕셔너리
     Dictionary<GameObject, CameraSettings> originalCameraSettings = new Dictionary<GameObject, CameraSettings>();
@@ -15,25 +14,22 @@ public class GyroDropSceneManager : MonoBehaviour
     void Start()
     {
         Front = GameObject.Find("SpoutCamera").transform.Find("Front").gameObject;
-        Right = GameObject.Find("SpoutCamera").transform.Find("Right").gameObject;
-        Left = GameObject.Find("SpoutCamera").transform.Find("Left").gameObject;
         Down = GameObject.Find("SpoutCamera").transform.Find("Down").gameObject;
 
         // 초기 설정 저장
         SaveCameraSettings(Front);
-        SaveCameraSettings(Right);
-        SaveCameraSettings(Left);
         SaveCameraSettings(Down);
-
-        // 각 카메라 설정 변경
-        ModifyCameraSettings(Front, 37.3f, 98.7f, 1781f);
-        ModifyCameraSettings(Right, 48.454f, 74f, 1337f);
-        ModifyCameraSettings(Left, 48.454f, 74f, 1325f);
 
         // Down 카메라는 Perspective 모드로 변경
         Camera downCam = Down.GetComponent<Camera>();
         downCam.orthographic = false;
-        ModifyCameraSettings(Down, 142.7f, 33.3f, 596.1f);
+
+        // 각 카메라 설정 변경 : fov, near, far
+        ModifyCameraSettings(Front, 90f, 47f, 800f);
+        ModifyCameraSettings(Down, 90f, 47f, 800f);
+
+        // 카메라 위치 세팅 
+        SettingCameraPositions();
     }
 
 
@@ -46,7 +42,6 @@ public class GyroDropSceneManager : MonoBehaviour
             originalCameraSettings[cameraObj] = new CameraSettings(cam.fieldOfView, cam.nearClipPlane, cam.farClipPlane, cam.orthographic);
         }
     }
-
 
     // [ 카메라 설정 복원 ]
     void RestoreCameraSettings(GameObject cameraObj)
@@ -81,14 +76,42 @@ public class GyroDropSceneManager : MonoBehaviour
         }
     }
 
+    // [ 특정 위치로 카메라 세팅 ]
+    void SettingCameraPositions()
+    {
+        if (Front != null)
+        {
+            Front.transform.position = new Vector3(0, 13.8f, 52f);
+        }
+
+        if (Down != null)
+        {
+            Down.transform.position = new Vector3(0, 13.2f, 52.7f); 
+        }
+    }
+
+    // [ 특정 위치로 카메라 강제 복원 ]
+    void RestoreCameraPositions()
+    {
+        if (Front != null)
+        {
+            Front.transform.position = new Vector3(0, 13.58f, -40.5f); 
+        }
+
+        if (Down != null)
+        {
+            Down.transform.position = new Vector3(0, 0f, 52.7f); 
+        }
+    }
 
     // [ 메인 메뉴로 이동하기 전 카메라 설정 복원하고 씬 이동 ]
     public void LoadMainMenuMap()
     {
         RestoreCameraSettings(Front);
-        RestoreCameraSettings(Right);
-        RestoreCameraSettings(Left);
         RestoreCameraSettings(Down);
+
+        // 카메라 위치 복원
+        RestoreCameraPositions();
 
         print("카메라 세팅을 복원하고 돌아갑니다.");
 

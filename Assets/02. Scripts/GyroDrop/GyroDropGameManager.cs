@@ -34,7 +34,7 @@ public class GyroDropGameManager : MonoBehaviour
     public Material material_red;
 
     // [ 설정 ]
-    private const float TargetYPosition = 525f;  // 카메라 목표 Y 위치
+    private const float TargetYPosition = 700f;  // 카메라 목표 Y 위치
     private const float DiskCameraOffset = 41f;  // 원판과 카메라 간 오프셋
     private const float TotalRiseDuration = 60f; // 전체 상승에 걸리는 시간
 
@@ -51,7 +51,7 @@ public class GyroDropGameManager : MonoBehaviour
     public bool isTrigger_center = false;
 
     // [ 회전 및 속도 ]
-    private float RotationSpeed = 30f;     // 원판 회전 속도
+    private float RotationSpeed = 20f;     // 원판 회전 속도
     private int RotationDirection = 1;     // 1: 시계 방향, -1: 반시계 방향
     private float riseSpeed;               // 카메라 상승 속도
 
@@ -66,7 +66,7 @@ public class GyroDropGameManager : MonoBehaviour
     {
         // ★ 시연 시, 필요 
         cameraObject = GameObject.Find("SpoutCamera"); 
-        // cameraObject = GameObject.Find("SpoutCamera_Sample"); // 테스트용 
+        // cameraObject = GameObject.Find("SpoutCamera_woo_new"); // 테스트용 
 
         riseSpeed = (TargetYPosition - 10f) / TotalRiseDuration; // 상승 속도 계산 (목표 위치까지 일정 시간에 맞게)
         print("상승 속도 = " + riseSpeed);
@@ -97,6 +97,8 @@ public class GyroDropGameManager : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         isRising = true;
+        HeightSlider.gameObject.SetActive(true);
+        TimerText.gameObject.SetActive(true);
         _gyrodropUIManager.HideStartArrows();
 
         StartCoroutine(RiseCoroutine()); // 상승 : 1차 멈춤 있음 
@@ -268,10 +270,10 @@ public class GyroDropGameManager : MonoBehaviour
         float heightPercentage = cameraObject.transform.position.y / TargetYPosition;
 
         Material newMaterial = null;
-        if (heightPercentage >= 0.8f) { newMaterial = material_red; RotationSpeed = 10f * 2.5f;  }        // 속도 2.5배
-        else if (heightPercentage >= 0.6f) { newMaterial = material_orange; RotationSpeed = 10f * 2f; }   // 속도 2배
-        else if (heightPercentage >= 0.4f) { newMaterial = material_blue; RotationSpeed = 10f * 1.7f; }   // 속도 1.7배
-        else if (heightPercentage >= 0.2f) { newMaterial = material_green; RotationSpeed = 10f * 1.3f; }  // 속도 1.3배
+        if (heightPercentage >= 0.8f) { newMaterial = material_red; RotationSpeed = 20 * 2.5f;  }        // 속도 2.5배
+        else if (heightPercentage >= 0.6f) { newMaterial = material_orange; RotationSpeed = 20 * 2f; }   // 속도 2배
+        else if (heightPercentage >= 0.4f) { newMaterial = material_blue; RotationSpeed = 20 * 1.7f; }   // 속도 1.7배
+        else if (heightPercentage >= 0.2f) { newMaterial = material_green; RotationSpeed = 20 * 1.3f; }  // 속도 1.3배
         else { newMaterial = material_gray; }
 
         if (newMaterial != null)
@@ -307,20 +309,7 @@ public class GyroDropGameManager : MonoBehaviour
 
         }
     }
-    /*
-    // 화살표 활성화
-    private void ActivateArrows() { ArrowObject1.SetActive(true); ArrowObject2.SetActive(true); }
 
-    // 화살표 비활성화
-    private void DeactivateArrows() { ArrowObject1.SetActive(false); ArrowObject2.SetActive(false); }
-
-    // 화살표 방향 설정
-    private void UpdateArrowSprites()
-    {
-        Sprite selectedSprite = RotationDirection == 1 ? Arrow_reverse : Arrow;
-        ArrowObject1.GetComponent<Image>().sprite = selectedSprite; ArrowObject2.GetComponent<Image>().sprite = selectedSprite;
-    }
-    */
 
     // ----------------------------------------------------------------------------------------------------------
     // ★ [ 충돌 발생 시 호출되는 함수 ] ★ ---------------------------------------------------------------------
